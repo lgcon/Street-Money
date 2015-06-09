@@ -4,11 +4,7 @@ var game = new Phaser.Game(937,532,Phaser.Auto,'');
 game.state.add('Boot',boot);
 game.state.add('Load',load);
 game.state.add('Menu',menu);
+game.state.add('Play',play);
 
-//Add all the levels
-var totalLevels = 1;
-for ( var i = 0; i < totalLevels; i++){
-	game.state.add('Level'+i,levels[i]);
-}
 //We launch the 'Boot' state
 game.state.start('Boot');
