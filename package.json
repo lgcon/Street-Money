@@ -1,0 +1,26 @@
+{
+  "name": "money-street",
+  "version": "0.1.0",
+  "description": "An HTML5 game based on the Phaser game engine",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luigiconiglio/Street-Money.git"
+  },
+  "keywords": [
+    "HTML5",
+    "Game",
+    "Phaser",
+    "canvas",
+    "WebGL",
+    "javascript",
+    "run",
+    "collect"
+  ],
+  "author": "Luigi Coniglio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luigiconiglio/Street-Money/issues"
+  },
+  "homepage": "https://github.com/luigiconiglio/Street-Money#readme"
+}
