@@ -34,6 +34,8 @@ var play = {
 			//Animate them
 			coins.callAll('animations.add','animations','spin',[0,1,2,3,4,6,7],10,true);
 			coins.callAll('animations.play','animations','spin');
+			//Track the score
+			this.score = 0;
 
 
 			//CAMERA
@@ -74,6 +76,7 @@ var play = {
 					var newCoin = coins.create(this.level.coins[this.currentCoin].x,this.level.coins[this.currentCoin].y,'coin');
 					newCoin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
 					newCoin.animations.play('spin');
+					this.score++;
 					this.currentCoin++;
 				}
 				
