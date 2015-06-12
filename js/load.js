@@ -11,6 +11,13 @@ var load = {
 				this.load.spritesheet('player','assets/images/player.png',32,48);
 				//Background
 				this.load.image('city','assets/images/city.png');
+				//Money
+				this.load.spritesheet('coin','assets/images/coin_gold.png',32,32);
+				//Load the levels
+				for(var i = 1; i < totalLevels+1;i++){
+					this.load.text('level'+i,'assets/levels/level'+i+'.json');
+					console.log('level'+i);
+				}
 			},
 		create: function(){
 				this.game.state.start('Menu');
