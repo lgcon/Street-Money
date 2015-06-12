@@ -6,7 +6,9 @@ var load = {
 				this.preloadBar = this.add.image(100,100,'preloadbar');
 				this.load.setPreloadSprite(this.preloadBar);
 				//Load assets
-			
+				
+				//Language TODO choose the language?
+				this.load.text('language','assets/languages/english.json');
 				//Player
 				this.load.spritesheet('player','assets/images/player.png',32,48);
 				//Background
