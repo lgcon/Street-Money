@@ -41,9 +41,17 @@ var play = {
 			this.scoreText = this.add.text(10,10,'Score: '+this.score,{font: "40px Impact",fill: "#FBEFEF"});
 			this.scoreText.fixedToCamera = true;
 
+			//TIMER
+			this.timeLeft = 12; //TODO take it from the level
+			this.timer = this.time.create(false);
+			this.timer.loop(1000,this.updateTimer,this);
+			this.timer.start();
+			//Display
+			this.timerText = this.add.text(10,60,'Time left: '+this.timeLeft,{font: "40px Impact",fill: "#FBEFEF"});
+			this.timerText.fixedToCamera = true;
+
 			//CAMERA
 			this.camera.follow(player);
-			console.log(this);
 		},
 		update: function(){
 			//Move the player
@@ -83,9 +91,15 @@ var play = {
 					newCoin.animations.play('spin');
 					this.currentCoin++;
 				}
+		},
+		updateTimer: function(){
+				this.timeLeft--;
+				this.timerText.setText('Time left: '+this.timeLeft);
+				//TODO gameover if timeLeft == 0
+		}
 				
 					
-			}
+			
 			
 			
 };
