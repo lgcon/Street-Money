@@ -38,7 +38,7 @@ var play = {
 			//SCORE
 			this.score = 0;
 			//Display
-			this.scoreText = this.add.text(10,10,'Score: '+this.score,{font: "40px Impact",fill: "#FBEFEF"});
+			this.scoreText = this.add.text(10,10,languageGame.text_score+this.score,{font: "40px Impact",fill: "#FBEFEF"});
 			this.scoreText.fixedToCamera = true;
 
 			//TIMER
@@ -47,7 +47,7 @@ var play = {
 			this.timer.loop(1000,this.updateTimer,this);
 			this.timer.start();
 			//Display
-			this.timerText = this.add.text(10,60,'Time left: '+this.timeLeft,{font: "40px Impact",fill: "#FBEFEF"});
+			this.timerText = this.add.text(10,60,languageGame.text_timer+this.timeLeft,{font: "40px Impact",fill: "#FBEFEF"});
 			this.timerText.fixedToCamera = true;
 
 			//CAMERA
@@ -83,7 +83,7 @@ var play = {
 		collectCoin: function(player,coin){
 				coin.destroy();
 				this.score++;
-				this.scoreText.setText('Score: '+this.score);
+				this.scoreText.setText(languageGame.text_score+this.score);
 				//Add next coin
 				if (this.currentCoin < this.level.coins.length){
 					var newCoin = coins.create(this.level.coins[this.currentCoin].x,this.level.coins[this.currentCoin].y,'coin');
@@ -94,7 +94,7 @@ var play = {
 		},
 		updateTimer: function(){
 				this.timeLeft--;
-				this.timerText.setText('Time left: '+this.timeLeft);
+				this.timerText.setText(languageGame.text_timer+this.timeLeft);
 				//TODO gameover if timeLeft == 0
 		}
 				
