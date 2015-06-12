@@ -34,9 +34,12 @@ var play = {
 			//Animate them
 			coins.callAll('animations.add','animations','spin',[0,1,2,3,4,6,7],10,true);
 			coins.callAll('animations.play','animations','spin');
-			//Track the score
-			this.score = 0;
 
+			//SCORE
+			this.score = 0;
+			//Display
+			this.scoreText = this.add.text(10,10,'Score: '+this.score,{font: "40px Impact",fill: "#FBEFEF"});
+			this.scoreText.fixedToCamera = true;
 
 			//CAMERA
 			this.camera.follow(player);
@@ -71,12 +74,13 @@ var play = {
 
 		collectCoin: function(player,coin){
 				coin.destroy();
+				this.score++;
+				this.scoreText.setText('Score: '+this.score);
 				//Add next coin
 				if (this.currentCoin < this.level.coins.length){
 					var newCoin = coins.create(this.level.coins[this.currentCoin].x,this.level.coins[this.currentCoin].y,'coin');
 					newCoin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
 					newCoin.animations.play('spin');
-					this.score++;
 					this.currentCoin++;
 				}
 				
