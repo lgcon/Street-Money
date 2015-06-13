@@ -28,7 +28,7 @@ var play = {
 			coins = this.add.group();
 			coins.enableBody = true;
 			//Create initial coins
-			for (this.currentCoin = 0;this.currentCoin < 3;this.currentCoin++){
+			for (this.currentCoin = 0;this.currentCoin < this.level.startingCoins;this.currentCoin++){
 				coins.create(this.level.coins[this.currentCoin].x,this.level.coins[this.currentCoin].y,'coin',0);
 			}
 			//Animate them
@@ -42,7 +42,7 @@ var play = {
 			this.scoreText.fixedToCamera = true;
 
 			//TIMER
-			this.timeLeft = 12; //TODO take it from the level
+			this.timeLeft = this.level.time;
 			this.timer = this.time.create(false);
 			this.timer.loop(1000,this.updateTimer,this);
 			this.timer.start();
