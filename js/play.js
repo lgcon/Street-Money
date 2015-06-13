@@ -20,11 +20,12 @@ var play = {
 			player.animations.add('left',[4,5,6,7],10,true);
 			player.animations.add('right',[8,9,10,11],10,true);
 			player.animations.add('up',[12,13,14,15],10,true);
-			//Create cursors
+			//Create cursors TODO: Cursor created in another state
 			cursors = this.input.keyboard.createCursorKeys();
 			//Player collide world bounds
 			player.body.collideWorldBounds = true;
-
+			//Get player speed
+			player.speed = 200;
 			//COINS
 			coins = this.add.group();
 			coins.enableBody = true;
@@ -62,19 +63,19 @@ var play = {
 		update: function(){
 			//Move the player
 			if (cursors.down.isDown){
-				player.body.velocity.setTo(0,200);
+				player.body.velocity.setTo(0,player.speed);
 				player.animations.play('down');
 			}
 			else if (cursors.left.isDown){
-				player.body.velocity.setTo(-200,0);
+				player.body.velocity.setTo(-player.speed,0);
 				player.animations.play('left');
 			}
 			else if (cursors.right.isDown){
-				player.body.velocity.setTo(200,0);
+				player.body.velocity.setTo(player.speed,0);
 				player.animations.play('right');
 			}
 			else if (cursors.up.isDown && player.body.y > 400){
-				player.body.velocity.setTo(0,-200);
+				player.body.velocity.setTo(0,-player.speed);
 				player.animations.play('up');
 				
 			}
@@ -83,8 +84,9 @@ var play = {
 				player.animations.stop();
 			}
 			//Chek for overlap with coin
-			this.physics.arcade.overlap(player,coins,this.collectCoin.bind(this));
-			//TODO check for overlap with boots
+			this.physics.arcade.overlap(player,coins,this.collectCoin,null,this);
+			//Check for overlap with boots
+			this.physics.arcade.overlap(player,this.boots,this.launchSpeedBonus,null,this);
 		},
 
 		collectCoin: function(player,coin){
@@ -111,8 +113,13 @@ var play = {
 						this.boots.create(this.level.bonuses.speed[i].x,this.level.bonuses.speed[i].y,'boots');
 					}
 				}
-						
+		},
+		launchSpeedBonus: function(player,boots){
+				boots.destroy();
+				this.add.tween(player).from({speed: 2*player.speed},4000,"Linear",true);
+				
 		}
+						
 				
 					
 			
