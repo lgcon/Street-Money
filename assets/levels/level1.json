@@ -6,7 +6,7 @@
 	"startingCoins": 3,
 	"bonuses":{
 			"speed":[{"x":230, "y":300, "time":12}]
-		}
+		},
 	"personages":{
 			"robber": {},
 			"tresure": {}
