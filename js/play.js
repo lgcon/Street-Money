@@ -1,4 +1,5 @@
 //Create some variables to identify sprites and groups
+//TODO player and coins as internal attributes and cursore created in another state.
 var player;
 var cursors;
 var coins;
@@ -34,6 +35,11 @@ var play = {
 			//Animate them
 			coins.callAll('animations.add','animations','spin',[0,1,2,3,4,6,7],10,true);
 			coins.callAll('animations.play','animations','spin');
+
+			//BONUSES
+			//Speed bonuses
+			this.boots = this.add.group();
+			this.boots.enableBody = true; 
 
 			//SCORE
 			this.score = 0;
@@ -78,6 +84,7 @@ var play = {
 			}
 			//Chek for overlap with coin
 			this.physics.arcade.overlap(player,coins,this.collectCoin.bind(this));
+			//TODO check for overlap with boots
 		},
 
 		collectCoin: function(player,coin){
@@ -94,8 +101,17 @@ var play = {
 		},
 		updateTimer: function(){
 				this.timeLeft--;
-				this.timerText.setText(languageGame.text_timer+this.timeLeft);
 				//TODO gameover if timeLeft == 0
+				//Update text timer
+				this.timerText.setText(languageGame.text_timer+this.timeLeft);
+				//TIMER BASED EVENTS
+				//Speed bonuses
+				for ( var i = 0; i < this.level.bonuses.speed.length; i++){
+					if (this.level.bonuses.speed[i].time === this.level.time - this.timeLeft){
+						this.boots.create(this.level.bonuses.speed[i].x,this.level.bonuses.speed[i].y,'boots');
+					}
+				}
+						
 		}
 				
 					
