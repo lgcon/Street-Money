@@ -20,12 +20,13 @@ var play = {
 			player.animations.add('left',[4,5,6,7],10,true);
 			player.animations.add('right',[8,9,10,11],10,true);
 			player.animations.add('up',[12,13,14,15],10,true);
-			//Create cursors TODO: Cursor created in another state
+			//Create cursors TODO: Cursor created in another state and a system for mobile devices
 			cursors = this.input.keyboard.createCursorKeys();
 			//Player collide world bounds
 			player.body.collideWorldBounds = true;
 			//Get player speed
 			player.speed = 200;
+			
 			//COINS
 			coins = this.add.group();
 			coins.enableBody = true;
@@ -41,6 +42,19 @@ var play = {
 			//Speed bonuses
 			this.boots = this.add.group();
 			this.boots.enableBody = true; 
+
+			//OTHER PERSONAGES
+			//ROBBER
+			this.robbers = this.add.group();
+			this.robbers.enableBody = true;
+			for (var i = 0; i < this.level.personages.robbers.length; i++){
+				this.robbers.create(this.level.personages.robbers[i].path[0].x,this.level.personages.robbers[i].path[0].y,'robber');
+			}
+			//Animations
+			this.robbers.callAll('animations.add','animations','down',[0,1,2,3],10,true);
+			this.robbers.callAll('animations.add','animations','left',[4,5,6,7],10,true);
+			this.robbers.callAll('animations.add','animations','right',[8,9,10,11],10,true);
+			this.robbers.callAll('animations.add','animations','up',[12,13,14,15],10,true);	
 
 			//SCORE
 			this.score = 0;

@@ -17,6 +17,8 @@ var load = {
 				this.load.spritesheet('coin','assets/images/coin_gold.png',32,32);
 				//Bonuses
 				this.load.image('boots','assets/images/boots.png');
+				//Robber
+				this.load.spritesheet('robber','assets/images/robber.png',32,48);
 				//Load the levels
 				for(var i = 1; i < totalLevels+1;i++){
 					this.load.text('level'+i,'assets/levels/level'+i+'.json');
