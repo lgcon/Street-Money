@@ -49,6 +49,7 @@ var play = {
 			this.robbers.enableBody = true;
 			for (var i = 0; i < this.level.personages.robbers.length; i++){
 				this.robbers.create(this.level.personages.robbers[i].path[0].x,this.level.personages.robbers[i].path[0].y,'robber');
+				this.robbers.children[i].goingTo = 0; //index of the point the robber is moving to
 			}
 			//Animations
 			this.robbers.callAll('animations.add','animations','down',[0,1,2,3],10,true);
@@ -97,6 +98,8 @@ var play = {
 				player.body.velocity.setTo(0,0);
 				player.animations.stop();
 			}
+			//Animate robbers
+			//this.followLinearPath(this.robbers);
 			//Chek for overlap with coin
 			this.physics.arcade.overlap(player,coins,this.collectCoin,null,this);
 			//Check for overlap with boots
@@ -132,7 +135,19 @@ var play = {
 				boots.destroy();
 				this.add.tween(player).from({speed: 2*player.speed},4000,"Linear",true);
 				
-		}
+		}//,
+
+//		followLinearPath: function(sprite,spriteData){//TODO INCOMPLETE (complete, and use some reference to make it readable)
+//					if (passedPoint(sprite,spriteDate.path[sprite.goingTo].x,spriteDate.path[sprite.goingTo].y,sprite.direction))
+//					
+//					if (sprite.body.x)
+//					if (spriteData.path[sprite.goingTo+1])//check if exist a next point in the path
+//						sprite.goingTo++;//in this case we move to it
+//					else
+//						sprite.goingTo = 0;//if not go to the first point of the path
+//					game.physics.arcade.movetoXY(sprite,spriteData.path[sprite.goingTo].x,spriteData.path[sprite.goingTo].y,spriteData.speed);
+//					
+//				}
 						
 				
 					
@@ -140,3 +155,27 @@ var play = {
 			
 			
 };
+
+var direction = {up: 0, down:1, right: 2, left: 3};
+function passedPoint(sprite,point,direction){
+	switch (direction){
+		case direction.up:
+			return sprite.body.y <= point.y;
+		case direction.down:
+			return sprite.body.y >= point.y;
+		case direction.right:
+			return sprite.body.x >= point.x;
+		case direction.left:
+			return sprite.body.x <= point.x;
+	}
+}
+function fromAngleToDirection(angle){//TODO make it more performant
+	if (angle > Math.PI/4 && angle < (Math.PI/4)*3)
+		return direction.up;
+	else if (angle > (Math.PI*3) && angle < (Math.PI/4)*5)
+		return direction.left;
+	else if (angle > (Math.PI/4)*5 && angle < (Math.PI/4)*7)
+		return direction.down;
+	else
+		return direction.right;
+}
