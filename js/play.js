@@ -107,6 +107,10 @@ var play = {
 			//Check for overlap with boots
 			this.physics.arcade.overlap(player,this.boots,this.launchSpeedBonus,null,this);
 		},
+		render: function(){
+			this.time.advancedTiming = true;
+			this.game.debug.text('fps: '+this.time.fps,200,32);
+		},
 
 		collectCoin: function(player,coin){
 				coin.destroy();
