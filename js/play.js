@@ -6,6 +6,7 @@ var coins;
 //Play state
 var play = {
 		create: function(){
+			//TODO: Use a display order based on the y position of the anchors of every sprite (put the anchor in the bottom)
 			//Background
 			this.add.image(0,0,'city');
 			//Parse the level
@@ -99,8 +100,8 @@ var play = {
 				player.body.velocity.setTo(0,0);
 				player.animations.stop();
 			}
-			//Animate robbers
-			this.followLinearPath(this.robbers.children[0],this.level.personages.robbers[0]);
+			//Move robber
+			this.updateDirection(this.robbers.children[0],this.level.personages.robbers[0]);
 			//Chek for overlap with coin
 			this.physics.arcade.overlap(player,coins,this.collectCoin,null,this);
 			//Check for overlap with boots
@@ -138,8 +139,9 @@ var play = {
 				
 		},
 
-		followLinearPath: function(sprite,spriteData){//TODO change name in more expressive names (updateDirection, etc...) 
-					if (passedPoint(sprite,spriteData.path[sprite.goingTo])){//if the sprite reached the next point of the path
+		updateDirection: function(sprite,spriteData){//TODO change name in more expressive names (updateDirection, etc...) 
+					//Check if the sprite reached the next point of the path
+					if (reachedPathNode(sprite,spriteData.path[sprite.goingTo])){
 						if (spriteData.path[sprite.goingTo+1])//check if exist a next point in the path
 							sprite.goingTo++;//in this case we move to it
 						else
@@ -155,27 +157,37 @@ var play = {
 			
 			
 };
-
+// Enumaration of the 4 basical directions
 var direction = {up: 0, down:1, right: 2, left: 3};
-function passedPoint(sprite,point){
+
+/*This function takes a sprite and the next node of his path and check if the node 
+* has been reached by the sprite taking into acoount the value of sprite.direction
+* @param: a Phaser.Sprite onbject (with .direction attribute added)
+*/ 
+function reachedPathNode(sprite,node){
 	switch (sprite.direction){
 		case direction.up:
-			return sprite.body.y <= point.y;
+			return sprite.body.y <= node.y;
 		case direction.down:
-			return sprite.body.y >= point.y;
+			return sprite.body.y >= node.y;
 		case direction.right:
-			return sprite.body.x >= point.x;
+			return sprite.body.x >= node.x;
 		case direction.left:
-			return sprite.body.x <= point.x;
+			return sprite.body.x <= node.x;
 	}
 }
+
+/*This function take one angle as argument and returns one direction between up,down,right and left based on a interval of PI/2
+* @param: An angle in radiant
+* @return: One direction between up,down,right and left (enumarated)
+*/
 function fromAngleToDirection(angle){//TODO make it more performant
-	var range = Math.PI/4;
-	if (angle < -range && angle > -range*3)
+	var step = Math.PI/4;
+	if (angle < -step && angle > -step*3)
 		return direction.up;
-	else if (angle > range && angle < range*3)
+	else if (angle > step && angle < step*3)
 		return direction.down;
-	else if (angle > -range && angle < range)
+	else if (angle > -step && angle < step)
 		return direction.right;
 	else
 		return direction.left;
