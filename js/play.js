@@ -152,6 +152,7 @@ var play = {
 							sprite.goingTo = 0;//if not go to the first point of the path
 						var angle = this.physics.arcade.moveToXY(sprite,spriteData.path[sprite.goingTo].x,spriteData.path[sprite.goingTo].y,spriteData.speed);
 						sprite.direction = fromAngleToDirection(angle);
+						sprite.animations.play(getDirectionString(sprite.direction));
 				 	}	
 				}
 						
@@ -164,6 +165,20 @@ var play = {
 // Enumaration of the 4 basical directions
 var direction = {up: 0, down:1, right: 2, left: 3};
 
+// Return a string with the direction from an enumeration
+function getDirectionString(dir){
+	switch (dir){
+		case direction.up:
+			return "up";
+		case direction.down:
+			return "down";
+		case direction.right:
+			return "right";
+		case direction.left:
+			return "left";
+	}
+}
+		
 /*This function takes a sprite and the next node of his path and check if the node 
 * has been reached by the sprite taking into acoount the value of sprite.direction
 * @param: a Phaser.Sprite onbject (with .direction attribute added)
