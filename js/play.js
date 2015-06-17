@@ -51,7 +51,9 @@ var play = {
 			for (var i = 0; i < this.level.personages.robbers.length; i++){
 				this.robbers.create(this.level.personages.robbers[i].path[0].x,this.level.personages.robbers[i].path[0].y,'robber');
 				this.robbers.children[i].goingTo = 0; //index of the point the robber is moving to
-				this.robbers.children[i].direction = 0;
+				this.robbers.children[i].direction = 0;//the default direction is 0
+				this.robbers.children[i].timer = this.time.create(false);//the timer we will use to wait beatween each node
+				this.robbers.children[i].timer.expired = true;
 			}
 			//Animations
 			this.robbers.callAll('animations.add','animations','down',[0,1,2,3],10,true);
@@ -142,18 +144,39 @@ var play = {
 				this.add.tween(player).from({speed: 2*player.speed},4000,"Linear",true);
 				
 		},
-
-		updateDirection: function(sprite,spriteData){//TODO change name in more expressive names (updateDirection, etc...) 
-					//Check if the sprite reached the next point of the path
-					if (reachedPathNode(sprite,spriteData.path[sprite.goingTo])){
-						if (spriteData.path[sprite.goingTo+1])//check if exist a next point in the path
-							sprite.goingTo++;//in this case we move to it
-						else
-							sprite.goingTo = 0;//if not go to the first point of the path
-						var angle = this.physics.arcade.moveToXY(sprite,spriteData.path[sprite.goingTo].x,spriteData.path[sprite.goingTo].y,spriteData.speed);
-						sprite.direction = fromAngleToDirection(angle);
-						sprite.animations.play(getDirectionString(sprite.direction));
-				 	}	
+		/*If a sprite in following a path this function has to be called each frame in order to update the direction
+		 * @param: the sprite to move, the data of the sprite from the current level
+		 * @result: update the velocity of the sprite
+		 */
+		updateDirection: function(sprite,spriteData){
+					//Check if the sprite reached the next point of the path and is not waiting
+					if (reachedPathNode(sprite,spriteData.path[sprite.goingTo]) && sprite.timer.expired){
+						//If it has to wait set a timer
+						if(spriteData.path[sprite.goingTo].wait > 0){
+							sprite.body.velocity.setTo(0,0);
+							sprite.timer.add(spriteData.path[sprite.goingTo].wait,this.goNextNode,this,sprite,spriteData);
+							sprite.timer.start();
+							sprite.animations.stop();
+						}//Otherwise move to the next node
+						else {
+							this.goNextNode.bind(this)(sprite,spriteData);
+						}
+						
+							
+					}
+				},
+		/*If the sprite is following a path, this function will make it go to the next node
+		* @param: The sprite to move, an object containing the path
+		*/
+		goNextNode: function(sprite,spriteData){	
+					if (spriteData.path[sprite.goingTo+1])//check if exist a next point in the path
+						sprite.goingTo++;//in this case we move to it
+					else
+						sprite.goingTo = 0;//if not go to the first point of the path
+	
+					var angle = this.physics.arcade.moveToXY(sprite,spriteData.path[sprite.goingTo].x,spriteData.path[sprite.goingTo].y,spriteData.speed);
+					sprite.direction = fromAngleToDirection(angle);
+					sprite.animations.play(getDirectionString(sprite.direction));
 				}
 						
 				
