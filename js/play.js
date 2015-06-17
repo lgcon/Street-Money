@@ -185,11 +185,15 @@ var play = {
 				},
 		
 		stealCoin: function(player,robber){
-				if (this.time.elapsedSince(player.lastTheft) > 1000 && this.score > 0){
+				//Steal one coin max every 200ms and only if there are coins to steal
+				if (this.time.elapsedSince(player.lastTheft) > 200 && this.score > 0){
 					this.score--;
 					player.lastTheft = this.time.time;
 					this.scoreText.setText(languageGame.text_score+this.score);//TODO istead use a function to update the score					
-					//TODO insert some effect
+					//Display a -1 when a coin is stolen
+					var oneLessWarn = this.add.text(player.x,player.y-100,"-1",{font: "20px Impact",fill: "#FBEFEF"});
+					this.add.tween(oneLessWarn).from({y: player.y, alpha: 0},1000,Phaser.Easing.Linear.None,true).onComplete.add(oneLessWarn.destroy,oneLessWarn);
+
 				}
 			}
 						
