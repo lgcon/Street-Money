@@ -106,7 +106,8 @@ var play = {
 				player.animations.stop();
 			}
 			//Move robber
-			this.updateDirection(this.robbers.children[0],this.level.personages.robbers[0]);
+			for (var i = 0; i < this.robbers.children.length; i++)
+				this.updateDirection(this.robbers.children[i],this.level.personages.robbers[i]);
 			//Chek for overlap with coin
 			this.physics.arcade.overlap(player,coins,this.collectCoin,null,this);
 			//Check for overlap with boots
