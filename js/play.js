@@ -27,6 +27,8 @@ var play = {
 			player.body.collideWorldBounds = true;
 			//Get player speed
 			player.speed = 200;
+			//Take track of the thefts
+			player.lastTheft = 0;
 			
 			//COINS
 			coins = this.add.group();
@@ -54,6 +56,7 @@ var play = {
 				this.robbers.children[i].direction = 0;//the default direction is 0
 				this.robbers.children[i].timer = this.time.create(false);//the timer we will use to wait beatween each node
 				this.robbers.children[i].timer.expired = true;
+				this.robbers.children[i].body.immovable = true;
 			}
 			//Animations
 			this.robbers.callAll('animations.add','animations','down',[0,1,2,3],10,true);
@@ -108,6 +111,8 @@ var play = {
 			this.physics.arcade.overlap(player,coins,this.collectCoin,null,this);
 			//Check for overlap with boots
 			this.physics.arcade.overlap(player,this.boots,this.launchSpeedBonus,null,this);
+			//Check for collision with the robber
+			this.physics.arcade.collide(player,this.robbers,this.stealCoin,null,this);
 		},
 		render: function(){
 			this.time.advancedTiming = true;
@@ -117,7 +122,7 @@ var play = {
 		collectCoin: function(player,coin){
 				coin.destroy();
 				this.score++;
-				this.scoreText.setText(languageGame.text_score+this.score);
+				this.scoreText.setText(languageGame.text_score+this.score);//TODO istead use a function to update the score
 				//Add next coin
 				if (this.currentCoin < this.level.coins.length){
 					var newCoin = coins.create(this.level.coins[this.currentCoin].x,this.level.coins[this.currentCoin].y,'coin');
@@ -177,7 +182,16 @@ var play = {
 					var angle = this.physics.arcade.moveToXY(sprite,spriteData.path[sprite.goingTo].x,spriteData.path[sprite.goingTo].y,spriteData.speed);
 					sprite.direction = fromAngleToDirection(angle);
 					sprite.animations.play(getDirectionString(sprite.direction));
+				},
+		
+		stealCoin: function(player,robber){
+				if (this.time.elapsedSince(player.lastTheft) > 1000 && this.score > 0){
+					this.score--;
+					player.lastTheft = this.time.time;
+					this.scoreText.setText(languageGame.text_score+this.score);//TODO istead use a function to update the score					
+					//TODO insert some effect
 				}
+			}
 						
 				
 					
