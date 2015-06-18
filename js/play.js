@@ -54,9 +54,15 @@ var play = {
 						    this.level.personages.robbers[i].path[0].y,'robber');
 				this.robbers.children[i].body.immovable = true;
 			}
-		
+			//TREASURES
+			this.treasures = this.add.group();
+			this.treasures.enableBody = true;
+			for (i = 0; i < this.level.personages.treasures.length; i++){
+				this.treasures.create(this.level.personages.treasures[i].path[0].x,
+						      this.level.personages.treasures[i].path[0].y,'treasure');
+			}	
 			//PATH-FOLLLOWERS PROPERTIES
-			var pathBasedPersonages = [this.robbers];
+			var pathBasedPersonages = [this.robbers,this.treasures];
 			//Set the properties we need to follow the path for every child inside
 			for (i = 0; i < pathBasedPersonages.length; i++){
 				pathBasedPersonages[i].setAll('goingTo',0,false,false,0,true);//index of the point the sprite is moving to
@@ -68,7 +74,7 @@ var play = {
 			}
 
 			//SITHJESTER's ANIMATIONS (spritesheets from sithjester uses the same animations, we can add them together)
-			var sithJestersSprites = [this.robbers];
+			var sithJestersSprites = [this.robbers,this.treasures];
 			for (i = 0; i < sithJestersSprites.length; i++){
 				sithJestersSprites[i].callAll('animations.add','animations','down',[0,1,2,3],10,true);
 				sithJestersSprites[i].callAll('animations.add','animations','left',[4,5,6,7],10,true);
@@ -120,6 +126,8 @@ var play = {
 			//Move robber
 			for (var i = 0; i < this.robbers.children.length; i++)
 				this.updateDirection(this.robbers.children[i],this.level.personages.robbers[i]);
+			for (i = 0; i < this.treasures.length;i++)
+				this.updateDirection(this.treasures.children[i],this.level.personages.treasures[i]);
 			//Chek for overlap with coin
 			this.physics.arcade.overlap(player,coins,this.collectCoin,null,this);
 			//Check for overlap with boots
