@@ -11,7 +11,7 @@ var play = {
 			this.add.image(0,0,'city');
 			//Parse the level
 			this.level = JSON.parse(this.game.cache.getText('level'+currentLevel));
-
+			
 			//PLAYER
 			player = this.add.sprite(this.level.playerStarts.x,this.level.playerStarts.y,'player',0);
 			//Add physic body to the player
@@ -25,9 +25,9 @@ var play = {
 			cursors = this.input.keyboard.createCursorKeys();
 			//Player collide world bounds
 			player.body.collideWorldBounds = true;
-			//Get player speed
+			//Set player speed
 			player.speed = 200;
-			//Take track of the thefts
+			//Take track of the thefts (timestamp of the last one)
 			player.lastTheft = 0;
 			
 			//COINS
@@ -46,24 +46,36 @@ var play = {
 			this.boots = this.add.group();
 			this.boots.enableBody = true; 
 
-			//OTHER PERSONAGES
-			//ROBBER
+			//ROBBERS
 			this.robbers = this.add.group();
 			this.robbers.enableBody = true;
 			for (var i = 0; i < this.level.personages.robbers.length; i++){
-				this.robbers.create(this.level.personages.robbers[i].path[0].x,this.level.personages.robbers[i].path[0].y,'robber');
-				this.robbers.children[i].goingTo = 0; //index of the point the robber is moving to
-				this.robbers.children[i].direction = 0;//the default direction is 0
-				this.robbers.children[i].timer = this.time.create(false);//the timer we will use to wait beatween each node
-				this.robbers.children[i].timer.expired = true;
+				this.robbers.create(this.level.personages.robbers[i].path[0].x,
+						    this.level.personages.robbers[i].path[0].y,'robber');
 				this.robbers.children[i].body.immovable = true;
 			}
-			//Animations
-			this.robbers.callAll('animations.add','animations','down',[0,1,2,3],10,true);
-			this.robbers.callAll('animations.add','animations','left',[4,5,6,7],10,true);
-			this.robbers.callAll('animations.add','animations','right',[8,9,10,11],10,true);
-			this.robbers.callAll('animations.add','animations','up',[12,13,14,15],10,true);	
+		
+			//PATH-FOLLLOWERS PROPERTIES
+			var pathBasedPersonages = [this.robbers];
+			//Set the properties we need to follow the path for every child inside
+			for (i = 0; i < pathBasedPersonages.length; i++){
+				pathBasedPersonages[i].setAll('goingTo',0,false,false,0,true);//index of the point the sprite is moving to
+				pathBasedPersonages[i].setAll('direction',0,false,false,0,true);//The default direction is 0
+				for (var j = 0; j < pathBasedPersonages[i].length; j++){
+					pathBasedPersonages[i].children[j].timer = this.time.create(false);//timer to wait beatween each node
+					pathBasedPersonages[i].children[j].timer.expired = true;
+				}
+			}
 
+			//SITHJESTER's ANIMATIONS (spritesheets from sithjester uses the same animations, we can add them together)
+			var sithJestersSprites = [this.robbers];
+			for (i = 0; i < sithJestersSprites.length; i++){
+				sithJestersSprites[i].callAll('animations.add','animations','down',[0,1,2,3],10,true);
+				sithJestersSprites[i].callAll('animations.add','animations','left',[4,5,6,7],10,true);
+				sithJestersSprites[i].callAll('animations.add','animations','right',[8,9,10,11],10,true);
+				sithJestersSprites[i].callAll('animations.add','animations','up',[12,13,14,15],10,true);	
+			}
+				 
 			//SCORE
 			this.score = 0;
 			//Display
