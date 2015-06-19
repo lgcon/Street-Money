@@ -205,6 +205,8 @@ var play = {
 		* @param: The sprite to move, an object containing the path
 		*/
 		goNextNode: function(sprite,spriteData){	
+					/*First check if the body exist (this test was a fast solution to avoid the issue due to the asynchronus 					* call of this function after (timer set to wait in a path node) after the sprite has been destroyed)
+					*/
 					if (!sprite.body)
 						return false;
 					if (spriteData.path[sprite.goingTo+1])//check if exist a next point in the path
@@ -244,11 +246,13 @@ var play = {
 								.onComplete.add(lifeInfo.destroy,lifeInfo);
 						}
 						else {	
-							var velocityCoins = new Phaser.Point(100,0);
+							var velocityCoins = new Phaser.Point(300,0);
 							var angleCoins = 2*Math.PI/treasure.coins;
 							for (var i = 0; i < treasure.coins; i++){
 								var coin = coins.create(treasure.x,treasure.y,'coin',0)
 								coin.body.velocity.setTo(velocityCoins.x,velocityCoins.y);
+								coin.body.collideWorldBounds = true;
+								this.add.tween(coin.body.velocity).to({x:0,y:0},1000,Phaser.Easing.Linear.None,true);
 								coin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
 								coin.animations.play('spin');
 								velocityCoins.rotate(0,0,angleCoins);
