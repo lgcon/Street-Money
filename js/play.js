@@ -60,6 +60,9 @@ var play = {
 			for (i = 0; i < this.level.personages.treasures.length; i++){
 				this.treasures.create(this.level.personages.treasures[i].path[0].x,
 						      this.level.personages.treasures[i].path[0].y,'treasure');
+				this.treasures.children[i].body.immovable = true;
+				this.treasures.children[i].life = this.level.personages.treasures[i].life;
+				this.treasures.children[i].coins = this.level.personages.treasures[i].coins;
 			}	
 			//PATH-FOLLLOWERS PROPERTIES
 			var pathBasedPersonages = [this.robbers,this.treasures];
@@ -99,6 +102,10 @@ var play = {
 
 			//CAMERA
 			this.camera.follow(player);
+
+			//ADD SPACEBAR
+			this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+			this.spacebar.onDown.add(this.hitTreasure,this);
 		},
 		update: function(){
 			//Move the player
@@ -126,7 +133,8 @@ var play = {
 			//Move robber
 			for (var i = 0; i < this.robbers.children.length; i++)
 				this.updateDirection(this.robbers.children[i],this.level.personages.robbers[i]);
-			for (i = 0; i < this.treasures.length;i++)
+			//Move the treasures
+			for (i = 0; i < this.treasures.children.length;i++)
 				this.updateDirection(this.treasures.children[i],this.level.personages.treasures[i]);
 			//Chek for overlap with coin
 			this.physics.arcade.overlap(player,coins,this.collectCoin,null,this);
@@ -134,6 +142,8 @@ var play = {
 			this.physics.arcade.overlap(player,this.boots,this.launchSpeedBonus,null,this);
 			//Check for collision with the robber
 			this.physics.arcade.collide(player,this.robbers,this.stealCoin,null,this);
+			//Check for collisions with the treasures
+			this.physics.arcade.collide(player,this.treasures);
 		},
 		render: function(){
 			this.time.advancedTiming = true;
@@ -195,6 +205,8 @@ var play = {
 		* @param: The sprite to move, an object containing the path
 		*/
 		goNextNode: function(sprite,spriteData){	
+					if (!sprite.body)
+						return false;
 					if (spriteData.path[sprite.goingTo+1])//check if exist a next point in the path
 						sprite.goingTo++;//in this case we move to it
 					else
@@ -216,7 +228,37 @@ var play = {
 					this.add.tween(oneLessWarn).from({y: player.y, alpha: 0},1000,Phaser.Easing.Linear.None,true).onComplete.add(oneLessWarn.destroy,oneLessWarn);
 
 				}
+			},
+		
+		hitTreasure: function(){
+				console.log("hit");
+				for (var i = 0; i < this.treasures.length; i++){
+					var treasure = this.treasures.children[i];
+					if (this.physics.arcade.distanceBetween(player,treasure) < 50){
+						treasure.life--;
+						if (treasure.life > 0){	
+							var lifeInfo = this.add.text(treasure.x,treasure.y-100,
+									     treasure.life,{font:"30px Impact",fill:"#FF8000"});		
+							this.add.tween(lifeInfo)
+								.from({y: treasure.y,alpha: 0},500,Phaser.Easing.Linear.None,true)
+								.onComplete.add(lifeInfo.destroy,lifeInfo);
+						}
+						else {	
+							var velocityCoins = new Phaser.Point(100,0);
+							var angleCoins = 2*Math.PI/treasure.coins;
+							for (var i = 0; i < treasure.coins; i++){
+								var coin = coins.create(treasure.x,treasure.y,'coin',0)
+								coin.body.velocity.setTo(velocityCoins.x,velocityCoins.y);
+								coin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
+								coin.animations.play('spin');
+								velocityCoins.rotate(0,0,angleCoins);
+							}
+							treasure.destroy();
+						}
+					}
+				}
 			}
+
 						
 				
 					
