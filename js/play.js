@@ -53,6 +53,7 @@ var play = {
 				this.robbers.create(this.level.personages.robbers[i].path[0].x,
 						    this.level.personages.robbers[i].path[0].y,'robber');
 				this.robbers.children[i].body.immovable = true;
+				this.robbers.children[i].data = this.level.personages.robbers[i];
 			}
 			//TREASURES
 			this.treasures = this.add.group();
@@ -60,9 +61,8 @@ var play = {
 			for (i = 0; i < this.level.personages.treasures.length; i++){
 				this.treasures.create(this.level.personages.treasures[i].path[0].x,
 						      this.level.personages.treasures[i].path[0].y,'treasure');
+				this.treasures.children[i].data = this.level.personages.treasures[i];
 				this.treasures.children[i].body.immovable = true;
-				this.treasures.children[i].life = this.level.personages.treasures[i].life;
-				this.treasures.children[i].coins = this.level.personages.treasures[i].coins;
 			}	
 			//PATH-FOLLLOWERS PROPERTIES
 			var pathBasedPersonages = [this.robbers,this.treasures];
@@ -132,10 +132,10 @@ var play = {
 			}
 			//Move robber
 			for (var i = 0; i < this.robbers.children.length; i++)
-				this.updateDirection(this.robbers.children[i],this.level.personages.robbers[i]);
+				this.updateDirection(this.robbers.children[i]);
 			//Move the treasures
 			for (i = 0; i < this.treasures.children.length;i++)
-				this.updateDirection(this.treasures.children[i],this.level.personages.treasures[i]);
+				this.updateDirection(this.treasures.children[i]);
 			//Chek for overlap with coin
 			this.physics.arcade.overlap(player,coins,this.collectCoin,null,this);
 			//Check for overlap with boots
@@ -184,18 +184,18 @@ var play = {
 		 * @param: the sprite to move, the data of the sprite from the current level
 		 * @result: update the velocity of the sprite
 		 */
-		updateDirection: function(sprite,spriteData){
+		updateDirection: function(sprite){
 					//Check if the sprite reached the next point of the path and is not waiting
-					if (reachedPathNode(sprite,spriteData.path[sprite.goingTo]) && sprite.timer.expired){
+					if (reachedPathNode(sprite,sprite.data.path[sprite.goingTo]) && sprite.timer.expired){
 						//If it has to wait set a timer
-						if(spriteData.path[sprite.goingTo].wait > 0){
+						if(sprite.data.path[sprite.goingTo].wait > 0){
 							sprite.body.velocity.setTo(0,0);
-							sprite.timer.add(spriteData.path[sprite.goingTo].wait,this.goNextNode,this,sprite,spriteData);
+							sprite.timer.add(sprite.data.path[sprite.goingTo].wait,this.goNextNode,this,sprite);
 							sprite.timer.start();
 							sprite.animations.stop();
 						}//Otherwise move to the next node
 						else {
-							this.goNextNode.bind(this)(sprite,spriteData);
+							this.goNextNode.bind(this)(sprite);
 						}
 						
 							
@@ -204,17 +204,17 @@ var play = {
 		/*If the sprite is following a path, this function will make it go to the next node
 		* @param: The sprite to move, an object containing the path
 		*/
-		goNextNode: function(sprite,spriteData){	
+		goNextNode: function(sprite){	
 					/*First check if the body exist (this test was a fast solution to avoid the issue due to the asynchronus 					* call of this function after (timer set to wait in a path node) after the sprite has been destroyed)
 					*/
 					if (!sprite.body)
 						return false;
-					if (spriteData.path[sprite.goingTo+1])//check if exist a next point in the path
+					if (sprite.data.path[sprite.goingTo+1])//check if exist a next point in the path
 						sprite.goingTo++;//in this case we move to it
 					else
 						sprite.goingTo = 0;//if not go to the first point of the path
 	
-					var angle = this.physics.arcade.moveToXY(sprite,spriteData.path[sprite.goingTo].x,spriteData.path[sprite.goingTo].y,spriteData.speed);
+					var angle = this.physics.arcade.moveToXY(sprite,sprite.data.path[sprite.goingTo].x,sprite.data.path[sprite.goingTo].y,sprite.data.speed);
 					sprite.direction = fromAngleToDirection(angle);
 					sprite.animations.play(getDirectionString(sprite.direction));
 				},
@@ -233,22 +233,21 @@ var play = {
 			},
 		
 		hitTreasure: function(){
-				console.log("hit");
 				for (var i = 0; i < this.treasures.length; i++){
 					var treasure = this.treasures.children[i];
 					if (this.physics.arcade.distanceBetween(player,treasure) < 50){
-						treasure.life--;
-						if (treasure.life > 0){	
+						treasure.data.life--;
+						if (treasure.data.life > 0){	
 							var lifeInfo = this.add.text(treasure.x,treasure.y-100,
-									     treasure.life,{font:"30px Impact",fill:"#FF8000"});		
+									     treasure.data.life,{font:"30px Impact",fill:"#FF8000"});		
 							this.add.tween(lifeInfo)
 								.from({y: treasure.y,alpha: 0},500,Phaser.Easing.Linear.None,true)
 								.onComplete.add(lifeInfo.destroy,lifeInfo);
 						}
 						else {	
 							var velocityCoins = new Phaser.Point(300,0);
-							var angleCoins = 2*Math.PI/treasure.coins;
-							for (var i = 0; i < treasure.coins; i++){
+							var angleCoins = 2*Math.PI/treasure.data.coins;
+							for (var i = 0; i < treasure.data.coins; i++){
 								var coin = coins.create(treasure.x,treasure.y,'coin',0)
 								coin.body.velocity.setTo(velocityCoins.x,velocityCoins.y);
 								coin.body.collideWorldBounds = true;
