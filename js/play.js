@@ -12,6 +12,9 @@ var play = {
 			//Parse the level
 			this.level = JSON.parse(this.game.cache.getText('level'+currentLevel));
 			
+			//STREET BOUDARIES (must contain all the sprites that risk to go out of the street and need to stay inside)
+			this.keepInTheStreet = this.add.group();
+			
 			//PLAYER
 			player = this.add.sprite(this.level.playerStarts.x,this.level.playerStarts.y,'player',0);
 			//Add physic body to the player
@@ -29,7 +32,9 @@ var play = {
 			player.speed = 200;
 			//Take track of the thefts (timestamp of the last one)
 			player.lastTheft = 0;
-			
+			//Keep the player inside the street
+			this.keepInTheStreet.add(player);
+	
 			//COINS
 			coins = this.add.group();
 			coins.enableBody = true;
@@ -121,7 +126,7 @@ var play = {
 				player.body.velocity.setTo(player.speed,0);
 				player.animations.play('right');
 			}
-			else if (cursors.up.isDown && player.body.y > 400){
+			else if (cursors.up.isDown ){
 				player.body.velocity.setTo(0,-player.speed);
 				player.animations.play('up');
 				
@@ -130,6 +135,8 @@ var play = {
 				player.body.velocity.setTo(0,0);
 				player.animations.stop();
 			}
+			//Check for street's up bound
+			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 400) sprite.y = 400;},this);
 			//Move robber
 			for (var i = 0; i < this.robbers.children.length; i++)
 				this.updateDirection(this.robbers.children[i]);
@@ -251,6 +258,7 @@ var play = {
 								var coin = coins.create(treasure.x,treasure.y,'coin',0)
 								coin.body.velocity.setTo(velocityCoins.x,velocityCoins.y);
 								coin.body.collideWorldBounds = true;
+								this.keepInTheStreet.add(coin);
 								this.add.tween(coin.body.velocity).to({x:0,y:0},1000,Phaser.Easing.Linear.None,true);
 								coin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
 								coin.animations.play('spin');
