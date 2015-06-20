@@ -12,8 +12,8 @@ var play = {
 			//Parse the level
 			this.level = JSON.parse(this.game.cache.getText('level'+currentLevel));
 			
-			//STREET BOUDARIES (must contain all the sprites that risk to go out of the street and need to stay inside)
-			this.keepInTheStreet = this.add.group();
+			//STREET BOUDARIES (this array must contain all the sprites that risk to go out of the street and need to stay inside)
+			this.keepInTheStreet = [];
 			
 			//PLAYER
 			player = this.add.sprite(this.level.playerStarts.x,this.level.playerStarts.y,'player',0);
@@ -33,7 +33,7 @@ var play = {
 			//Take track of the thefts (timestamp of the last one)
 			player.lastTheft = 0;
 			//Keep the player inside the street
-			this.keepInTheStreet.add(player);
+			this.keepInTheStreet.push(player);
 	
 			//COINS
 			coins = this.add.group();
@@ -225,7 +225,9 @@ var play = {
 					sprite.direction = fromAngleToDirection(angle);
 					sprite.animations.play(getDirectionString(sprite.direction));
 				},
-		
+		/*This function is called when the player collide with a robber, takes out 1 from the score and display a -1 text
+		* @param: the sprite object of the player and the robber
+		*/ 
 		stealCoin: function(player,robber){
 				//Steal one coin max every 200ms and only if there are coins to steal
 				if (this.time.elapsedSince(player.lastTheft) > 200 && this.score > 0){
@@ -238,13 +240,18 @@ var play = {
 
 				}
 			},
-		
+		/*This function reduce by 1 the life of every treasure distant less than 50px from the player, if the life is 0 the tresure is
+		* destroyed, and the money it contains are launched in every direction
+		* @param: none.
+		*/		
 		hitTreasure: function(){
 				for (var i = 0; i < this.treasures.length; i++){
 					var treasure = this.treasures.children[i];
+					//If the treasure is distant less than 50px from the player
 					if (this.physics.arcade.distanceBetween(player,treasure) < 50){
 						treasure.data.life--;
-						if (treasure.data.life > 0){	
+						if (treasure.data.life > 0){
+							//Display the remaining life
 							var lifeInfo = this.add.text(treasure.x,treasure.y-100,
 									     treasure.data.life,{font:"30px Impact",fill:"#FF8000"});		
 							this.add.tween(lifeInfo)
@@ -252,13 +259,14 @@ var play = {
 								.onComplete.add(lifeInfo.destroy,lifeInfo);
 						}
 						else {	
-							var velocityCoins = new Phaser.Point(300,0);
+							//Launch all the coins and destroy the treasure	
+							var velocityCoins = new Phaser.Point(500,0);
 							var angleCoins = 2*Math.PI/treasure.data.coins;
 							for (var i = 0; i < treasure.data.coins; i++){
 								var coin = coins.create(treasure.x,treasure.y,'coin',0)
 								coin.body.velocity.setTo(velocityCoins.x,velocityCoins.y);
 								coin.body.collideWorldBounds = true;
-								this.keepInTheStreet.add(coin);
+								this.keepInTheStreet.push(coin);
 								this.add.tween(coin.body.velocity).to({x:0,y:0},1000,Phaser.Easing.Linear.None,true);
 								coin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
 								coin.animations.play('spin');
