@@ -50,6 +50,11 @@ var play = {
 			//Speed bonuses
 			this.boots = this.add.group();
 			this.boots.enableBody = true; 
+			//Oil spots
+			this.oilSpots = this.add.group();
+			this.oilSpots.enableBody = true;
+			for (var i = 0; i < this.level.bonuses.oil.length; i++)
+				this.oilSpots.create(this.level.bonuses.oil[i].x,this.level.bonuses.oil[i].y,'oil');
 
 			//ROBBERS
 			this.robbers = this.add.group();
@@ -147,6 +152,8 @@ var play = {
 			this.physics.arcade.overlap(player,coins,this.collectCoin,null,this);
 			//Check for overlap with boots
 			this.physics.arcade.overlap(player,this.boots,this.launchSpeedBonus,null,this);
+			//Check for overlap with the oil spots
+			this.physics.arcade.overlap(player,this.oilSpots,this.slip,null,this);
 			//Check for collision with the robber
 			this.physics.arcade.collide(player,this.robbers,this.stealCoin,null,this);
 			//Check for collisions with the treasures
@@ -187,6 +194,20 @@ var play = {
 				this.add.tween(player).from({speed: 2*player.speed},4000,"Linear",true);
 				
 		},
+		/*Called when the player overlap with an oil spot, make the player slip for 500ms in the direction he was going
+		* @param: the player, a reference to the spot ovelapped with the player
+		*/
+		slip: function(player,spot){
+			//Note, tween on the speed are possible because they are updated after the update function
+			if (player.body.facing == Phaser.UP)
+				this.add.tween(player.body.velocity).from({y: -player.speed},500,"Linear",true);
+			if (player.body.facing == Phaser.DOWN)
+				this.add.tween(player.body.velocity).from({y: player.speed},500,"Linear",true);
+			if (player.body.facing == Phaser.RIGHT)
+				this.add.tween(player.body.velocity).from({x: player.speed},500,"Linear",true);
+			if (player.body.facing == Phaser.LEFT)
+				this.add.tween(player.body.velocity).from({x: -player.speed},500,"Linear",true);
+			},	
 		/*If a sprite in following a path this function has to be called each frame in order to update the direction
 		 * @param: the sprite to move, the data of the sprite from the current level
 		 * @result: update the velocity of the sprite
