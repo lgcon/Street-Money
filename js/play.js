@@ -121,24 +121,24 @@ var play = {
 			//Move the player
 			if (cursors.down.isDown){
 				player.body.velocity.setTo(0,player.speed);
-				player.animations.play('down');
+				player.animation = 'down'
 			}
 			else if (cursors.left.isDown){
 				player.body.velocity.setTo(-player.speed,0);
-				player.animations.play('left');
+				player.animation = 'left'
 			}
 			else if (cursors.right.isDown){
 				player.body.velocity.setTo(player.speed,0);
-				player.animations.play('right');
+				player.animation = 'right'
 			}
 			else if (cursors.up.isDown ){
 				player.body.velocity.setTo(0,-player.speed);
-				player.animations.play('up');
+				player.animation = 'up'
 				
 			}
 			else{
 				player.body.velocity.setTo(0,0);
-				player.animations.stop();
+				player.animation = null;
 			}
 			//Check for street's up bound
 			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 400) sprite.y = 400;},this);
@@ -154,10 +154,17 @@ var play = {
 			this.physics.arcade.overlap(player,this.boots,this.launchSpeedBonus,null,this);
 			//Check for overlap with the oil spots
 			this.physics.arcade.overlap(player,this.oilSpots,this.slip,null,this);
+			//TODO check for ovelap with drains
+		//	this.physics.arcade.overlap(player,this.drains,this.teleport,null,this);
 			//Check for collision with the robber
 			this.physics.arcade.collide(player,this.robbers,this.stealCoin,null,this);
 			//Check for collisions with the treasures
 			this.physics.arcade.collide(player,this.treasures);
+			//Player animation
+			if (player.animation)
+				player.animations.play(player.animation);
+			else
+				player.animations.stop();
 		},
 		render: function(){
 			this.time.advancedTiming = true;
