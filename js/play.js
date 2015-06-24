@@ -80,10 +80,7 @@ var play = {
 			for (i = 0; i < pathBasedPersonages.length; i++){
 				pathBasedPersonages[i].setAll('goingTo',0,false,false,0,true);//index of the point the sprite is moving to
 				pathBasedPersonages[i].setAll('direction',0,false,false,0,true);//The default direction is 0
-				for (var j = 0; j < pathBasedPersonages[i].length; j++){
-					pathBasedPersonages[i].children[j].timer = this.time.create(false);//timer to wait beatween each node
-					pathBasedPersonages[i].children[j].timer.expired = true;
-				}
+				pathBasedPersonages[i].setAll('waiting',false,false,false,0,true);//Start without waiting
 			}
 
 			//SITHJESTER's ANIMATIONS (spritesheets from sithjester uses the same animations, we can add them together)
@@ -221,12 +218,12 @@ var play = {
 		 */
 		updateDirection: function(sprite){
 					//Check if the sprite reached the next point of the path and is not waiting
-					if (reachedPathNode(sprite,sprite.data.path[sprite.goingTo]) && sprite.timer.expired){
+					if (reachedPathNode(sprite,sprite.data.path[sprite.goingTo]) && sprite.waiting == false){
 						//If it has to wait set a timer
 						if(sprite.data.path[sprite.goingTo].wait > 0){
 							sprite.body.velocity.setTo(0,0);
-							sprite.timer.add(sprite.data.path[sprite.goingTo].wait,this.goNextNode,this,sprite);
-							sprite.timer.start();
+							sprite.waiting = true;
+							this.timer.add(sprite.data.path[sprite.goingTo].wait,this.goNextNode,this,sprite);
 							sprite.animations.stop();
 						}//Otherwise move to the next node
 						else {
@@ -240,7 +237,7 @@ var play = {
 		* @param: The sprite to move, an object containing the path
 		*/
 		goNextNode: function(sprite){	
-					/*First check if the body exist (this test was a fast solution to avoid the issue due to the asynchronus 					* call of this function after (timer set to wait in a path node) after the sprite has been destroyed)
+					/*First check if the body exist (this test was a fast solution to avoid the issue due to the asynchronus 					* call of this function (timer set to wait in a path node after the sprite has been destroyed)
 					*/
 					if (!sprite.body)
 						return false;
@@ -252,6 +249,7 @@ var play = {
 					var angle = this.physics.arcade.moveToXY(sprite,sprite.data.path[sprite.goingTo].x,sprite.data.path[sprite.goingTo].y,sprite.data.speed);
 					sprite.direction = fromAngleToDirection(angle);
 					sprite.animations.play(getDirectionString(sprite.direction));
+					sprite.waiting = false;
 				},
 		/*This function is called when the player collide with a robber, takes out 1 from the score and display a -1 text
 		* @param: the sprite object of the player and the robber
