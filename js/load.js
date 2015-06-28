@@ -18,6 +18,7 @@ var load = {
 				//Bonuses
 				this.load.image('boots','assets/images/boots.png');
 				this.load.image('oil','assets/images/oil_spot.png');
+				this.load.image('drain','assets/images/drain.png');
 				//Robber
 				this.load.spritesheet('robber','assets/images/robber.png',32,48);
 				//Treasure

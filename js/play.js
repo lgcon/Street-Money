@@ -24,6 +24,7 @@ var play = {
 			player.animations.add('left',[4,5,6,7],10,true);
 			player.animations.add('right',[8,9,10,11],10,true);
 			player.animations.add('up',[12,13,14,15],10,true);
+			player.animations.add('fall',[0,4,8,12],10,true);
 			//Create cursors TODO: Cursor created in another state and a system for mobile devices
 			cursors = this.input.keyboard.createCursorKeys();
 			//Player collide world bounds
@@ -34,6 +35,9 @@ var play = {
 			player.lastTheft = 0;
 			//Keep the player inside the street
 			this.keepInTheStreet.push(player);
+			//Some values to menage the drains-teleporting
+			player.allowTeleport = true;
+			player.isTeleporting = false;
 	
 			//COINS
 			coins = this.add.group();
@@ -55,6 +59,13 @@ var play = {
 			this.oilSpots.enableBody = true;
 			for (var i = 0; i < this.level.bonuses.oil.length; i++)
 				this.oilSpots.create(this.level.bonuses.oil[i].x,this.level.bonuses.oil[i].y,'oil');
+			//Drains
+			this.drains = this.add.group();
+			this.drains.enableBody = true;
+			for (i = 0; i < this.level.bonuses.drains.length; i++){
+				this.drains.create(this.level.bonuses.drains[i].x,this.level.bonuses.drains[i].y,'drain')
+					.go = this.level.bonuses.drains[i].go;
+			}
 
 			//ROBBERS
 			this.robbers = this.add.group();
@@ -151,8 +162,9 @@ var play = {
 			this.physics.arcade.overlap(player,this.boots,this.launchSpeedBonus,null,this);
 			//Check for overlap with the oil spots
 			this.physics.arcade.overlap(player,this.oilSpots,this.slip,null,this);
-			//TODO check for ovelap with drains
-		//	this.physics.arcade.overlap(player,this.drains,this.teleport,null,this);
+			//Check for ovelap with drains
+		 	if (!this.physics.arcade.overlap(player,this.drains,this.teleport,null,this))
+				player.allowTeleport = true; //If the player is out of any drain, allow teleporting for eventual contacts
 			//Check for collision with the robber
 			this.physics.arcade.collide(player,this.robbers,this.stealCoin,null,this);
 			//Check for collisions with the treasures
@@ -266,6 +278,39 @@ var play = {
 
 				}
 			},
+		/*This function permorms a teleport to the next drain
+		* @param: the player to teleport, the actual drain which body overlaped with the player
+		*/
+		teleport: function(player, drain){
+				//Teleport only if allowed
+				if (player.allowTeleport){
+					player.animation = 'fall';
+					//We neew to check the value of isTeleporting in order to avoid add multiple timers
+					if (player.isTeleporting)
+						player.body.velocity.setTo(0,0);
+					else {
+						player.isTeleporting = true;
+						this.timer.add(500,this.moveToNextDrain,this,player,drain);
+					}
+				}
+			},
+		/*This function move the player to the next drain
+		* @param: the player to move, the drain from which the player is coming from
+		*/
+		moveToNextDrain: function(player,drain){
+					player.position.setTo(this.level.bonuses.drains[drain.go].x,this.level.bonuses.drains[drain.go].y);
+					//Free the camera from following the player
+					this.camera.unfollow();
+					//Set a tween to move smoothly the camera to the player
+					this.add.tween(this.camera.view)
+						.to({x: player.position.x - this.camera.view.halfWidth, 
+						     y: player.position.y - this.camera.view.halfHeight},500)
+						.start()
+						.onComplete.add(function(){this.camera.follow(player)},this);//Follow the player once arrived
+					//Don't allow teleport since the player exit the new drain
+					player.allowTeleport = false;
+					player.isTeleporting = false;
+				},	
 		/*This function reduce by 1 the life of every treasure distant less than 50px from the player, if the life is 0 the tresure is
 		* destroyed, and the money it contains are launched in every direction
 		* @param: none.
