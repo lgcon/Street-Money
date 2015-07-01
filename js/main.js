@@ -1,5 +1,5 @@
 //Create a Phaser.Game object
-var game = new Phaser.Game(937,532,Phaser.Auto,'');
+var game = new Phaser.Game(937,532,Phaser.AUTO,'');
 
 //Define global variables
 var totalLevels = 1;
