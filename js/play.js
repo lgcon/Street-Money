@@ -124,6 +124,14 @@ var play = {
 			//ADD SPACEBAR
 			this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 			this.spacebar.onDown.add(this.hitTreasure,this);
+
+			//MAKE EVERYTHING ISOMETRIC
+			this.groundObjects = this.add.group();
+			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
+			
+			this.entitiesToSort = this.add.group();
+			this.entitiesToSort.addMultiple([player,this.robbers,this.treasures,this.boots,coins]);
+			//No need to change the 'z' index of the children of the world, they are already ordered	
 		},
 		update: function(){
 			//Move the player
@@ -174,6 +182,8 @@ var play = {
 				player.animations.play(player.animation);
 			else
 				player.animations.stop();
+			//Update display order
+			this.entitiesToSort.sort('y',Phaser.Group.SORT_ASCENDING,true);
 		},
 		render: function(){
 			this.time.advancedTiming = true;
@@ -307,6 +317,7 @@ var play = {
 						     y: player.position.y - this.camera.view.halfHeight},500)
 						.start()
 						.onComplete.add(function(){this.camera.follow(player)},this);//Follow the player once arrived
+													  //TODO update the tween direction
 					//Don't allow teleport since the player exit the new drain
 					player.allowTeleport = false;
 					player.isTeleporting = false;
