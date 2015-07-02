@@ -1,6 +1,5 @@
 //Create some variables to identify sprites and groups
 //TODO player and coins as internal attributes and cursore created in another state.
-var player;
 var cursors;
 var coins;
 //Play state
@@ -15,39 +14,39 @@ var play = {
 			this.keepInTheStreet = [];
 			
 			//PLAYER
-			player = this.add.sprite(this.level.playerStarts.x,this.level.playerStarts.y,'player',0);
+			this.player = this.add.sprite(this.level.playerStarts.x,this.level.playerStarts.y,'player',0);
 			//Add physic body to the player
-			this.physics.arcade.enable(player);
+			this.physics.arcade.enable(this.player);
 			//Walk animation
-			player.animations.add('down',[0,1,2,3],10,true);
-			player.animations.add('left',[4,5,6,7],10,true);
-			player.animations.add('right',[8,9,10,11],10,true);
-			player.animations.add('up',[12,13,14,15],10,true);
-			player.animations.add('fall',[0,4,8,12],10,true);
+			this.player.animations.add('down',[0,1,2,3],10,true);
+			this.player.animations.add('left',[4,5,6,7],10,true);
+			this.player.animations.add('right',[8,9,10,11],10,true);
+			this.player.animations.add('up',[12,13,14,15],10,true);
+			this.player.animations.add('fall',[0,4,8,12],10,true);
 			//Create cursors TODO: Cursor created in another state and a system for mobile devices
 			cursors = this.input.keyboard.createCursorKeys();
 			//Player collide world bounds
-			player.body.collideWorldBounds = true;
+			this.player.body.collideWorldBounds = true;
 			//Set player speed
-			player.speed = 200;
+			this.player.speed = 200;
 			//Take track of the thefts (timestamp of the last one)
-			player.lastTheft = 0;
+			this.player.lastTheft = 0;
 			//Keep the player inside the street
-			this.keepInTheStreet.push(player);
+			this.keepInTheStreet.push(this.player);
 			//Some values to menage the drains-teleporting
-			player.allowTeleport = true;
-			player.isTeleporting = false;
+			this.player.allowTeleport = true;
+			this.player.isTeleporting = false;
 	
 			//COINS
-			coins = this.add.group();
-			coins.enableBody = true;
+			this.coins = this.add.group();
+			this.coins.enableBody = true;
 			//Create initial coins
 			for (this.currentCoin = 0;this.currentCoin < this.level.startingCoins;this.currentCoin++){
-				coins.create(this.level.coins[this.currentCoin].x,this.level.coins[this.currentCoin].y,'coin',0);
+				this.coins.create(this.level.coins[this.currentCoin].x,this.level.coins[this.currentCoin].y,'coin',0);
 			}
 			//Animate them
-			coins.callAll('animations.add','animations','spin',[0,1,2,3,4,6,7],10,true);
-			coins.callAll('animations.play','animations','spin');
+			this.coins.callAll('animations.add','animations','spin',[0,1,2,3,4,6,7],10,true);
+			this.coins.callAll('animations.play','animations','spin');
 
 			//BONUSES
 			//Speed bonuses
@@ -118,7 +117,7 @@ var play = {
 			this.timerText.fixedToCamera = true;
 
 			//CAMERA
-			this.camera.follow(player);
+			this.camera.follow(this.player);
 
 			//ADD SPACEBAR
 			this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -129,7 +128,7 @@ var play = {
 			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
 			
 			this.entitiesToSort = this.add.group();
-			this.entitiesToSort.addMultiple([player,this.robbers,this.treasures,this.boots,coins]);
+			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.boots,this.coins]);
 			//No need to change the 'z' index of the children of the world, they are already ordered	
 			
 			//RESIZE BODIES
@@ -148,25 +147,25 @@ var play = {
 		update: function(){
 			//Move the player
 			if (cursors.down.isDown){
-				player.body.velocity.setTo(0,player.speed);
-				player.animation = 'down'
+				this.player.body.velocity.setTo(0,this.player.speed);
+				this.player.animation = 'down'
 			}
 			else if (cursors.left.isDown){
-				player.body.velocity.setTo(-player.speed,0);
-				player.animation = 'left'
+				this.player.body.velocity.setTo(-this.player.speed,0);
+				this.player.animation = 'left'
 			}
 			else if (cursors.right.isDown){
-				player.body.velocity.setTo(player.speed,0);
-				player.animation = 'right'
+				this.player.body.velocity.setTo(this.player.speed,0);
+				this.player.animation = 'right'
 			}
 			else if (cursors.up.isDown ){
-				player.body.velocity.setTo(0,-player.speed);
-				player.animation = 'up'
+				this.player.body.velocity.setTo(0,-this.player.speed);
+				this.player.animation = 'up'
 				
 			}
 			else{
-				player.body.velocity.setTo(0,0);
-				player.animation = null;
+				this.player.body.velocity.setTo(0,0);
+				this.player.animation = null;
 			}
 			//Check for street's up bound
 			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 400) sprite.y = 400;},this);
@@ -177,34 +176,34 @@ var play = {
 			for (i = 0; i < this.treasures.children.length;i++)
 				this.updateDirection(this.treasures.children[i]);
 			//Chek for overlap with coin
-			this.physics.arcade.overlap(player,coins,this.collectCoin,null,this);
+			this.physics.arcade.overlap(this.player,this.coins,this.collectCoin,null,this);
 			//Check for overlap with boots
-			this.physics.arcade.overlap(player,this.boots,this.launchSpeedBonus,null,this);
+			this.physics.arcade.overlap(this.player,this.boots,this.launchSpeedBonus,null,this);
 			//Check for overlap with the oil spots
-			this.physics.arcade.overlap(player,this.oilSpots,this.slip,null,this);
+			this.physics.arcade.overlap(this.player,this.oilSpots,this.slip,null,this);
 			//Check for ovelap with drains
-		 	if (!this.physics.arcade.overlap(player,this.drains,this.teleport,null,this))
-				player.allowTeleport = true; //If the player is out of any drain, allow teleporting for eventual contacts
+		 	if (!this.physics.arcade.overlap(this.player,this.drains,this.teleport,null,this))
+				this.player.allowTeleport = true; //If the player is out of any drain, allow teleporting for eventual contacts
 			//Check for collision with the robber
-			this.physics.arcade.collide(player,this.robbers,this.stealCoin,null,this);
+			this.physics.arcade.collide(this.player,this.robbers,this.stealCoin,null,this);
 			//Check for collisions with the treasures
-			this.physics.arcade.collide(player,this.treasures);
+			this.physics.arcade.collide(this.player,this.treasures);
 			//Player animation
-			if (player.animation)
-				player.animations.play(player.animation);
+			if (this.player.animation)
+				this.player.animations.play(this.player.animation);
 			else
-				player.animations.stop();
+				this.player.animations.stop();
 			//Update display order
 			this.entitiesToSort.sort('bottom',Phaser.Group.SORT_ASCENDING,true);
 		},
 		render: function(){
 			this.time.advancedTiming = true;
 			this.game.debug.text('fps: '+this.time.fps,200,32);
-//			this.game.debug.body(player);
+//			this.game.debug.body(this.player);
 //			this.robbers.forEach(this.game.debug.body,this.game.debug);
 //			this.treasures.forEach(this.game.debug.body,this.game.debug);
 //			this.boots.forEach(this.game.debug.body,this.game.debug);
-//			coins.forEach(this.game.debug.body,this.game.debug);
+//			this.coins.forEach(this.game.debug.body,this.game.debug);
 //			this.drains.forEach(this.game.debug.body,this.game.debug);
 //			this.oilSpots.forEach(this.game.debug.body,this.game.debug);
 		
@@ -216,7 +215,7 @@ var play = {
 				this.scoreText.setText(languageGame.text_score+this.score);//TODO istead use a function to update the score
 				//Add next coin
 				if (this.currentCoin < this.level.coins.length){
-					var newCoin = coins.create(this.level.coins[this.currentCoin].x,this.level.coins[this.currentCoin].y,'coin');
+					var newCoin = this.coins.create(this.level.coins[this.currentCoin].x,this.level.coins[this.currentCoin].y,'coin');
 					newCoin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
 					newCoin.animations.play('spin');
 					newCoin.body.setSize(newCoin.width/2,feetHeight,newCoin.width/4,newCoin.height-feetHeight);
@@ -352,7 +351,7 @@ var play = {
 				for (var i = 0; i < this.treasures.length; i++){
 					var treasure = this.treasures.children[i];
 					//If the treasure is distant less than 50px from the player
-					if (this.physics.arcade.distanceBetween(player,treasure) < 50){
+					if (this.physics.arcade.distanceBetween(this.player,treasure) < 50){
 						treasure.data.life--;
 						if (treasure.data.life > 0){
 							//Display the remaining life
@@ -367,7 +366,7 @@ var play = {
 							var velocityCoins = new Phaser.Point(500,0);
 							var angleCoins = 2*Math.PI/treasure.data.coins;
 							for (var i = 0; i < treasure.data.coins; i++){
-								var coin = coins.create(treasure.x,treasure.y,'coin',0)
+								var coin = this.coins.create(treasure.x,treasure.y,'coin',0)
 								coin.body.velocity.setTo(velocityCoins.x,velocityCoins.y);
 								coin.body.collideWorldBounds = true;
 								coin.body.setSize(coin.width/2,feetHeight,coin.width/4,coin.height-feetHeight);
