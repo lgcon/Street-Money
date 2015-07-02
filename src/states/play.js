@@ -6,7 +6,6 @@ var coins;
 //Play state
 var play = {
 		create: function(){
-			//TODO: Use a display order based on the y position of the anchors of every sprite (put the anchor in the bottom)
 			//Background
 			this.add.image(0,0,'city');
 			//Parse the level
@@ -132,6 +131,19 @@ var play = {
 			this.entitiesToSort = this.add.group();
 			this.entitiesToSort.addMultiple([player,this.robbers,this.treasures,this.boots,coins]);
 			//No need to change the 'z' index of the children of the world, they are already ordered	
+			
+			//RESIZE BODIES
+			setBodyAsFeet(this.entitiesToSort);
+			var sprite;
+			for (i = 0; i < this.drains.length; i++){
+				sprite = this.drains.children[i];
+				sprite.body.setSize(5,5,sprite.width/2-2.5,sprite.height/2-2.5);
+			}
+			for (i = 0; i < this.oilSpots.length; i++){
+				sprite = this.oilSpots.children[i];
+				sprite.body.setSize(sprite.width/2,sprite.height/2,sprite.width/4,sprite.height/4);
+			}
+			
 		},
 		update: function(){
 			//Move the player
@@ -183,11 +195,19 @@ var play = {
 			else
 				player.animations.stop();
 			//Update display order
-			this.entitiesToSort.sort('y',Phaser.Group.SORT_ASCENDING,true);
+			this.entitiesToSort.sort('bottom',Phaser.Group.SORT_ASCENDING,true);
 		},
 		render: function(){
 			this.time.advancedTiming = true;
 			this.game.debug.text('fps: '+this.time.fps,200,32);
+//			this.game.debug.body(player);
+//			this.robbers.forEach(this.game.debug.body,this.game.debug);
+//			this.treasures.forEach(this.game.debug.body,this.game.debug);
+//			this.boots.forEach(this.game.debug.body,this.game.debug);
+//			coins.forEach(this.game.debug.body,this.game.debug);
+//			this.drains.forEach(this.game.debug.body,this.game.debug);
+//			this.oilSpots.forEach(this.game.debug.body,this.game.debug);
+		
 		},
 
 		collectCoin: function(player,coin){
@@ -199,6 +219,7 @@ var play = {
 					var newCoin = coins.create(this.level.coins[this.currentCoin].x,this.level.coins[this.currentCoin].y,'coin');
 					newCoin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
 					newCoin.animations.play('spin');
+					newCoin.body.setSize(newCoin.width/2,feetHeight,newCoin.width/4,newCoin.height-feetHeight);
 					this.currentCoin++;
 				}
 		},
@@ -211,7 +232,8 @@ var play = {
 				//Speed bonuses
 				for ( var i = 0; i < this.level.bonuses.speed.length; i++){
 					if (this.level.bonuses.speed[i].time === this.level.time - this.timeLeft){
-						this.boots.create(this.level.bonuses.speed[i].x,this.level.bonuses.speed[i].y,'boots');
+						var boots = this.boots.create(this.level.bonuses.speed[i].x,this.level.bonuses.speed[i].y,'boots');	
+						boots.body.setSize(boots.width/2,feetHeight,boots.width/4,boots.height-feetHeight);
 					}
 				}
 		},
@@ -348,6 +370,7 @@ var play = {
 								var coin = coins.create(treasure.x,treasure.y,'coin',0)
 								coin.body.velocity.setTo(velocityCoins.x,velocityCoins.y);
 								coin.body.collideWorldBounds = true;
+								coin.body.setSize(coin.width/2,feetHeight,coin.width/4,coin.height-feetHeight);
 								this.keepInTheStreet.push(coin);
 								this.add.tween(coin.body.velocity).to({x:0,y:0},1000,Phaser.Easing.Linear.None,true);
 								coin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
@@ -391,13 +414,13 @@ function getDirectionString(dir){
 function reachedPathNode(sprite,node){
 	switch (sprite.direction){
 		case direction.up:
-			return sprite.body.y <= node.y;
+			return sprite.y <= node.y;
 		case direction.down:
-			return sprite.body.y >= node.y;
+			return sprite.y >= node.y;
 		case direction.right:
-			return sprite.body.x >= node.x;
+			return sprite.x >= node.x;
 		case direction.left:
-			return sprite.body.x <= node.x;
+			return sprite.x <= node.x;
 	}
 }
 
@@ -415,4 +438,21 @@ function fromAngleToDirection(angle){//TODO make it more performant
 		return direction.right;
 	else
 		return direction.left;
+}
+
+//This value will be the vertical dimension of the space occupied on the game surface
+var feetHeight = 10;
+
+/*Set the body shape according to the need of the game, to use with the sprites that need an isometric-style collision effect
+* (it will move the body to the feet of the object and resize it) [! not valid for sprites belonging to groudObjects]
+* take as parameter a Group or a Sprite, in the first case it will recursively look for all the sprite inside it
+* @param: A Phaser.Group or another display object
+*/
+function setBodyAsFeet(object) {
+	if (object instanceof Phaser.Group){
+		for (var i = 0; i < object.length; i++)
+			setBodyAsFeet(object.children[i]);
+	}
+	else 
+		object.body.setSize(object.width/2,feetHeight,object.width/4,object.height-feetHeight);
 }
