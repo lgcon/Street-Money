@@ -66,7 +66,7 @@ var play = {
 			this.entitiesToSort = this.add.group();
 			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.boots,this.coins]);
 			//No need to change the 'z' index of the children of the world, they are already ordered	
-			
+
 			//RESIZE BODIES
 			setBodyAsFeet(this.entitiesToSort);
 			var sprite;
