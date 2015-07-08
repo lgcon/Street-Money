@@ -1,5 +1,8 @@
 {	
-	"total_levels": "1",
+	"total_levels": 2,
 	"lang": "en",
-	"font": "Fredoka+One::latin"
+	"font": {
+			"family":"Fredoka+One::latin",
+			"name":"Fredoka One"
+	}
 }

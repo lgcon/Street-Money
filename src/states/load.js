@@ -6,9 +6,16 @@ var load = {
 				this.preloadBar = this.add.image(100,100,'preloadbar');
 				this.load.setPreloadSprite(this.preloadBar);
 				//Load assets
-				
+			
+				//Menu
+				this.load.image('menu_title','assets/images/menu_title.png');	
+				this.load.image('play_button','assets/images/button.png');
+				this.load.image('arrow_left','assets/images/arrow_left.png');
+				this.load.image('arrow_right','assets/images/arrow_right.png');
+				this.load.image('lock','assets/images/lock.png');
+				this.load.spritesheet('speaker','assets/images/speaker.png',64,64,2);
 				//Language TODO choose the language?
-				this.load.text('language','assets/languages/english.json');
+				this.load.text('language','assets/languages/'+game.conf.lang+'.json');
 				//Player
 				this.load.spritesheet('player','assets/images/player.png',32,48);
 				//Background
@@ -24,13 +31,12 @@ var load = {
 				//Treasure
 				this.load.spritesheet('treasure','assets/images/treasure.png',32,48);
 				//Load the levels
-				for(var i = 1; i < totalLevels+1;i++){
+				for(var i = 1; i < game.conf.total_levels+1;i++){
 					this.load.text('level'+i,'assets/levels/level'+i+'.json');
 				}
 			},
 		create: function(){
 				this.game.state.start('Menu');
 			}
-
 };
 						

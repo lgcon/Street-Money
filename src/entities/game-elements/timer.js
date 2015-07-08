@@ -12,7 +12,7 @@ function updateTime(){
 		this.left--;
 		//TODO gameover if timeLeft == 0
 		//Update text timer
-		play.timerText.setText(languageGame.text_timer+this.left);
+		play.timerText.setText(game.lang.text_timer+this.left);
 		//TIMER BASED EVENTS
 		//Speed bonuses
 		play.boots.generate();

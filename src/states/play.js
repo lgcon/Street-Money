@@ -1,10 +1,13 @@
 //Create some variablesto identify sprites and groups
 var cursors;
 //Play state
-var play = {
+var play = {	init: function(){
+			//Define world bounds
+			this.world.setBounds(0,0,2937,532);
+		},
 		preload: function(){
 			//Parse the level
-			this.level = JSON.parse(this.game.cache.getText('level'+currentLevel));
+			this.level = JSON.parse(this.game.cache.getText('level'+game.current_lev));
 			//STREET BOUDARIES (this array must contain all the sprites that risk to go out of the street and need to stay inside)
 			this.keepInTheStreet = [];
 		},
@@ -39,14 +42,14 @@ var play = {
 				 
 			//SCORE
 			this.score = 0;
-			this.scoreText = this.add.text(10,10,languageGame.text_score+this.score,{font: "40px Impact",fill: "#FBEFEF"});
+			this.scoreText = this.add.text(10,10,game.lang.text_score+this.score,{font: "40px Impact",fill: "#FBEFEF"});
 			this.scoreText.fixedToCamera = true;
 
 			//TIMER
 			this.timer = this.createTimer();
 			this.timer.start();
 			//Display
-			this.timerText = this.add.text(10,60,languageGame.text_timer+this.timer.left,{font: "40px Impact",fill: "#FBEFEF"});
+			this.timerText = this.add.text(10,60,game.lang.text_timer+this.timer.left,{font: "40px Impact",fill: "#FBEFEF"});
 			this.timerText.fixedToCamera = true;
 
 			//CAMERA

@@ -18,7 +18,7 @@ play.createCoins = function () {
 function collectCoin(player, coin){
 			coin.destroy();
 			play.score++;
-			play.scoreText.setText(languageGame.text_score+play.score);//TODO istead use a function to update the score
+			play.scoreText.setText(game.lang.text_score+play.score);//TODO istead use a function to update the score
 			//Add next coin
 			if (play.currentCoin < play.level.coins.length){
 				var newCoin = play.coins.create(play.level.coins[play.currentCoin].x,play.level.coins[play.currentCoin].y,'coin');
