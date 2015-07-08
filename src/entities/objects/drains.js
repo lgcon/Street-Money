@@ -31,7 +31,8 @@ function teleport(player, drain){
 * @param: the player to move, the drain from which the player is coming from
 */
 function moveToNextDrain(player,drain){
-			player.position.setTo(play.level.bonuses.drains[drain.go].x,play.level.bonuses.drains[drain.go].y);
+			var nextDrain = play.drains.children[drain.go];
+			player.position.setTo(nextDrain.body.center.x,nextDrain.body.center.y);
 			//Free the camera from following the player
 			play.camera.unfollow();
 			//Set a tween to move smoothly the camera to the player
