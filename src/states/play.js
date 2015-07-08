@@ -1,13 +1,12 @@
 //Create some variablesto identify sprites and groups
 var cursors;
 //Play state
-var play = {	init: function(){
-			//Define world bounds
-			this.world.setBounds(0,0,2937,750);
-		},
+var play = {	
 		preload: function(){
 			//Parse the level
 			this.level = JSON.parse(this.game.cache.getText('level'+game.current_lev));
+			//Define world bounds
+			this.world.setBounds(0,0,this.level.width,750);
 			//STREET BOUDARIES (this array must contain all the sprites that risk to go out of the street and need to stay inside)
 			//!!ATTENTION!! in order to deal with different height of sprites the anchor has to be set on the bottom
 			this.keepInTheStreet = [];
