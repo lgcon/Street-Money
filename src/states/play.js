@@ -13,11 +13,9 @@ var play = {
 		},
 		create: function(){
 			//Background
-			this.add.image(0,0,'city');
-
-
-
-
+			this.city = this.add.tileSprite(0,0,this.world.width,this.world.height,'city');
+		
+			
 			//GAME ENTITIES
 			this.player = this.createPlayer();				
 			this.coins = this.createCoins();	
