@@ -3,7 +3,7 @@ var cursors;
 //Play state
 var play = {	init: function(){
 			//Define world bounds
-			this.world.setBounds(0,0,2937,532);
+			this.world.setBounds(0,0,2937,750);
 		},
 		preload: function(){
 			//Parse the level
@@ -87,7 +87,7 @@ var play = {	init: function(){
 		update: function(){
 			this.player.move();
 			//Check for street's up bound
-			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 410) sprite.y = 410;},this);
+			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 505) sprite.y = 505;},this);
 			//Move the treasures
 			for (i = 0; i < this.treasures.children.length;i++)
 				this.path.updateDirection(this.treasures.children[i]);
