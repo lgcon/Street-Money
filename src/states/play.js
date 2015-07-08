@@ -9,6 +9,7 @@ var play = {	init: function(){
 			//Parse the level
 			this.level = JSON.parse(this.game.cache.getText('level'+game.current_lev));
 			//STREET BOUDARIES (this array must contain all the sprites that risk to go out of the street and need to stay inside)
+			//!!ATTENTION!! in order to deal with different height of sprites the anchor has to be set on the bottom
 			this.keepInTheStreet = [];
 		},
 		create: function(){
@@ -75,7 +76,7 @@ var play = {	init: function(){
 			var sprite;
 			for (i = 0; i < this.drains.length; i++){
 				sprite = this.drains.children[i];
-				sprite.body.setSize(5,5,sprite.width/2-2.5,sprite.height/2-2.5);
+				sprite.body.setSize(10,10,sprite.width/2-5,sprite.height/2-5);
 			}
 			for (i = 0; i < this.oilSpots.length; i++){
 				sprite = this.oilSpots.children[i];
@@ -86,7 +87,7 @@ var play = {	init: function(){
 		update: function(){
 			this.player.move();
 			//Check for street's up bound
-			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 400) sprite.y = 400;},this);
+			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 410) sprite.y = 410;},this);
 			//Move the treasures
 			for (i = 0; i < this.treasures.children.length;i++)
 				this.path.updateDirection(this.treasures.children[i]);

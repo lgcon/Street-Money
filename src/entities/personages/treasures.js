@@ -46,7 +46,8 @@ function breackTreasure(treasure){
 				var coin = play.coins.create(treasure.x,treasure.y,'coin',0)
 				coin.body.velocity.setTo(velocityCoins.x,velocityCoins.y);
 				coin.body.collideWorldBounds = true;
-				coin.body.setSize(coin.width/2,feetHeight,coin.width/4,coin.height-feetHeight);
+				coin.anchor.setTo(0.5,1);
+				coin.body.setSize(coin.width/2,feetHeight);
 				play.keepInTheStreet.push(coin);
 				play.add.tween(coin.body.velocity).to({x:0,y:0},1000,Phaser.Easing.Linear.None,true);
 				coin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
