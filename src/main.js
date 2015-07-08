@@ -1,5 +1,5 @@
 //Create a Phaser.Game object
-var game = new Phaser.Game(937,532,Phaser.AUTO,'game');
+var game = new Phaser.Game(1200,750,Phaser.AUTO,'game');
 //Let's add the all the states we created before
 game.state.add('Boot',boot);
 game.state.add('Load',load);

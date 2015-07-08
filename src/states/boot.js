@@ -3,7 +3,7 @@ var boot = {
 	init: function(){
 			//First of all, resize the game and make it responsive
 			this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
-			this.scale.setMinMax(200,100,1000,532);	
+			this.scale.setMinMax(200,100,1200,750);	
 			this.scale.pageAlignHorizontally = true;
 			this.scale.setResizeCallback(function (){ 
 						var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height);

@@ -17,19 +17,19 @@ var load = {
 				//Language TODO choose the language?
 				this.load.text('language','assets/languages/'+game.conf.lang+'.json');
 				//Player
-				this.load.spritesheet('player','assets/images/player.png',32,48);
+				this.load.spritesheet('player','assets/images/player.png',64,96);
 				//Background
 				this.load.image('city','assets/images/city.png');
 				//Money
-				this.load.spritesheet('coin','assets/images/coin_gold.png',32,32);
+				this.load.spritesheet('coin','assets/images/coin_gold.png',64,64);
 				//Bonuses
 				this.load.image('boots','assets/images/boots.png');
 				this.load.image('oil','assets/images/oil_spot.png');
 				this.load.image('drain','assets/images/drain.png');
 				//Robber
-				this.load.spritesheet('robber','assets/images/robber.png',32,48);
+				this.load.spritesheet('robber','assets/images/robber.png',64,96);
 				//Treasure
-				this.load.spritesheet('treasure','assets/images/treasure.png',32,48);
+				this.load.spritesheet('treasure','assets/images/treasure.png',64,96);
 				//Load the levels
 				for(var i = 1; i < game.conf.total_levels+1;i++){
 					this.load.text('level'+i,'assets/levels/level'+i+'.json');

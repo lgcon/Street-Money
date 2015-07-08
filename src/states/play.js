@@ -26,7 +26,7 @@ var play = {	init: function(){
 			this.drains = this.createDrains();
 			this.oilSpots = this.createOilSpots();
 			this.boots = this.createBoots();
-
+			
 			//PATH-FOLLLOWERS PROPERTIES
 			var pathBasedPersonages = [this.robbers,this.treasures];
 			this.path.setProperties(pathBasedPersonages);

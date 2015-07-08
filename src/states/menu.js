@@ -8,12 +8,11 @@ var menu = {
 			var centerX = this.world.centerX;
 			var centerY = this.world.centerY;
 			//Title
-			this.add.image(centerX, 70, 'menu_title')
+			this.add.image(centerX, 100, 'menu_title')
 				.anchor.setTo(0.5,0.5);
 			//Level selector
 			//Level
-		//	this.displayLevel = game.current_lev;
-			this.textLevel = this.add.text(centerX,centerY,game.current_lev,{font:game.textFont, fill:"#FBEFEF",fontSize:100 });
+			this.textLevel = this.add.text(centerX,centerY+20,game.current_lev,{font:game.textFont, fill:"#FBEFEF",fontSize:100 });
 			this.textLevel.anchor.setTo(0.5,0.5);
 			//Text
 			this.add.text(centerX,this.textLevel.y-80,game.lang.level_selector,{font:game.textFont, fill: "#FBEFEF",fontSize: 40})
@@ -34,7 +33,7 @@ var menu = {
 			this.arrowRight.inputEnabled = true;
 			this.arrowRight.events.onInputDown.add(function(){this.updateLevel(1);},this);
 			//Play button
-			this.playButton = this.add.image(centerX, centerY+100,'play_button');
+			this.playButton = this.add.image(centerX, centerY+150,'play_button');
 			this.playButton.anchor.setTo(0.5,0.5);
 			this.playButton.inputEnabled = true;
 			this.playButton.events.onInputDown.add(function(){if (!this.textLevel.locked)this.state.start('Play');},this);
@@ -53,7 +52,7 @@ var menu = {
 			game.current_lev = newLevel;
 			if (newLevel > game.lastPassed){
 				if (!this.textLevel.locked){
-			//		this.textLevel.fill = '#BDBDBD';
+					this.textLevel.fill = '#BDBDBD';
 					this.textLevel.alpha = 0.3;
 					this.lock.visible = true;
 					this.textLevel.locked = true;
