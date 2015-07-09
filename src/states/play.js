@@ -61,11 +61,14 @@ var play = {
 			
 			//CONTROLS	
 			//Create cursors TODO: Cursor created in another state and a system for mobile devices
-			cursors = this.input.keyboard.createCursorKeys();
-			this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-			this.spacebar.onDown.add(this.treasures.hit);
-			this.hitButton = this.createHitButton(100,100);
-			this.joystick = this.createJoystick(1000,180,90);
+			if (this.game.device.desktop) {
+				cursors = this.input.keyboard.createCursorKeys();
+				this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+				this.spacebar.onDown.add(this.treasures.hit);
+			} else {
+				this.hitButton = this.createHitButton(100,100);
+				this.joystick = this.createJoystick(1000,180,90);
+			}
 
 
 			//MAKE EVERYTHING ISOMETRIC
@@ -90,7 +93,6 @@ var play = {
 			
 		},
 		update: function(){
-			this.joystick.resetFrames();
 			this.player.move();
 			//Check for street's up bound
 			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 505) sprite.y = 505;},this);
