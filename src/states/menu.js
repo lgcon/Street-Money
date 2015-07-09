@@ -45,6 +45,7 @@ var menu = {
 			this.speaker.inputEnabled = true;
 			this.speaker.events.onInputDown.add(this.switchSound,this);
 			//Fullscreen
+			this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 			this.input.onDown.add(this.goFullscreen,this);
 		},
 	updateLevel: function (step){
