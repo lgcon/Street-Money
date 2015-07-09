@@ -44,6 +44,8 @@ var menu = {
 			this.speaker = this.add.image(game.width-100,game.height-100,'speaker',0);
 			this.speaker.inputEnabled = true;
 			this.speaker.events.onInputDown.add(this.switchSound,this);
+			//Fullscreen
+			this.input.onDown.add(this.goFullscreen,this);
 		},
 	updateLevel: function (step){
 			var newLevel = game.current_lev + step;
@@ -78,6 +80,9 @@ var menu = {
 				this.speaker.frame = 0;
 				game.soundOn = true;
 			}
-		}
+		},
+	goFullscreen: function(){
+			this.scale.startFullScreen();
+	}
 
 };
