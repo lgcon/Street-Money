@@ -33,19 +33,23 @@ play.createPlayer = function () {
 */
  function movePlayer() {
 			//Move the player
-			if (cursors.down.isDown){
+			if (cursors.down.isDown || play.joystick.down.isDown){
+				play.joystick.down.frame = 1;
 				this.body.velocity.setTo(0,this.speed);
 				this.animation = 'down'
 			}
-			else if (cursors.left.isDown){
+			else if (cursors.left.isDown || play.joystick.left.isDown){
+				play.joystick.left.frame = 1;
 				this.body.velocity.setTo(-this.speed,0);
 				this.animation = 'left'
 			}
-			else if (cursors.right.isDown){
+			else if (cursors.right.isDown || play.joystick.right.isDown){
+				play.joystick.right.frame = 1;
 				this.body.velocity.setTo(this.speed,0);
 				this.animation = 'right'
 			}
-			else if (cursors.up.isDown ){
+			else if (cursors.up.isDown || play.joystick.up.isDown){
+				play.joystick.up.frame = 1;
 				this.body.velocity.setTo(0,-this.speed);
 				this.animation = 'up'
 				

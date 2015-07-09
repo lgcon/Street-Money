@@ -18,8 +18,11 @@ var load = {
 				this.load.text('language','assets/languages/'+game.conf.lang+'.json');
 				//Player
 				this.load.spritesheet('player','assets/images/player.png',64,96);
-				//Background
+				//Backgroundj
 				this.load.image('city','assets/images/city.png');
+				//Joystick
+				this.load.spritesheet('joystick','assets/images/joystick.png',130,105);
+
 				//Money
 				this.load.spritesheet('coin','assets/images/coin_gold.png',64,64);
 				//Bonuses

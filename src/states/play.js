@@ -14,8 +14,8 @@ var play = {
 		create: function(){
 			//Background
 			this.city = this.add.tileSprite(0,0,this.world.width,this.world.height,'city');
-		
-			
+			//Button	
+			this.joystick = this.createJoystick(1000,180,90);
 			//GAME ENTITIES
 			this.player = this.createPlayer();				
 			this.coins = this.createCoins();	
@@ -82,6 +82,7 @@ var play = {
 			
 		},
 		update: function(){
+			this.joystick.resetFrames();
 			this.player.move();
 			//Check for street's up bound
 			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 505) sprite.y = 505;},this);
