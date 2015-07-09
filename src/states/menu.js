@@ -15,7 +15,7 @@ var menu = {
 			this.textLevel = this.add.text(centerX,centerY+20,game.current_lev,{font:game.textFont, fill:"#FBEFEF",fontSize:100 });
 			this.textLevel.anchor.setTo(0.5,0.5);
 			//Text
-			this.add.text(centerX,this.textLevel.y-80,game.lang.level_selector,{font:game.textFont, fill: "#FBEFEF",fontSize: 40})
+			this.add.text(centerX,this.textLevel.y-120,game.lang.level_selector,{font:game.textFont, fill: "#FBEFEF",fontSize: 60})
 				.anchor.setTo(0.5,0.5);
 			//Lock
 			this.lock = this.add.image(this.textLevel.x,this.textLevel.y,'lock');
@@ -33,12 +33,12 @@ var menu = {
 			this.arrowRight.inputEnabled = true;
 			this.arrowRight.events.onInputDown.add(function(){this.updateLevel(1);},this);
 			//Play button
-			this.playButton = this.add.image(centerX, centerY+150,'play_button');
+			this.playButton = this.add.image(centerX, centerY+180,'play_button');
 			this.playButton.anchor.setTo(0.5,0.5);
 			this.playButton.inputEnabled = true;
 			this.playButton.events.onInputDown.add(function(){if (!this.textLevel.locked)this.state.start('Play');},this);
 			this.add.text(this.playButton.x,this.playButton.y,game.lang.play_button,
-					{font:game.textFont, fill:"#FBEFEF",fontSize: 34})
+					{font:game.textFont, fill:"#FBEFEF",fontSize: 40})
 				.anchor.setTo(0.5,0.5);
 			//Sound
 			this.speaker = this.add.image(game.width-100,game.height-100,'speaker',0);
@@ -60,7 +60,6 @@ var menu = {
 			
 			}
 			else {
-				console.log(game.current_lev);	
 				if (this.textLevel.locked){
 					this.textLevel.fill = '#FBEFEF';
 					this.textLevel.alpha = 1;
