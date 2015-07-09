@@ -40,22 +40,24 @@ var play = {
 
 			//GAME TEXT 
 			var centerX = this.game.width/2;
+			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 80};
 			//SCORE
 			this.score = 0;
-			this.scoreText = this.add.text(centerX,150,game.lang.text_score+this.score,{font: game.textFont,fill: "#FBEFEF",
-													fontSize: 80});
+			var scorePosition = this.game.conf.positions. text_score;
+			this.scoreText = this.add.text(scorePosition.x,scorePosition.y,this.game.lang.text_score,style);
+			this.scoreText.count = this.add.text(this.scoreText.right+20,this.scoreText.y,0+'',style);
 			this.scoreText.fixedToCamera = true;
-			this.scoreText.anchor.setTo(0.5);
+			this.scoreText.count.fixedToCamera = true;
 
 			//TIMER
 			this.timer = this.createTimer();
 			this.timer.start();
 			//Display
-			this.timerText = this.add.text(centerX,60,game.lang.text_timer+this.timer.left,{font: game.textFont,fill: "#FBEFEF",
-														fontSize: 80});
-			this.timerText.fixedToCamera = true;
-			this.timerText.anchor.setTo(0.5);
-
+			var textPosition = this.game.conf.positions.text_timeleft;
+			this.timer.text = this.add.text(textPosition.x,textPosition.y,this.game.lang.text_timer,style);
+			this.timer.text.count = this.add.text(this.timer.text.right+20,this.timer.text.y,this.timer.left,style);
+			this.timer.text.fixedToCamera = true;
+			this.timer.text.count.fixedToCamera = true;
 			//CAMERA
 			this.camera.follow(this.player);
 			
