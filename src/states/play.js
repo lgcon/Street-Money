@@ -68,8 +68,11 @@ var play = {
 				this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				this.spacebar.onDown.add(this.treasures.hit);
 			} else {
-				this.hitButton = this.createHitButton(100,100);
-				this.joystick = this.createJoystick(1000,180,90);
+				this.hitButton = this.createHitButton(this.game.conf.positions.hitButton.x,
+								      this.game.conf.positions.hitButton.y);
+				this.joystick = this.createJoystick(this.game.conf.positions.joystick.x,
+								    this.game.conf.positions.joystick.y,
+								    this.game.conf.positions.joystick.radius);
 			}
 
 
