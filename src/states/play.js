@@ -14,8 +14,6 @@ var play = {
 		create: function(){
 			//Background
 			this.city = this.add.tileSprite(0,0,this.world.width,this.world.height,'city');
-			//Button	
-			this.joystick = this.createJoystick(1000,180,90);
 			//GAME ENTITIES
 			this.player = this.createPlayer();				
 			this.coins = this.createCoins();	
@@ -66,6 +64,8 @@ var play = {
 			cursors = this.input.keyboard.createCursorKeys();
 			this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 			this.spacebar.onDown.add(this.treasures.hit);
+			this.hitButton = this.createHitButton(100,100);
+			this.joystick = this.createJoystick(1000,180,90);
 
 
 			//MAKE EVERYTHING ISOMETRIC

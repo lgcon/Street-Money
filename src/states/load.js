@@ -22,6 +22,7 @@ var load = {
 				this.load.image('city','assets/images/city.png');
 				//Joystick
 				this.load.spritesheet('joystick','assets/images/joystick.png',130,105);
+				this.load.image('hitButton','assets/images/hitButton.png');
 
 				//Money
 				this.load.spritesheet('coin','assets/images/coin_gold.png',64,64);

@@ -2,5 +2,6 @@
 	"level_selector": "Select a level:",
 	"play_button": "Play",
 	"text_score": "SCORE:",
-	"text_timer": "TIME LEFT:"
+	"text_timer": "TIME LEFT:",
+	"hit_button": "HIT"
 }
