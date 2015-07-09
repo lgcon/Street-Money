@@ -37,18 +37,26 @@ var play = {
 				sithJestersSprites[i].callAll('animations.add','animations','right',[8,9,10,11],10,true);
 				sithJestersSprites[i].callAll('animations.add','animations','up',[12,13,14,15],10,true);	
 			}
-				 
+		
+
+
+			//GAME TEXT 
+			var centerX = this.game.width/2;
 			//SCORE
 			this.score = 0;
-			this.scoreText = this.add.text(10,10,game.lang.text_score+this.score,{font: "40px Impact",fill: "#FBEFEF"});
+			this.scoreText = this.add.text(centerX,150,game.lang.text_score+this.score,{font: game.textFont,fill: "#FBEFEF",
+													fontSize: 80});
 			this.scoreText.fixedToCamera = true;
+			this.scoreText.anchor.setTo(0.5);
 
 			//TIMER
 			this.timer = this.createTimer();
 			this.timer.start();
 			//Display
-			this.timerText = this.add.text(10,60,game.lang.text_timer+this.timer.left,{font: "40px Impact",fill: "#FBEFEF"});
+			this.timerText = this.add.text(centerX,60,game.lang.text_timer+this.timer.left,{font: game.textFont,fill: "#FBEFEF",
+														fontSize: 80});
 			this.timerText.fixedToCamera = true;
+			this.timerText.anchor.setTo(0.5);
 
 			//CAMERA
 			this.camera.follow(this.player);
