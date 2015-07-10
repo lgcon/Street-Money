@@ -44,6 +44,9 @@ var menu = {
 			this.speaker = this.add.image(game.width-100,game.height-100,'speaker',0);
 			this.speaker.inputEnabled = true;
 			this.speaker.events.onInputDown.add(this.switchSound,this);
+			this.game.music = this.add.audio('music',1,true);
+			this.game.music.play();
+
 			//Fullscreen
 			this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 			this.input.onDown.add(this.goFullscreen,this);
@@ -75,11 +78,13 @@ var menu = {
 	switchSound: function() {
 			if (this.speaker.frame == 0){
 				this.speaker.frame = 1;
-				game.soundOn = false;
+				this.game.soundOn = false;
+				this.game.music.stop();				
 			}
 			else {
 				this.speaker.frame = 0;
-				game.soundOn = true;
+				this.game.soundOn = true;
+				this.game.music.play();
 			}
 		},
 	goFullscreen: function(){

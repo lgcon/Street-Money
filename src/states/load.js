@@ -34,9 +34,11 @@ var load = {
 				this.load.spritesheet('robber','assets/images/robber.png',64,96);
 				//Treasure
 				this.load.spritesheet('treasure','assets/images/treasure.png',64,96);
-				//Load the levels
+				//Load the levels TODO load singularly at every call
 				for(var i = 1; i < game.conf.total_levels+1;i++){
 					this.load.text('level'+i,'assets/levels/level'+i+'.json');
+				//Sounds
+				this.load.audio('music','assets/sounds/music.ogg',true);
 				}
 			},
 		create: function(){
