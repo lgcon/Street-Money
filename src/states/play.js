@@ -74,8 +74,8 @@ var play = {
 								    this.game.conf.positions.joystick.y,
 								    this.game.conf.positions.joystick.radius);
 			}
-
-
+			//Buttons
+			this.add.existing(this.game.speaker);
 			//MAKE EVERYTHING ISOMETRIC
 			this.groundObjects = this.add.group();
 			this.groundObjects.addMultiple([this.oilSpots,this.drains]);

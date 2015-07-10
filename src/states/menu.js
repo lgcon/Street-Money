@@ -41,9 +41,10 @@ var menu = {
 					{font:game.textFont, fill:"#FBEFEF",fontSize: 40})
 				.anchor.setTo(0.5,0.5);
 			//Sound
-			this.speaker = this.add.image(game.width-100,game.height-100,'speaker',0);
-			this.speaker.inputEnabled = true;
-			this.speaker.events.onInputDown.add(this.switchSound,this);
+			this.game.speaker = this.add.image(this.game.conf.positions.speaker.x,this.game.conf.positions.speaker.y,'speaker',0);
+			this.game.speaker.fixedToCamera = true;
+			this.game.speaker.inputEnabled = true;
+			this.game.speaker.events.onInputDown.add(this.switchSound,this);
 			this.game.music = this.add.audio('music',1,true);
 			this.game.music.play();
 
@@ -51,6 +52,10 @@ var menu = {
 			this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 			this.input.onDown.add(this.goFullscreen,this);
 		},
+	shutdown: function (){
+				//Keep the sprites we need for the next state
+				this.world.remove(this.game.speaker);
+	},
 	updateLevel: function (step){
 			var newLevel = game.current_lev + step;
 			if (newLevel < 1 || newLevel > game.conf.total_levels)
@@ -76,13 +81,13 @@ var menu = {
 			this.textLevel.setText(game.current_lev);
 		},
 	switchSound: function() {
-			if (this.speaker.frame == 0){
-				this.speaker.frame = 1;
+			if (this.game.speaker.frame == 0){
+				this.game.speaker.frame = 1;
 				this.game.soundOn = false;
 				this.game.music.stop();				
 			}
 			else {
-				this.speaker.frame = 0;
+				this.game.speaker.frame = 0;
 				this.game.soundOn = true;
 				this.game.music.play();
 			}
