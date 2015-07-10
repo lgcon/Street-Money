@@ -8,5 +8,6 @@ play.createHitButton = function(x,y){
 		button.text.fixedToCamera = true;
 		button.onInputDown.add(function() { button.text.fill = "#FFFF00";});
 		button.onInputUp.add(function() { button.text.fill = "#FBEFEF";});
+		button.alpha = 0.7;
 		return button;
 	}

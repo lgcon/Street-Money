@@ -6,9 +6,9 @@
 			"name":"Fredoka One"
 	},
 	"positions": {
-			"text_timeleft": {"x": 325, "y": 20},
-			"text_score": {"x": 395, "y": 100},
-			"joystick": {"x": 980, "y": 220, "radius": 100},
-			"hitButton": {"x": 130, "y": 130}
+			"text_timeleft": {"x": 330, "y": 20},
+			"text_score": {"x": 420, "y": 100},
+			"joystick": {"x": 210, "y": 220, "radius": 100},
+			"hitButton": {"x": 1050, "y": 150}
 	}
 }

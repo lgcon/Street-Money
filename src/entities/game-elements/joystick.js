@@ -14,6 +14,7 @@ play.createJoystick = function (x,y,r) {
 			button.onInputOver.add(isPointerDown,button,button);
 			button.onInputUp.add(function(){this.isDown = false;},button);
 			button.onInputOut.add(function(){this.isDown = false;},button);
+			button.alpha = 0.7;
 			joystick[direction[i]] = button;
 		}
 		joystick.resetFrames = resetFrames;

@@ -21,7 +21,7 @@ var load = {
 				//Backgroundj
 				this.load.image('city','assets/images/city.png');
 				//Joystick
-				this.load.spritesheet('joystick','assets/images/joystick.png',185,148);
+				this.load.spritesheet('joystick','assets/images/joystick.png',180,144);
 				this.load.image('hitButton','assets/images/hitButton.png');
 
 				//Money
