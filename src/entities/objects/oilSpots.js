@@ -17,13 +17,10 @@ function slip(player,spot){
 		if (play.game.soundOn)
 			play.sound.play('oil_sound');
 		//Note, tween on the speed are possible because they are updated after the update function
-		if (player.body.facing == Phaser.UP)
-			play.add.tween(player.body.velocity).from({y: -player.speed},500,"Linear",true);
-		if (player.body.facing == Phaser.DOWN)
-			play.add.tween(player.body.velocity).from({y: player.speed},500,"Linear",true);
-		if (player.body.facing == Phaser.RIGHT)
+		console.log(player.body.velocity.x);
+		if (player.body.facing == Phaser.UP || player.body.facing == Phaser.DOWN)
+			play.add.tween(player.body.velocity).to({y: 0},1500,"Linear",true);
+		else
 			play.add.tween(player.body.velocity).to({x: 0},1500,"Linear",true);	
-		if (player.body.facing == Phaser.LEFT)
-			play.add.tween(player.body.velocity).from({x: -player.speed},500,"Linear",true);
 	}
 }	
