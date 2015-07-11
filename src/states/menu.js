@@ -38,7 +38,7 @@ var menu = {
 			this.playButton.inputEnabled = true;
 			this.playButton.events.onInputDown.add(function(){
 									if (!this.textLevel.locked){
-									this.state.start('Play');
+										this.state.start('Play-intro');
 									if (this.game.soundOn)
 										this.sound.play('click_sound');
 								}},this);
