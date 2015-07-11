@@ -50,9 +50,10 @@ var load = {
 				this.load.audio('break_sound','assets/sounds/break.ogg');
 				this.load.audio('drain_sound','assets/sounds/drain.ogg');
 				this.load.audio('oil_sound','assets/sounds/oil.ogg');
-			},
-		create: function(){
-				this.game.state.start('Menu');
+				//Switch state
+				this.load.onLoadComplete.add(function(){
+					this.game.state.start('Menu');
+					});
 			}
 };
 						
