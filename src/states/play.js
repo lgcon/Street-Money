@@ -104,10 +104,11 @@ var play = {
 			//Move the treasures
 			for (i = 0; i < this.treasures.children.length;i++)
 				this.path.updateDirection(this.treasures.children[i]);
-			//Chek for overlap with coin
+			//COLLISIONS/OVERLAPS
 			this.physics.arcade.overlap(this.player,this.coins,this.coins.collect);
 			this.physics.arcade.overlap(this.player,this.boots,this.boots.getBonus);
-			this.physics.arcade.overlap(this.player,this.oilSpots,this.oilSpots.slip);
+			if (!this.physics.arcade.overlap(this.player,this.oilSpots,this.oilSpots.slip))
+				this.player.allowSlip = true;//In order to avoid multiple splip events
 			//Check for ovelap with drains
 		 	if (!this.physics.arcade.overlap(this.player,this.drains,this.drains.teleport))
 				this.player.allowTeleport = true; //If the player is out of any drain, allow teleporting for eventual contacts

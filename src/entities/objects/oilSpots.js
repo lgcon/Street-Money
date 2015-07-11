@@ -12,15 +12,18 @@ play.createOilSpots = function () {
 * @param: the player, a reference to the spot ovelapped with the player
 */
 function slip(player,spot){
-	//Note, tween on the speed are possible because they are updated after the update function
-	if (player.body.facing == Phaser.UP)
-		play.add.tween(player.body.velocity).from({y: -player.speed},500,"Linear",true);
-	if (player.body.facing == Phaser.DOWN)
-		play.add.tween(player.body.velocity).from({y: player.speed},500,"Linear",true);
-	if (player.body.facing == Phaser.RIGHT){
-		player.body.velocity.setTo(0,0);//TODO check better play possibility
-		play.add.tween(player.body.velocity).from({x: player.speed},500,"Linear",true);
+	if (player.allowSlip){
+		player.allowSlip = false;
+		//if (play.game.soundOn)
+			//play.sound.play('oil_sound');
+		//Note, tween on the speed are possible because they are updated after the update function
+		if (player.body.facing == Phaser.UP)
+			play.add.tween(player.body.velocity).from({y: -player.speed},500,"Linear",true);
+		if (player.body.facing == Phaser.DOWN)
+			play.add.tween(player.body.velocity).from({y: player.speed},500,"Linear",true);
+		if (player.body.facing == Phaser.RIGHT)
+			play.add.tween(player.body.velocity).to({x: 0},1500,"Linear",true);	
+		if (player.body.facing == Phaser.LEFT)
+			play.add.tween(player.body.velocity).from({x: -player.speed},500,"Linear",true);
 	}
-	if (player.body.facing == Phaser.LEFT)
-		play.add.tween(player.body.velocity).from({x: -player.speed},500,"Linear",true);
 }	
