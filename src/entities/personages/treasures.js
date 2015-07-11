@@ -23,6 +23,8 @@ function hitTreasure(){
 			//If the treasure is distant less than 50px from the player
 			if (play.physics.arcade.distanceBetween(play.player,treasure) < 50){
 				treasure.data.life--;
+				if (play.game.soundOn)
+					play.sound.play('hit_sound',0.3);
 				if (treasure.data.life > 0){
 					//Display the remaining life
 					var lifeInfo = play.add.text(treasure.x,treasure.y-100,
@@ -40,6 +42,8 @@ function hitTreasure(){
 
 //Launch all the coins and destroy the treasure	
 function breackTreasure(treasure){
+			if (play.game.soundOn)
+				play.sound.play('break_sound',0.8);
 			var velocityCoins = new Phaser.Point(500,0);
 			var angleCoins = 2*Math.PI/treasure.data.coins;
 			for (var i = 0; i < treasure.data.coins; i++){

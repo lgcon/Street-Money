@@ -24,6 +24,8 @@ function teleport(player, drain){
 			else {
 				player.isTeleporting = true;
 				play.timer.add(500,this.go,this,player,drain);
+				if (play.game.soundOn)
+					play.sound.play('drain_sound');
 			}
 		}
 	}

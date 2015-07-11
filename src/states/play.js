@@ -122,12 +122,12 @@ var play = {
 		render: function(){
 			this.time.advancedTiming = true;
 			this.game.debug.text('fps: '+this.time.fps,200,32);
-			this.game.debug.body(this.player);
-			this.robbers.forEach(this.game.debug.body,this.game.debug);
-			this.treasures.forEach(this.game.debug.body,this.game.debug);
-			this.boots.forEach(this.game.debug.body,this.game.debug);
-			this.coins.forEach(this.game.debug.body,this.game.debug);
-			this.drains.forEach(this.game.debug.body,this.game.debug);
-			this.oilSpots.forEach(this.game.debug.body,this.game.debug);
+//			this.game.debug.body(this.player);
+//			this.robbers.forEach(this.game.debug.body,this.game.debug);
+//			this.treasures.forEach(this.game.debug.body,this.game.debug);
+//			this.boots.forEach(this.game.debug.body,this.game.debug);
+//			this.coins.forEach(this.game.debug.body,this.game.debug);
+//			this.drains.forEach(this.game.debug.body,this.game.debug);
+//			this.oilSpots.forEach(this.game.debug.body,this.game.debug);
 		}
 };

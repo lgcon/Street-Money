@@ -18,6 +18,8 @@ play.createCoins = function () {
 function collectCoin(player, coin){
 			coin.destroy();
 			play.score++;
+			if (play.game.soundOn)
+				play.sound.play('coin_sound');
 			play.scoreText.count.setText(play.score);//TODO istead use a function to update the score
 			//Add next coin
 			if (play.currentCoin < play.level.coins.length){

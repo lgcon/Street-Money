@@ -17,6 +17,8 @@ var boot = {
 			this.load.image('preloadbar','assets/images/preloader-bar.png');
 			//Set physic system	
 			this.physics.startSystem(Phaser.Physics.ARCADE);
+			//Turn on sounds
+			this.game.soundOn = true;
 		},
 	create: function(){
 			//Parse game configuration file

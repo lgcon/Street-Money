@@ -37,9 +37,16 @@ var load = {
 				//Load the levels TODO load singularly at every call
 				for(var i = 1; i < game.conf.total_levels+1;i++){
 					this.load.text('level'+i,'assets/levels/level'+i+'.json');
-				//Sounds
-				this.load.audio('music','assets/sounds/music.ogg',true);
 				}
+				//Sounds
+				this.load.audio('click_sound','assets/sounds/click.wav');
+				this.load.audio('music','assets/sounds/music.ogg',true);
+				this.load.audio('coin_sound','assets/sounds/coin.ogg');
+				this.load.audio('thief_sound','assets/sounds/thief.ogg');
+				this.load.audio('hit_sound','assets/sounds/hit.ogg');
+				this.load.audio('break_sound','assets/sounds/break.ogg');
+				this.load.audio('drain_sound','assets/sounds/drain.ogg');
+				this.load.audio('oil_sound','assets/sounds/oil.ogg');
 			},
 		create: function(){
 				this.game.state.start('Menu');

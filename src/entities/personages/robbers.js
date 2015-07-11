@@ -21,6 +21,8 @@ function stealCoin(player,robber){
 		//Steal one coin max every 200ms and only if there are coins to steal
 		if (play.time.elapsedSince(player.lastTheft) > 200 && play.score > 0){
 			play.score--;
+			if (play.game.soundOn)
+				play.sound.play('thief_sound');
 			player.lastTheft = play.time.time;
 			play.scoreText.count.setText(play.score);//TODO istead use a function to update the score					
 			//Display a -1 when a coin is stolen
