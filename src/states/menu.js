@@ -3,8 +3,8 @@ var menu = {
 			game.lang = JSON.parse(this.game.cache.getText('language'));
 		},
 	create: function() {
-			this.add.image(0,0,'city')
-				.alpha = 0.5;
+			this.game.background = this.add.image(0,0,'city')
+			this.game.background.alpha = 0.5;
 			var centerX = this.world.centerX;
 			var centerY = this.world.centerY;
 			//Title
@@ -60,6 +60,7 @@ var menu = {
 	shutdown: function (){
 				//Keep the sprites we need for the next state
 				this.world.remove(this.game.speaker);
+				this.world.remove(this.game.background);
 	},
 	updateLevel: function (step){
 			var newLevel = game.current_lev + step;

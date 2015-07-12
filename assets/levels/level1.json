@@ -1,4 +1,8 @@
 {
+	"tuto": {
+			"image":"coin",
+			"frame": 4 
+	},
 	"width": 2200,	
 	"playerStarts": {"x":200,"y":560},
 	"time": 20,

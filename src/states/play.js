@@ -3,8 +3,6 @@ var cursors;
 //Play state
 var play = {	
 		preload: function(){
-			//Parse the level
-			this.level = JSON.parse(this.game.cache.getText('level'+game.current_lev));
 			//Define world bounds
 			this.world.setBounds(0,0,this.level.width,750);
 			//STREET BOUDARIES (this array must contain all the sprites that risk to go out of the street and need to stay inside)

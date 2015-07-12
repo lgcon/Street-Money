@@ -19,6 +19,12 @@ var load = {
 				this.load.spritesheet('speaker','assets/images/speaker.png',90,90);
 				//Language TODO choose the language?
 				this.load.text('language','assets/languages/'+game.conf.lang+'.json');
+
+
+
+				//Play intro
+				this.load.image('panel','assets/images/panel.png');
+				this.load.image('button_brown','assets/images/button_brown.png');
 				//Player
 				this.load.spritesheet('player','assets/images/player.png',64,96);
 				//Backgroundj
