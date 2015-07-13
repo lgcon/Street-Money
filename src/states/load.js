@@ -16,7 +16,7 @@ var load = {
 				this.load.image('arrow_left','assets/images/arrow_left.png');
 				this.load.image('arrow_right','assets/images/arrow_right.png');
 				this.load.image('lock','assets/images/lock.png');
-				this.load.spritesheet('speaker','assets/images/speaker.png',90,90);
+				this.load.spritesheet('speaker','assets/images/speaker.png',48,48);
 				//Language TODO choose the language?
 				this.load.text('language','assets/languages/'+game.conf.lang+'.json');
 

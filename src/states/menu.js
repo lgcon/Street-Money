@@ -47,6 +47,7 @@ var menu = {
 				.anchor.setTo(0.5,0.5);
 			//Sound
 			this.game.speaker = this.add.image(this.game.conf.positions.speaker.x,this.game.conf.positions.speaker.y,'speaker',0);
+			this.game.speaker.scale.setTo(1.5,1.5);
 			this.game.speaker.fixedToCamera = true;
 			this.game.speaker.inputEnabled = true;
 			this.game.speaker.events.onInputDown.add(this.switchSound,this);
@@ -92,11 +93,13 @@ var menu = {
 			this.sound.play('click_sound');
 			if (this.game.speaker.frame == 0){
 				this.game.speaker.frame = 1;
+				this.game.speaker.alpha = 0.7;
 				this.game.soundOn = false;
 				this.game.music.stop();				
 			}
 			else {
 				this.game.speaker.frame = 0;
+				this.game.speaker.alpha = 1;
 				this.game.soundOn = true;
 				this.game.music.play();
 			}
