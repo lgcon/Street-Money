@@ -71,6 +71,7 @@ var play = {
 				this.joystick = this.createJoystick(this.game.conf.positions.joystick.x,
 								    this.game.conf.positions.joystick.y,
 								    this.game.conf.positions.joystick.radius);
+				this.joystick.push(this.hitButton);
 			}
 			//Buttons
 			this.add.existing(this.game.speaker);
@@ -93,6 +94,12 @@ var play = {
 				sprite = this.oilSpots.children[i];
 				sprite.body.setSize(sprite.width/2,sprite.height/2,sprite.width/4,sprite.height/4);
 			}
+			
+			//PAUSE
+			//Generate a subWorld to stop in order to separate the game from the pause
+			this.elementsToPause = this.world.createSubGroup();
+			//Move the speaker out of the elements to pause
+			this.world.add(this.game.speaker);
 			
 		},
 		update: function(){
@@ -127,5 +134,12 @@ var play = {
 //			this.coins.forEach(this.game.debug.body,this.game.debug);
 //			this.drains.forEach(this.game.debug.body,this.game.debug);
 //			this.oilSpots.forEach(this.game.debug.body,this.game.debug);
+		},
+		startPause: function(){
+			this.game.setPause([this.elementsToPause],[this.timer],this.joystick,true);
+			this.elementsToPause.setAllChildren('tint',0x1C1C1B);
+		},
+		stopPause: function(){
+			this.game.unsetPause([this.elementsToPause],[this.timer],this.joystick,true);
 		}
 };
