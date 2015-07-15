@@ -33,18 +33,26 @@ var menu = {
 			this.arrowRight.inputEnabled = true;
 			this.arrowRight.events.onInputDown.add(function(){this.updateLevel(1);},this);
 			//Play button
-			this.playButton = this.add.image(centerX, centerY+180,'play_button');
+			this.playButton = this.add.button(centerX, centerY+180,'play_button');
 			this.playButton.anchor.setTo(0.5,0.5);
-			this.playButton.inputEnabled = true;
-			this.playButton.events.onInputDown.add(function(){
-									if (!this.textLevel.locked){
-										this.state.start('Play-intro');
-									if (this.game.soundOn)
+			this.playButton.text = this.add.text(this.playButton.x,this.playButton.y,game.lang.play_button,
+					{font:game.textFont, fill:"#FBEFEF",fontSize: 40});
+			this.playButton.text.anchor.setTo(0.5,0.5);
+			this.playButton.onInputDown.add(function(){
+								this.playButton.frame = 1;
+								this.playButton.text.y += 3;
+								if (this.game.soundOn)
+									if (!this.textLevel.locked) 
 										this.sound.play('click_sound');
-								}},this);
-			this.add.text(this.playButton.x,this.playButton.y,game.lang.play_button,
-					{font:game.textFont, fill:"#FBEFEF",fontSize: 40})
-				.anchor.setTo(0.5,0.5);
+									else
+										return; //TODO in here play the bad sound
+							},this)
+			this.playButton.onInputUp.add(function(){
+								this.playButton.frame = 0;
+								this.playButton.text.y -= 3;
+							        if (!this.textLevel.locked)
+									this.state.start('Play-intro');
+						      },this)
 			//Sound
 			this.game.speaker = this.add.image(this.game.conf.positions.speaker.x,this.game.conf.positions.speaker.y,'speaker',0);
 			this.game.speaker.scale.setTo(1.5,1.5);

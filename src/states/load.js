@@ -12,7 +12,7 @@ var load = {
 			
 				//Menu
 				this.load.image('menu_title','assets/images/menu_title.png');	
-				this.load.image('play_button','assets/images/button.png');
+				this.load.spritesheet('play_button','assets/images/button.png',195,75);
 				this.load.image('arrow_left','assets/images/arrow_left.png');
 				this.load.image('arrow_right','assets/images/arrow_right.png');
 				this.load.image('lock','assets/images/lock.png');
