@@ -12,11 +12,9 @@ var play_intro = {
 				this.board = this.add.group();
 				this.panel = this.add.image(this.world.centerX,this.world.centerY,'panel');
 				this.panel.anchor.setTo(0.5,0.5);
-				//this.panel.scale.setTo(1.2,1.2);
 				this.level_text = this.add.text(this.panel.x,this.panel.y-220,this.game.lang.level+' '+this.game.current_lev,
 							{font: this.game.textFont, fill: '#E0995E', fontSize: 80});
 				this.level_text.anchor.setTo(0.5);
-			//	this.board.button = this.add.button(this.panel.x,this.panel.y+250,'button_brown');
 				this.board.button = this.add.button(this.panel.x,this.panel.y+250,'play_button');
 				this.board.button.anchor.setTo(0.5);
 				this.board.addMultiple([this.panel,this.level_text,this.board.button]);
@@ -31,7 +29,7 @@ var play_intro = {
 				this.world.remove(this.game.speaker);
 			},
 			showTuto: function (){
-				this.hasTuto = true;
+				this.hasTuto = true; 
 				var tuto = this.game.lang.tutos[this.game.current_lev];
 				this.tutoTitle = this.add.text(this.level_text.x,this.level_text.y+40,tuto.title,
 							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
@@ -45,13 +43,13 @@ var play_intro = {
 				this.tutoElements.setAll('anchor.x',0.5);
 				this.board.add(this.tutoElements);
 				this.add.tween(this.board).from({y: -500},250,'Linear').start();
-				this.board.button.onInputUp.add(this.showInfos,this);
+				this.board.button.onInputDown.add(function(){this.board.button.goDown('click_sound');},this);
+				this.board.button.onInputUp.add(function(){this.board.button.goUp();this.showInfos();},this);
 			},
 			showInfos: function(){
+				//Clear the board if there was a tuto before
 				if (this.hasTuto){
 					this.tutoElements.destroy();
-					if (this.game.soundOn)
-						this.sound.play('click_sound');
 				}
 				this.infos = this.add.text(this.panel.x,this.panel.y-80,this.game.lang.text_goal+' '+play.level.goal+'\n'+
 									this.game.lang.text_time+' '+play.level.time+'s',this.style);
@@ -60,16 +58,11 @@ var play_intro = {
 				this.text_preLevel.anchor.setTo(0.5);
 				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.start_button,
 							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 40});
-				this.board.button.onInputUp.add(this.startLevel,this);
+				this.board.button.onInputUp.add(function(){this.state.start('Play');},this);
 				this.board.button.text.anchor.setTo(0.5,0.5);
 				this.board.addMultiple([this.infos,this.text_preLevel,this.board.button.text]);
 				//If this is the first time we see the board (there is no tuto) we set a tween
 				if (!this.hasTuto)
 					this.add.tween(this.board).from({y: -500},250,'Linear').start();
-			},
-			startLevel: function (){
-				if (this.game.soundOn)
-					this.sound.play('click_sound');
-				this.state.start('Play');
 			}
 }

@@ -21,7 +21,6 @@ var menu = {
 			this.lock = this.add.image(this.textLevel.x,this.textLevel.y,'lock');
 			this.lock.anchor.setTo(0.5,0.5);
 			this.lock.visible = false;
-			//this.lock.scale.setTo(0.9,0.9);
 			//Arrows
 			var distanceArrows = 100;
 			this.arrowLeft = this.add.image(centerX-distanceArrows,this.textLevel.y,'arrow_left');
