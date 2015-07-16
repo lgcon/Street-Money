@@ -12,11 +12,12 @@ var play_intro = {
 				this.board = this.add.group();
 				this.panel = this.add.image(this.world.centerX,this.world.centerY,'panel');
 				this.panel.anchor.setTo(0.5,0.5);
-				this.panel.scale.setTo(7,6);
+				//this.panel.scale.setTo(1.2,1.2);
 				this.level_text = this.add.text(this.panel.x,this.panel.y-220,this.game.lang.level+' '+this.game.current_lev,
-							{font: this.game.textFont, fill: 'orange', fontSize: 80});
+							{font: this.game.textFont, fill: '#E0995E', fontSize: 80});
 				this.level_text.anchor.setTo(0.5);
-				this.board.button = this.add.button(this.panel.x,this.panel.y+250,'button_brown');
+			//	this.board.button = this.add.button(this.panel.x,this.panel.y+250,'button_brown');
+				this.board.button = this.add.button(this.panel.x,this.panel.y+250,'play_button');
 				this.board.button.anchor.setTo(0.5);
 				this.board.addMultiple([this.panel,this.level_text,this.board.button]);
 				//If the level has a tutorial, show the tutorial, otherwise go to the info direclty
@@ -36,11 +37,11 @@ var play_intro = {
 							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
 				this.tutoImg = this.add.image(this.panel.x,this.tutoTitle.y+80,play.level.tuto.image,play.level.tuto.frame);
 				this.tutoTxt = this.add.text(this.panel.x,this.tutoImg.y+50,tuto.text,this.style);
-				this.textButton = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.tutos.button,
+				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.tutos.button,
 							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 40});
-				this.textButton.anchor.setTo(0.5,0.5);
+				this.board.button.text.anchor.setTo(0.5,0.5);
 				this.tutoElements = this.add.group();
-				this.tutoElements.addMultiple([this.tutoTitle,this.tutoImg,this.tutoTxt,this.textButton]);
+				this.tutoElements.addMultiple([this.tutoTitle,this.tutoImg,this.tutoTxt,this.board.button.text]);
 				this.tutoElements.setAll('anchor.x',0.5);
 				this.board.add(this.tutoElements);
 				this.add.tween(this.board).from({y: -500},250,'Linear').start();
@@ -57,11 +58,11 @@ var play_intro = {
 				this.infos.anchor.setTo(0.5);
 				this.text_preLevel = this.add.text(this.panel.x,this.panel.y+100,this.game.lang.text_preLevel,this.style);
 				this.text_preLevel.anchor.setTo(0.5);
-				this.textButton = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.start_button,
+				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.start_button,
 							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 40});
 				this.board.button.onInputUp.add(this.startLevel,this);
-				this.textButton.anchor.setTo(0.5,0.5);
-				this.board.addMultiple([this.infos,this.text_preLevel,this.textButton]);
+				this.board.button.text.anchor.setTo(0.5,0.5);
+				this.board.addMultiple([this.infos,this.text_preLevel,this.board.button.text]);
 				//If this is the first time we see the board (there is no tuto) we set a tween
 				if (!this.hasTuto)
 					this.add.tween(this.board).from({y: -500},250,'Linear').start();
