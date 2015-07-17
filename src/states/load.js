@@ -24,7 +24,7 @@ var load = {
 
 				//Play intro
 				this.load.image('panel','assets/images/panel.png');
-				this.load.image('button_brown','assets/images/button_brown.png');
+			 	this.load.image('level_label','assets/images/level_label.png');
 				//Player
 				this.load.spritesheet('player','assets/images/player.png',64,96);
 				//Backgroundj

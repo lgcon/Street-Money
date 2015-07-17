@@ -12,12 +12,15 @@ var play_intro = {
 				this.board = this.add.group();
 				this.panel = this.add.image(this.world.centerX,this.world.centerY,'panel');
 				this.panel.anchor.setTo(0.5,0.5);
-				this.level_text = this.add.text(this.panel.x,this.panel.y-220,this.game.lang.level+' '+this.game.current_lev,
-							{font: this.game.textFont, fill: '#E0995E', fontSize: 80});
+				this.level_label = this.add.image(this.panel.x,this.panel.y-305,'level_label');
+				this.level_label.anchor.setTo(0.5);
+				//this.level_label.tint = 	
+				this.level_text = this.add.text(this.panel.x,this.level_label.y,
+				      this.game.lang.level+' '+this.game.current_lev,{font: this.game.textFont, fill: '#E86A17', fontSize: 80});
 				this.level_text.anchor.setTo(0.5);
 				this.board.button = this.add.button(this.panel.x,this.panel.y+250,'play_button');
 				this.board.button.anchor.setTo(0.5);
-				this.board.addMultiple([this.panel,this.level_text,this.board.button]);
+				this.board.addMultiple([this.panel,this.level_label,this.level_text,this.board.button]);
 				//If the level has a tutorial, show the tutorial, otherwise go to the info direclty
 				if (play.level.tuto && this.game.lang.tutos[this.game.current_lev])
 					this.showTuto();
@@ -31,10 +34,10 @@ var play_intro = {
 			showTuto: function (){
 				this.hasTuto = true; 
 				var tuto = this.game.lang.tutos[this.game.current_lev];
-				this.tutoTitle = this.add.text(this.level_text.x,this.level_text.y+40,tuto.title,
+				this.tutoTitle = this.add.text(this.level_text.x,this.level_text.y+100,tuto.title,
 							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
 				this.tutoImg = this.add.image(this.panel.x,this.tutoTitle.y+80,play.level.tuto.image,play.level.tuto.frame);
-				this.tutoTxt = this.add.text(this.panel.x,this.tutoImg.y+50,tuto.text,this.style);
+				this.tutoTxt = this.add.text(this.panel.x,this.tutoImg.y+60,tuto.text,this.style);
 				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.tutos.button,
 							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 40});
 				this.board.button.text.anchor.setTo(0.5,0.5);
