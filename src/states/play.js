@@ -71,7 +71,8 @@ var play = {
 				this.joystick = this.createJoystick(this.game.conf.positions.joystick.x,
 								    this.game.conf.positions.joystick.y,
 								    this.game.conf.positions.joystick.radius);
-				this.joystick.push(this.hitButton);
+				this.buttonsToPause = [this.joystick.up,this.joystick.down,this.joystick.right,this.joystick.left,
+							this.hitButton];
 			}
 			//Buttons
 			this.add.existing(this.game.speaker);
@@ -136,10 +137,13 @@ var play = {
 //			this.oilSpots.forEach(this.game.debug.body,this.game.debug);
 		},
 		startPause: function(){
-			this.game.setPause([this.elementsToPause],[this.timer],this.joystick,true);
+			//TODO create panel
+			this.game.setPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
 			this.elementsToPause.setAllChildren('tint',0x1C1C1B);
 		},
 		stopPause: function(){
-			this.game.unsetPause([this.elementsToPause],[this.timer],this.joystick,true);
+			//TODO destroy panel
+			this.game.unsetPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
+			this.elementsToPause.setAllChildren('tint',0xFFFFFF);
 		}
 };
