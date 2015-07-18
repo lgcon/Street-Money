@@ -6,7 +6,7 @@ var load = {
 				this.preloadBar.scale.setTo(17,7);
 				this.load.setPreloadSprite(this.preloadBar);
 				var style = {font: game.textFont, fill: "#FBEFEF", fontSize: 100};
-				this.add.text(this.world.centerX,this.preloadBar.y-80,'Loading',style)
+				this.add.text(this.world.centerX,this.preloadBar.y-80,'Loading...',style)
 					.anchor.setTo(0.5,0.5);
 				//Load assets
 			
