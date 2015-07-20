@@ -104,7 +104,7 @@ var play = {
 			this.resumeButton = this.make.button(this.board.panel.x,this.board.panel.y+150,'play_button');
 			this.resumeButton.anchor.setTo(0.5);
 			this.resumeButton.onInputDown.add(function(){this.resumeButton.goDown('click_sound');},this);
-			this.resumeButton.onInputUp.add(function(){this.resumeButton.goUp();},this);//TODO show the resume
+			this.resumeButton.onInputUp.add(function(){this.resumeButton.goUp();this.stopPause();},this);//TODO show the resume
 			this.resumeButton.text = this.make.text(0,0,this.game.lang.resume_button,styleTextButtons);
 			this.resumeButton.text.anchor.setTo(0.5);
 			this.resumeButton.addChild(this.resumeButton.text);
@@ -185,8 +185,9 @@ var play = {
 			this.elementsToPause.setAllChildren('tint',0x1C1C1B);
 		},
 		stopPause: function(){
-			if (this.game.soundOn)
-				this.sound.play('click_sound');
+			this.world.remove(this.board);
+			for (var i = 0; i < this.pauseMenu.length; i++)
+				this.world.remove(this.pauseMenu[i]);
 			//TODO destroy panel
 			this.game.unsetPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
 			this.elementsToPause.setAllChildren('tint',0xFFFFFF);
