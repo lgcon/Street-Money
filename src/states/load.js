@@ -17,6 +17,7 @@ var load = {
 				this.load.image('arrow_right','assets/images/arrow_right.png');
 				this.load.image('lock','assets/images/lock.png');
 				this.load.spritesheet('speaker','assets/images/speaker.png',48,48);
+				this.load.image('pause_button','assets/images/pause_button.png');
 				//Language TODO choose the language?
 				this.load.text('language','assets/languages/'+game.conf.lang+'.json');
 
@@ -27,7 +28,7 @@ var load = {
 			 	this.load.image('level_label','assets/images/level_label.png');
 				//Player
 				this.load.spritesheet('player','assets/images/player.png',64,96);
-				//Backgroundj
+				//Background
 				this.load.image('city','assets/images/city.png');
 				//Joystick
 				this.load.spritesheet('joystick','assets/images/joystick.png',180,144);

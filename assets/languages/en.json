@@ -14,5 +14,9 @@
 				"title": "Lets start!",
 				"text": "Move with the arrows\nto catch all the coins\nin time!"
 			}
-	}
+	},
+	"pause_menu": "PAUSE",
+	"restart_button": "Restart",
+	"menu_button": "Menu",
+	"resume_button": "Resume"
 }

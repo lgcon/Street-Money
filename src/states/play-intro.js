@@ -14,7 +14,6 @@ var play_intro = {
 				this.panel.anchor.setTo(0.5,0.5);
 				this.level_label = this.add.image(this.panel.x,this.panel.y-305,'level_label');
 				this.level_label.anchor.setTo(0.5);
-				//this.level_label.tint = 	
 				this.level_text = this.add.text(this.panel.x,this.level_label.y,
 				      this.game.lang.level+' '+this.game.current_lev,{font: this.game.textFont, fill: '#E86A17', fontSize: 80});
 				this.level_text.anchor.setTo(0.5);

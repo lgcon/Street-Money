@@ -65,6 +65,7 @@ var play = {
 				cursors = this.input.keyboard.createCursorKeys();
 				this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				this.spacebar.onDown.add(this.treasures.hit);
+				this.buttonsToPause = [];
 			} else {
 				this.hitButton = this.createHitButton(this.game.conf.positions.hitButton.x,
 								      this.game.conf.positions.hitButton.y);
@@ -76,6 +77,26 @@ var play = {
 			}
 			//Buttons
 			this.add.existing(this.game.speaker);
+			this.pauseButton = this.add.button(this.game.speaker.x-100,this.game.speaker.y,'pause_button');
+			this.pauseButton.scale.setTo(1.5,1.5);
+			this.pauseButton.onInputDown.add(this.startPause,this);
+			this.buttonsToPause.push(this.pauseButton);	
+			//BOARD & Panels
+			this.board = createBoard.call(this,centerX,400,500,500);
+			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 30};//TODO use a global var
+			//Restart button	
+			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-50,'play_button');
+			this.restartButton.anchor.setTo(0.5);
+			this.restartButton.onInputDown.add(function(){this.restartButton.goDown('click_sound');},this);
+			this.restartButton.onInputUp.add(function(){this.restartButton.goUp();},this);//TODO
+			this.restartButton.text = this.make.text(0,0,this.game.lang.restart_button,styleTextButtons);
+			this.restartButton.text.anchor.setTo(0.5);
+			this.restartButton.addChild(this.restartButton.text);
+			//
+			
+			//Menus TODO fill
+			this.pauseMenu = [this.restartButton];
+			this.gameOverMenu = [];
 			//MAKE EVERYTHING ISOMETRIC
 			this.groundObjects = this.add.group();
 			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
@@ -137,11 +158,20 @@ var play = {
 //			this.oilSpots.forEach(this.game.debug.body,this.game.debug);
 		},
 		startPause: function(){
-			//TODO create panel
+			if (this.game.soundOn)
+				this.sound.play('click_sound');
+			//Show the menu
+			this.add.existing(this.board);
+			for (var i = 0; i < this.pauseMenu.length; i++)
+				this.add.existing(this.pauseMenu[i]);
+			this.board.setTitle('Pause');
+			//Stop everytingh
 			this.game.setPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
 			this.elementsToPause.setAllChildren('tint',0x1C1C1B);
 		},
 		stopPause: function(){
+			if (this.game.soundOn)
+				this.sound.play('click_sound');
 			//TODO destroy panel
 			this.game.unsetPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
 			this.elementsToPause.setAllChildren('tint',0xFFFFFF);
