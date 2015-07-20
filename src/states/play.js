@@ -88,14 +88,29 @@ var play = {
 			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-50,'play_button');
 			this.restartButton.anchor.setTo(0.5);
 			this.restartButton.onInputDown.add(function(){this.restartButton.goDown('click_sound');},this);
-			this.restartButton.onInputUp.add(function(){this.restartButton.goUp();},this);//TODO
+			this.restartButton.onInputUp.add(function(){this.restartButton.goUp();},this);//TODO restart the level
 			this.restartButton.text = this.make.text(0,0,this.game.lang.restart_button,styleTextButtons);
 			this.restartButton.text.anchor.setTo(0.5);
 			this.restartButton.addChild(this.restartButton.text);
-			//
+			//Menu button
+			this.menuButton = this.make.button(this.board.panel.x,this.board.panel.y+50,'play_button');
+			this.menuButton.anchor.setTo(0.5);
+			this.menuButton.onInputDown.add(function(){this.menuButton.goDown('click_sound');},this);
+			this.menuButton.onInputUp.add(function(){this.menuButton.goUp();},this);//TODO show the menu
+			this.menuButton.text = this.make.text(0,0,this.game.lang.menu_button,styleTextButtons);
+			this.menuButton.text.anchor.setTo(0.5);
+			this.menuButton.addChild(this.menuButton.text);
+			//Resume button
+			this.resumeButton = this.make.button(this.board.panel.x,this.board.panel.y+150,'play_button');
+			this.resumeButton.anchor.setTo(0.5);
+			this.resumeButton.onInputDown.add(function(){this.resumeButton.goDown('click_sound');},this);
+			this.resumeButton.onInputUp.add(function(){this.resumeButton.goUp();},this);//TODO show the resume
+			this.resumeButton.text = this.make.text(0,0,this.game.lang.resume_button,styleTextButtons);
+			this.resumeButton.text.anchor.setTo(0.5);
+			this.resumeButton.addChild(this.resumeButton.text);
 			
 			//Menus TODO fill
-			this.pauseMenu = [this.restartButton];
+			this.pauseMenu = [this.restartButton,this.menuButton,this.resumeButton];
 			this.gameOverMenu = [];
 			//MAKE EVERYTHING ISOMETRIC
 			this.groundObjects = this.add.group();
