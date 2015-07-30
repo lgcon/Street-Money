@@ -2,7 +2,7 @@
 */
 play.createPlayer = function () {
 			//PLAYER
-			player = this.add.sprite(this.level.playerStarts.x,this.level.playerStarts.y,'player',0);
+			var player = this.add.sprite(this.level.playerStarts.x,this.level.playerStarts.y,'player',0);
 			//Add physic body to the player
 			this.physics.arcade.enable(player);
 			//Walk animation
