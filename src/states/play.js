@@ -182,14 +182,19 @@ var play = {
 			this.board.setTitle('Pause');
 			//Stop everytingh
 			this.game.setPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
-			this.elementsToPause.setAllChildren('tint',0x1C1C1B);
+
+			//TODO ISSUE: the canvas render mode create a problem when changing the tint of the timer	
+			this.elementsToPause.setAllChildren('tint',0x1C1C1B); 
+			if (this.game.renderType == Phaser.CANVAS) //Escamotage due to the issue of pixi relative at the tint of tilesprites
+					this.city.alpha = 0.2;
 		},
 		stopPause: function(){
 			this.world.remove(this.board);
 			for (var i = 0; i < this.pauseMenu.length; i++)
 				this.world.remove(this.pauseMenu[i]);
-			//TODO destroy panel
 			this.game.unsetPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
 			this.elementsToPause.setAllChildren('tint',0xFFFFFF);
+			if (this.game.renderType == Phaser.CANVAS)
+					this.city.alpha = 1;
 		}
 };
