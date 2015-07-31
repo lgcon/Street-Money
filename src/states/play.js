@@ -79,6 +79,7 @@ var play = {
 			this.add.existing(this.game.speaker);
 			this.pauseButton = this.add.button(this.game.speaker.x-100,this.game.speaker.y,'pause_button');
 			this.pauseButton.scale.setTo(1.5,1.5);
+			this.pauseButton.fixedToCamera = true;
 			this.pauseButton.onInputDown.add(this.startPause,this);
 			this.buttonsToPause.push(this.pauseButton);	
 			//BOARD & Panels
@@ -88,7 +89,7 @@ var play = {
 			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-80,'play_button');
 			this.restartButton.anchor.setTo(0.5);
 			this.restartButton.onInputDown.add(function(){this.restartButton.goDown('click_sound');},this);
-			this.restartButton.onInputUp.add(function(){this.restartButton.goUp();},this);//TODO restart the level
+			this.restartButton.onInputUp.add(function(){this.restartButton.goUp();this.game.state.start('Play-intro');},this);
 			this.restartButton.text = this.make.text(0,0,this.game.lang.restart_button,styleTextButtons);
 			this.restartButton.text.anchor.setTo(0.5);
 			this.restartButton.addChild(this.restartButton.text);

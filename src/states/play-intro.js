@@ -1,8 +1,10 @@
-var play_intro = {
+var play_intro = {	
+			init: function(){
+				this.world.width = this.game.width;//Restore the width of the world
+			},
 			preload: function(){
 				//Parse the level
 				play.level = JSON.parse(this.game.cache.getText('level'+game.current_lev));
-				//this.state.start('Play');
 			},
 			create: function(){
 				this.add.existing(this.game.background);
@@ -29,6 +31,7 @@ var play_intro = {
 			shutdown: function(){
 				//Keep the sprites we need for the next state
 				this.world.remove(this.game.speaker);
+				this.world.remove(this.game.background);
 			},
 			showTuto: function (){
 				this.hasTuto = true; 

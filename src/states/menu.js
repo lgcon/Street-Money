@@ -6,7 +6,7 @@ var menu = {
 			game.lang = JSON.parse(this.game.cache.getText('language'));
 		},
 	create: function() {
-			this.game.background = this.add.image(0,0,'city')
+			this.game.background = this.add.image(0,0,'city');
 			this.game.background.alpha = 0.5;
 			var centerX = this.world.centerX;
 			var centerY = this.world.centerY;
