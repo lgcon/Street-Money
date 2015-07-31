@@ -1,4 +1,7 @@
 var menu = {
+	init: function(){ 
+			this.world.width = this.game.width;//Restore the width of the world
+	},
 	preload: function() {
 			game.lang = JSON.parse(this.game.cache.getText('language'));
 		},
@@ -50,13 +53,14 @@ var menu = {
 								}},this);
 
 			//Sound
-			this.game.speaker = this.add.image(this.game.conf.positions.speaker.x,this.game.conf.positions.speaker.y,'speaker',0);
+			if (this.game.speaker)
+				this.add.existing(this.game.speaker);
+			else
+				this.game.speaker = this.add.image(this.game.conf.positions.speaker.x,this.game.conf.positions.speaker.y,'speaker',0);
 			this.game.speaker.scale.setTo(1.5,1.5);
 			this.game.speaker.fixedToCamera = true;
 			this.game.speaker.inputEnabled = true;
 			this.game.speaker.events.onInputDown.add(this.switchSound,this);
-			this.game.music = this.add.audio('music',1,true);
-			this.game.music.play();
 
 			//Fullscreen
 			this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;

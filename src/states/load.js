@@ -59,8 +59,10 @@ var load = {
 				this.load.audio('oil_sound','assets/sounds/oil.ogg');
 				//Switch state
 				this.load.onLoadComplete.add(function(){
+					this.game.music = this.add.audio('music',1,true);
+					this.game.music.play();
 					this.game.state.start('Menu');
-					});
+					},this);
 			}
 };
 						

@@ -96,7 +96,7 @@ var play = {
 			this.menuButton = this.make.button(this.board.panel.x,this.board.panel.y+20,'play_button');
 			this.menuButton.anchor.setTo(0.5);
 			this.menuButton.onInputDown.add(function(){this.menuButton.goDown('click_sound');},this);
-			this.menuButton.onInputUp.add(function(){this.menuButton.goUp();},this);//TODO show the menu
+			this.menuButton.onInputUp.add(function(){this.menuButton.goUp();this.game.state.start('Menu')},this);
 			this.menuButton.text = this.make.text(0,0,this.game.lang.menu_button,styleTextButtons);
 			this.menuButton.text.anchor.setTo(0.5);
 			this.menuButton.addChild(this.menuButton.text);
@@ -171,6 +171,11 @@ var play = {
 //			this.coins.forEach(this.game.debug.body,this.game.debug);
 //			this.drains.forEach(this.game.debug.body,this.game.debug);
 //			this.oilSpots.forEach(this.game.debug.body,this.game.debug);
+		},
+		shutdown: function(){
+			this.world.remove(this.game.speaker);
+			if (!this.input.keyboard.enabled)//When in a pause state the keyboard is disabled
+				this.input.keyboard.enabled = true;
 		},
 		startPause: function(){
 			if (this.game.soundOn)
