@@ -1,14 +1,13 @@
 var play_intro = {	
 			init: function(){
 				this.world.width = this.game.width;//Restore the width of the world
-			},
-			preload: function(){
 				//Parse the level
-				play.level = JSON.parse(this.game.cache.getText('level'+game.current_lev));
+				play.level = JSON.parse(this.game.cache.getText('level'+this.game.current_lev));	
 			},
 			create: function(){
 				this.add.existing(this.game.background);
 				this.add.existing(this.game.speaker);
+				this.game.speaker.x = this.game.conf.positions.speaker.x;//Bring it back to the original position
 				//We build the board
 				this.style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};
 				this.board = this.add.group();
