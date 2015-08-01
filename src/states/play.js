@@ -117,7 +117,7 @@ var play = {
 			
 			//Menus TODO fill
 			this.pauseMenu = [this.restartButton,this.menuButton,this.resumeButton];
-			this.gameOverMenu = [];
+			this.gameoverMenu = [this.restartButton,this.menuButton];
 			//MAKE EVERYTHING ISOMETRIC
 			this.groundObjects = this.add.group();
 			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
@@ -196,13 +196,8 @@ var play = {
 			for (var i = 0; i < this.pauseMenu.length; i++)
 				this.pauseMenu[i].visible = true;
 			this.board.setTitle('Pause');
-			//Stop everytingh
-			this.game.setPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
-
-			//TODO ISSUE: the canvas render mode create a problem when changing the tint of the timer	
-			this.elementsToPause.setAllChildren('tint',0x1C1C1B); 
-			if (this.game.renderType == Phaser.CANVAS) //Escamotage due to the issue of pixi relative at the tint of tilesprites
-					this.game.background.alpha = 0.2;
+			//Block game
+			this.pauseGame();
 		},
 		stopPause: function(){
 			this.board.visible = false;
@@ -212,5 +207,30 @@ var play = {
 			this.elementsToPause.setAllChildren('tint',0xFFFFFF);
 			if (this.game.renderType == Phaser.CANVAS)
 					this.game.background.alpha = 1;
+		},
+		gameover: function(){
+			//Restyle the panel
+			this.board.panel.height = 300;
+			this.board.label.text.fontSize = 65;
+			this.board.label.y = this.board.panel.top;
+			this.board.label.text.y = this.board.panel.top;
+			this.board.buttons.cameraOffset.y += 50;
+			//Show the menu
+			this.board.visible = true;
+			for (var i = 0; i < this.gameoverMenu.length; i++)
+				this.gameoverMenu[i].visible = true;
+			this.board.setTitle('Game Over');
+			//Block game
+			this.pauseGame();
+		},
+		pauseGame: function(){
+			//Stop everytingh
+			this.game.setPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
+
+			//TODO ISSUE: the canvas render mode create a problem when changing the tint of the timer	
+			this.elementsToPause.setAllChildren('tint',0x1C1C1B); 
+			if (this.game.renderType == Phaser.CANVAS) //Escamotage due to the issue of pixi relative at the tint of tilesprites
+					this.game.background.alpha = 0.2;
 		}
+			
 };

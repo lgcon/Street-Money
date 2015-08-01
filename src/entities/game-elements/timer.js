@@ -12,7 +12,8 @@ function updateTime(){
 		this.left--;
 		//TODO gameover if timeLeft == 0
 		if (this.left === 0){
-			this.remove(this.timeLeftEvent);//does it work ?
+			this.remove(this.timeLeftEvent);
+			play.gameover();
 		}
 		//Update text timer
 		play.timer.text.count.setText(this.left);
