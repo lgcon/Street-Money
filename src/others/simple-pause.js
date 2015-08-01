@@ -40,6 +40,7 @@ Phaser.Game.prototype.setPause = function(groups,timers,buttons,disableKeyboard)
 					//Disable keyboard if necessary
 					if (disableKeyboard){
 						this.input.keyboard.enabled = false;
+						this.input.reset(false);
 					}
 }
 
