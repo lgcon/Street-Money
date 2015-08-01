@@ -14,18 +14,17 @@ function createBoard(x,y,h,w){
 		board.panel.width = w;
 		board.label = this.make.image(x,board.panel.top,'level_label');
 		board.label.anchor.setTo(0.5);
+		board.label.text = this.make.text(board.label.x,board.label.y,'',{font: this.game.textFont, fill: '#E86A17', fontSize: 80});
+		board.label.text.anchor.setTo(0.5);
 		board.setTitle = setTitleBoard;	
-		board.addMultiple([board.panel,board.label]);	
+		board.addMultiple([board.panel,board.label,board.label.text]);	
 		return board;
 }
 /*Insert a text containg the title in the label of the board
 * @param: title (string)
 */
 function setTitleBoard(title){
-		this.label.text = this.game.make.text(this.label.x,this.label.y,title,
-						{font: this.game.textFont, fill: '#E86A17', fontSize: 80});
-		this.label.text.anchor.setTo(0.5);
+		this.label.text.text = title;
 		this.label.width = this.label.text.width+50;
-		this.add(this.label.text);
 }
 		
