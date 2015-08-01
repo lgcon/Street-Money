@@ -82,33 +82,36 @@ var play = {
 			this.pauseButton.fixedToCamera = true;
 			this.pauseButton.onInputDown.add(this.startPause,this);
 			this.buttonsToPause.push(this.pauseButton);	
+
 			//BOARD & Panels
 			this.board = createBoard.call(this,centerX,400,450,450);
 			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 30};//TODO use a global var
 			//Restart button	
 			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-80,'play_button');
-			this.restartButton.anchor.setTo(0.5);
 			this.restartButton.onInputDown.add(function(){this.restartButton.goDown('click_sound');},this);
 			this.restartButton.onInputUp.add(function(){this.restartButton.goUp();this.game.state.start('Play-intro');},this);
 			this.restartButton.text = this.make.text(0,0,this.game.lang.restart_button,styleTextButtons);
-			this.restartButton.text.anchor.setTo(0.5);
 			this.restartButton.addChild(this.restartButton.text);
 			//Menu button
 			this.menuButton = this.make.button(this.board.panel.x,this.board.panel.y+20,'play_button');
-			this.menuButton.anchor.setTo(0.5);
 			this.menuButton.onInputDown.add(function(){this.menuButton.goDown('click_sound');},this);
 			this.menuButton.onInputUp.add(function(){this.menuButton.goUp();this.game.state.start('Menu')},this);
 			this.menuButton.text = this.make.text(0,0,this.game.lang.menu_button,styleTextButtons);
-			this.menuButton.text.anchor.setTo(0.5);
 			this.menuButton.addChild(this.menuButton.text);
 			//Resume button
 			this.resumeButton = this.make.button(this.board.panel.x,this.board.panel.y+120,'play_button');
-			this.resumeButton.anchor.setTo(0.5);
 			this.resumeButton.onInputDown.add(function(){this.resumeButton.goDown('click_sound');},this);
 			this.resumeButton.onInputUp.add(function(){this.resumeButton.goUp();this.stopPause();},this);//TODO show the resume
 			this.resumeButton.text = this.make.text(0,0,this.game.lang.resume_button,styleTextButtons);
-			this.resumeButton.text.anchor.setTo(0.5);
 			this.resumeButton.addChild(this.resumeButton.text);
+			//Lets use a group to definei some common properties to the buttons
+			this.board.buttons.addMultiple([this.restartButton,this.menuButton,this.resumeButton]);	
+			this.board.buttons.setAllChildren('visible',false);
+			for (var i = 0; i < this.board.buttons.length; i++){
+				this.board.buttons.children[i].anchor.setTo(0.5);
+				this.board.buttons.children[i].text.anchor.setTo(0.5);
+			}
+			this.board.buttons.fixedToCamera = true;
 			
 			//Menus TODO fill
 			this.pauseMenu = [this.restartButton,this.menuButton,this.resumeButton];
@@ -136,8 +139,8 @@ var play = {
 			//PAUSE
 			//Generate a subWorld to stop in order to separate the game from the pause
 			this.elementsToPause = this.world.createSubGroup();
-			//Move the speaker out of the elements to pause
-			this.world.add(this.game.speaker);
+			//Move out of the subWorld the elements that shouldn't be paused
+			this.world.addMultiple([this.game.speaker,this.board,this.board.buttons]);
 			
 		},
 		update: function(){
@@ -182,9 +185,9 @@ var play = {
 			if (this.game.soundOn)
 				this.sound.play('click_sound');
 			//Show the menu
-			this.add.existing(this.board);
+			this.board.visible = true;
 			for (var i = 0; i < this.pauseMenu.length; i++)
-				this.add.existing(this.pauseMenu[i]);
+				this.pauseMenu[i].visible = true;
 			this.board.setTitle('Pause');
 			//Stop everytingh
 			this.game.setPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
@@ -195,9 +198,9 @@ var play = {
 					this.city.alpha = 0.2;
 		},
 		stopPause: function(){
-			this.world.remove(this.board);
+			this.board.visible = false;
 			for (var i = 0; i < this.pauseMenu.length; i++)
-				this.world.remove(this.pauseMenu[i]);
+				this.pauseMenu[i].visible = false;
 			this.game.unsetPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
 			this.elementsToPause.setAllChildren('tint',0xFFFFFF);
 			if (this.game.renderType == Phaser.CANVAS)

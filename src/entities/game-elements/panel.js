@@ -4,7 +4,10 @@
 * @return: a Phaser.Group having as children all the elements of the board
 */
 function createBoard(x,y,h,w){
-		var board = this.make.group();
+		var board = this.add.group();
+		board.buttons = this.add.group();
+		board.fixedToCamera = true;
+		board.visible = false;
 		board.panel = this.make.image(x,y,'panel');
 		board.panel.anchor.setTo(0.5,0.5);
 		board.panel.height = h;
@@ -12,7 +15,7 @@ function createBoard(x,y,h,w){
 		board.label = this.make.image(x,board.panel.top,'level_label');
 		board.label.anchor.setTo(0.5);
 		board.setTitle = setTitleBoard;	
-		board.addMultiple([board.panel,board.label]);
+		board.addMultiple([board.panel,board.label]);	
 		return board;
 }
 /*Insert a text containg the title in the label of the board
