@@ -6,10 +6,12 @@ var menu = {
 			this.game.lang = JSON.parse(this.game.cache.getText('language'));
 		},
 	create: function() {
-			if (this.game.background)
+			if (this.game.background){//If the background has been created in the past
 				this.add.existing(this.game.background);
+				this.game.background.width = this.world.width;
+			}
 			else{
-				this.game.background = this.add.image(0,0,'city');
+				this.game.background = this.add.tileSprite(0,0,this.world.width,this.world.height,'city');
 				this.game.background.alpha = 0.5;
 			}
 			var centerX = this.world.centerX;

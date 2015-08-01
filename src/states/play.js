@@ -11,7 +11,9 @@ var play = {
 		},
 		create: function(){
 			//Background
-			this.city = this.add.tileSprite(0,0,this.world.width,this.world.height,'city');
+			this.add.existing(this.game.background);
+			this.game.background.width = this.world.width;
+			this.game.background.alpha = 1;
 			//GAME ENTITIES
 			this.player = this.createPlayer();				
 			this.coins = this.createCoins();	
@@ -177,7 +179,12 @@ var play = {
 //			this.oilSpots.forEach(this.game.debug.body,this.game.debug);
 		},
 		shutdown: function(){
+			//Remove the object we need to use later
 			this.world.remove(this.game.speaker);
+			this.elementsToPause.removeChild(this.game.background);
+			//Restore some values
+			this.game.background.alpha = 0.5;	
+			this.game.background.tint = 0xFFFFFF;
 			if (!this.input.keyboard.enabled)//When in a pause state the keyboard is disabled
 				this.input.keyboard.enabled = true;
 		},
@@ -195,7 +202,7 @@ var play = {
 			//TODO ISSUE: the canvas render mode create a problem when changing the tint of the timer	
 			this.elementsToPause.setAllChildren('tint',0x1C1C1B); 
 			if (this.game.renderType == Phaser.CANVAS) //Escamotage due to the issue of pixi relative at the tint of tilesprites
-					this.city.alpha = 0.2;
+					this.game.background.alpha = 0.2;
 		},
 		stopPause: function(){
 			this.board.visible = false;
@@ -204,6 +211,6 @@ var play = {
 			this.game.unsetPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
 			this.elementsToPause.setAllChildren('tint',0xFFFFFF);
 			if (this.game.renderType == Phaser.CANVAS)
-					this.city.alpha = 1;
+					this.game.background.alpha = 1;
 		}
 };
