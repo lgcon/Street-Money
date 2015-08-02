@@ -40,14 +40,14 @@ var play = {
 
 			//GAME TEXT 
 			var centerX = this.game.width/2;
-			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 80};
+			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};//TODO bring in config
 			//SCORE
 			this.score = 0;
-			var scorePosition = this.game.conf.positions. text_score;
-			this.scoreText = this.add.text(scorePosition.x,scorePosition.y,this.game.lang.text_score,style);
-			this.scoreText.count = this.add.text(this.scoreText.right+20,this.scoreText.y,0+'',style);
-			this.scoreText.fixedToCamera = true;
-			this.scoreText.count.fixedToCamera = true;
+			var scorePosition = this.game.conf.positions.text_score;
+			this.coinsleftText = this.add.text(scorePosition.x,scorePosition.y,this.game.lang.text_score,style);
+			this.coinsleftText.count = this.add.text(this.coinsleftText.right+20,this.coinsleftText.y,play.level.goal,style);
+			this.coinsleftText.fixedToCamera = true;
+			this.coinsleftText.count.fixedToCamera = true;
 
 			//TIMER
 			this.timer = this.createTimer();
