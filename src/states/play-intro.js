@@ -20,6 +20,7 @@ var play_intro = {
 				this.level_text.anchor.setTo(0.5);
 				this.board.button = this.add.button(this.panel.x,this.panel.y+250,'play_button');
 				this.board.button.anchor.setTo(0.5);
+				this.board.button.onInputDown.add(function(){this.board.button.goDown('click_sound');},this);
 				this.board.addMultiple([this.panel,this.level_label,this.level_text,this.board.button]);
 				//If the level has a tutorial, show the tutorial, otherwise go to the info direclty
 				if (play.level.tuto && this.game.lang.tutos[this.game.current_lev])
@@ -47,7 +48,6 @@ var play_intro = {
 				this.tutoElements.setAll('anchor.x',0.5);
 				this.board.add(this.tutoElements);
 				this.add.tween(this.board).from({y: -500},250,'Linear').start();
-				this.board.button.onInputDown.add(function(){this.board.button.goDown('click_sound');},this);
 				this.board.button.onInputUp.add(function(){this.board.button.goUp();this.showInfos();},this);
 			},
 			showInfos: function(){

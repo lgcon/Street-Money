@@ -17,10 +17,14 @@ play.createCoins = function () {
 
 function collectCoin(player, coin){
 			coin.destroy();
+			//Calculate and show score
 			play.score++;
+			var coinsLeft = play.level.goal-play.score;
+			play.coinsleftText.count.setText(play.level.goal-play.score);
+			
 			if (play.game.soundOn)
 				play.sound.play('coin_sound');
-			play.coinsleftText.count.setText(play.level.goal-play.score);
+			
 			//Add next coin
 			if (play.currentCoin < play.level.coins.length){
 				var newCoin = play.coins.create(play.level.coins[play.currentCoin].x,play.level.coins[play.currentCoin].y,'coin');
@@ -29,4 +33,9 @@ function collectCoin(player, coin){
 				newCoin.body.setSize(newCoin.width/2,feetHeight,newCoin.width/4,newCoin.height-feetHeight);
 				play.currentCoin++;
 			}
+			//Did the player win?
+			if (coinsLeft <= 0)
+				play.levelpassed();
+				
+		
 	}

@@ -5,7 +5,7 @@
 	},
 	"width": 2200,	
 	"playerStarts": {"x":200,"y":560},
-	"time": 20,
+	"time": 30,
 	"goal": 10,
 	"coins": [
 			{"x":123,"y":650},

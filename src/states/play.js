@@ -234,6 +234,8 @@ var play = {
 		levelpassed: function(){
 			//Block game
 			this.pauseGame();
+			//Update player results
+			this.game.lastPassed++;
 			//Text
 			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 80};//TODO bring in config
 			var textVictory = this.add.text(this.camera.x+this.game.width/2,200,this.game.lang.levelpassed,style);
@@ -262,6 +264,8 @@ var play = {
 			
 		},
 		startNextLevel: function() {
+			this.game.current_lev++;
+			this.state.start('Play-intro');
 		},
 		pauseGame: function(){
 			//Stop everytingh
