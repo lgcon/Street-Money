@@ -10,7 +10,6 @@ play.createTimer = function(){
 function updateTime(){
 
 		this.left--;
-		//TODO gameover if timeLeft == 0
 		if (this.left === 0){
 			this.remove(this.timeLeftEvent);
 			play.gameover();

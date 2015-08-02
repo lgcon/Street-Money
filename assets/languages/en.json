@@ -16,7 +16,10 @@
 			}
 	},
 	"pause_menu": "PAUSE",
+	"gameover_menu": "GAME OVER",
+	"levelpassed": "LEVEL PASSED!",
 	"restart_button": "Restart",
 	"menu_button": "Menu",
-	"resume_button": "Resume"
+	"resume_button": "Resume",
+	"goNextLevel_button": "Next"
 }

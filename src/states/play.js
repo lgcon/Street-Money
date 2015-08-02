@@ -103,11 +103,18 @@ var play = {
 			//Resume button
 			this.resumeButton = this.make.button(this.board.panel.x,this.board.panel.y+120,'play_button');
 			this.resumeButton.onInputDown.add(function(){this.resumeButton.goDown('click_sound');},this);
-			this.resumeButton.onInputUp.add(function(){this.resumeButton.goUp();this.stopPause();},this);//TODO show the resume
+			this.resumeButton.onInputUp.add(function(){this.resumeButton.goUp();this.stopPause();},this);
 			this.resumeButton.text = this.make.text(0,0,this.game.lang.resume_button,styleTextButtons);
 			this.resumeButton.addChild(this.resumeButton.text);
+			//Next Level button
+			this.nextlevelButton = this.make.button(centerX+150,500,'play_button');
+			this.nextlevelButton.onInputDown.add(function(){this.nextlevelButton.goDown('click_sound');},this);
+			this.nextlevelButton.onInputUp.add(function(){this.nextlevelButton.goUp();this.startNextLevel();},this);
+			this.nextlevelButton.text = this.make.text(0,0,this.game.lang.goNextLevel_button,styleTextButtons);
+			this.nextlevelButton.addChild(this.nextlevelButton.text);
+			
 			//Lets use a group to definei some common properties to the buttons
-			this.board.buttons.addMultiple([this.restartButton,this.menuButton,this.resumeButton]);	
+			this.board.buttons.addMultiple([this.restartButton,this.menuButton,this.resumeButton,this.nextlevelButton]);	
 			this.board.buttons.setAllChildren('visible',false);
 			for (var i = 0; i < this.board.buttons.length; i++){
 				this.board.buttons.children[i].anchor.setTo(0.5);
@@ -118,6 +125,7 @@ var play = {
 			//Menus TODO fill
 			this.pauseMenu = [this.restartButton,this.menuButton,this.resumeButton];
 			this.gameoverMenu = [this.restartButton,this.menuButton];
+			this.levelpassedMenu = [this.restartButton,this.nextlevelButton];
 			//MAKE EVERYTHING ISOMETRIC
 			this.groundObjects = this.add.group();
 			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
@@ -222,6 +230,38 @@ var play = {
 			this.board.setTitle('Game Over');
 			//Block game
 			this.pauseGame();
+		},
+		levelpassed: function(){
+			//Block game
+			this.pauseGame();
+			//Text
+			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 80};//TODO bring in config
+			var textVictory = this.add.text(this.camera.x+this.game.width/2,200,this.game.lang.levelpassed,style);
+			textVictory.anchor.setTo(0.5);		
+			//Stars
+			var levelScore = this.timer.left/this.level.time;
+			console.log(levelScore);
+			var stars = [];
+			for (var i = 0; i < 3; i++){//Create 3 stars
+				stars.push(this.add.image(textVictory.x-150+i*150,textVictory.y+120,'star',0));
+				stars[i].anchor.setTo(0.5);
+			}
+			if (levelScore <= 0.3){//More than 70% of the time
+				stars[2].frame = 1;
+				if (levelScore <= 0.2)//More than 80% of the time
+					stars[1].frame = 1;
+			}
+			//Buttons
+			for (var i = 0; i < this.levelpassedMenu.length; i++)
+				this.levelpassedMenu[i].visible = true;
+			//this.restartButton.cameraOffset.setTo(this.nextlevelButton.cameraOffset.x-300,this.nextlevelButton.cameraOffset.y);
+			this.restartButton.x = this.nextlevelButton.x-300;
+			this.restartButton.y = this.nextlevelButton.y;
+			
+			
+			
+		},
+		startNextLevel: function() {
 		},
 		pauseGame: function(){
 			//Stop everytingh

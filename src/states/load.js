@@ -12,20 +12,21 @@ var load = {
 			
 				//Menu
 				this.load.image('menu_title','assets/images/menu_title.png');	
-				this.load.spritesheet('play_button','assets/images/button.png',195,75);
 				this.load.image('arrow_left','assets/images/arrow_left.png');
 				this.load.image('arrow_right','assets/images/arrow_right.png');
 				this.load.image('lock','assets/images/lock.png');
-				this.load.spritesheet('speaker','assets/images/speaker.png',48,48);
-				this.load.image('pause_button','assets/images/pause_button.png');
-				//Language TODO choose the language?
+				//Language
 				this.load.text('language','assets/languages/'+game.conf.lang+'.json');
 
 
 
-				//Play intro
+				//UI
 				this.load.image('panel','assets/images/panel.png');
 			 	this.load.image('level_label','assets/images/level_label.png');
+				this.load.spritesheet('play_button','assets/images/button.png',195,75);
+				this.load.spritesheet('speaker','assets/images/speaker.png',48,48);
+				this.load.image('pause_button','assets/images/pause_button.png');
+				this.load.spritesheet('star','assets/images/star.png',95,97);
 				//Player
 				this.load.spritesheet('player','assets/images/player.png',64,96);
 				//Background
