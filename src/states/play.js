@@ -108,7 +108,12 @@ var play = {
 			this.resumeButton.addChild(this.resumeButton.text);
 			//Next Level button
 			this.nextlevelButton = this.make.button(centerX+150,500,'play_button');
-			this.nextlevelButton.onInputDown.add(function(){this.nextlevelButton.goDown('click_sound');},this);
+			this.nextlevelButton.onInputDown.add(function(){
+								if (this.game.current_lev >= this.game.conf.total_levels)
+									this.nextlevelButton.goDown('bad_sound');
+								else
+									this.nextlevelButton.goDown('click_sound');
+							     },this);
 			this.nextlevelButton.onInputUp.add(function(){this.nextlevelButton.goUp();this.startNextLevel();},this);
 			this.nextlevelButton.text = this.make.text(0,0,this.game.lang.goNextLevel_button,styleTextButtons);
 			this.nextlevelButton.addChild(this.nextlevelButton.text);
@@ -223,6 +228,9 @@ var play = {
 			this.board.label.y = this.board.panel.top;
 			this.board.label.text.y = this.board.panel.top;
 			this.board.buttons.cameraOffset.y += 50;
+			//Play sound
+			if (this.game.soundOn)
+				this.sound.play('gameover_sound');
 			//Show the menu
 			this.board.visible = true;
 			for (var i = 0; i < this.gameoverMenu.length; i++)
@@ -236,6 +244,9 @@ var play = {
 			this.pauseGame();
 			//Update player results
 			this.game.lastPassed++;
+			//Play sound
+			if (this.game.soundOn)
+				this.sound.play('win_sound');
 			//Text
 			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 80};//TODO bring in config
 			var textVictory = this.add.text(this.camera.x+this.game.width/2,200,this.game.lang.levelpassed,style);
@@ -264,6 +275,8 @@ var play = {
 			
 		},
 		startNextLevel: function() {
+			if (this.game.current_lev >= this.game.conf.total_levels)
+				return;
 			this.game.current_lev++;
 			this.state.start('Play-intro');
 		},

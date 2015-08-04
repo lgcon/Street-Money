@@ -58,6 +58,10 @@ var load = {
 				this.load.audio('break_sound','assets/sounds/break.ogg');
 				this.load.audio('drain_sound','assets/sounds/drain.ogg');
 				this.load.audio('oil_sound','assets/sounds/oil.ogg');
+				this.load.audio('win_sound','assets/sounds/win.ogg');
+				this.load.audio('gameover_sound','assets/sounds/gameover.ogg');
+				this.load.audio('bad_sound','assets/sounds/bad.ogg');
+				this.load.audio('beep_sound','assets/sounds/beep.ogg');
 				//Switch state
 				this.load.onLoadComplete.add(function(){
 					this.game.music = this.add.audio('music',1,true);

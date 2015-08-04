@@ -50,7 +50,7 @@ var menu = {
 								if (!this.textLevel.locked)
 									this.playButton.goDown('click_sound');
 								else
-									this.playButton.goDown();//TODO bad sound
+									this.playButton.goDown('bad_sound');
 							},this);
 			this.playButton.onInputUp.add(function(){
 								this.playButton.goUp();
@@ -82,13 +82,16 @@ var menu = {
 	},
 	updateLevel: function (step){
 			var newLevel = game.current_lev + step;
-			if (newLevel < 1 || newLevel > game.conf.total_levels)
+			if (newLevel < 1 || newLevel > game.conf.total_levels){
+				if (this.game.soundOn)
+					this.sound.play('bad_sound');
 				return;
+			}
 			game.current_lev = newLevel;
 			if (this.game.soundOn)
 				this.sound.play('click_sound');
 			if (newLevel > game.lastPassed){
-				if (!this.textLevel.locked){
+				if (!this.textLevel.locked){//lock the level
 					this.textLevel.fill = '#BDBDBD';
 					this.textLevel.alpha = 0.3;
 					this.lock.visible = true;
@@ -97,7 +100,7 @@ var menu = {
 			
 			}
 			else {
-				if (this.textLevel.locked){
+				if (this.textLevel.locked){//unlock the level
 					this.textLevel.fill = '#FBEFEF';
 					this.textLevel.alpha = 1;
 					this.lock.visible = false;
