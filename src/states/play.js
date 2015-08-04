@@ -86,7 +86,7 @@ var play = {
 			this.buttonsToPause.push(this.pauseButton);	
 
 			//BOARD & Panels
-			this.board = createBoard.call(this,centerX,400,450,450);
+			this.board = this.game.createBoard(centerX,400,450,450);
 			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 30};//TODO use a global var
 			//Restart button	
 			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-80,'play_button');
