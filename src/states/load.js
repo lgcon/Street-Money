@@ -50,18 +50,18 @@ var load = {
 					this.load.text('level'+i,'assets/levels/level'+i+'.json');
 				}
 				//Sounds
-				this.load.audio('click_sound','assets/sounds/click.wav');
-				this.load.audio('music','assets/sounds/music.ogg',true);
-				this.load.audio('coin_sound','assets/sounds/coin.ogg');
-				this.load.audio('thief_sound','assets/sounds/thief.ogg');
-				this.load.audio('hit_sound','assets/sounds/hit.ogg');
-				this.load.audio('break_sound','assets/sounds/break.ogg');
-				this.load.audio('drain_sound','assets/sounds/drain.ogg');
-				this.load.audio('oil_sound','assets/sounds/oil.ogg');
-				this.load.audio('win_sound','assets/sounds/win.ogg');
-				this.load.audio('gameover_sound','assets/sounds/gameover.ogg');
-				this.load.audio('bad_sound','assets/sounds/bad.ogg');
-				this.load.audio('beep_sound','assets/sounds/beep.ogg');
+				this.load.audio('click_sound',['assets/sounds/click.ogg','assets/sounds/click.wma','assets/sounds/click.mp3']);
+				this.load.audio('music',['assets/sounds/music.ogg','assets/sounds/music.wma','assets/sounds/music.mp3'],true);
+				this.load.audio('coin_sound',['assets/sounds/coin.ogg','assets/sounds/coin.wma','assets/sounds/coin.mp3']);
+				this.load.audio('thief_sound',['assets/sounds/thief.ogg','assets/sounds/thief.wma','assets/sounds/thief.mp3']);
+				this.load.audio('hit_sound',['assets/sounds/hit.ogg','assets/sounds/hit.wma','assets/sounds/hit.mp3']);
+				this.load.audio('break_sound',['assets/sounds/break.ogg','assets/sounds/break.wma','assets/sounds/break.mp3']);
+				this.load.audio('drain_sound',['assets/sounds/drain.ogg','assets/sounds/drain.wma','assets/sounds/drain.mp3']);
+				this.load.audio('oil_sound',['assets/sounds/oil.ogg','assets/sounds/oil.wma','assets/sounds/oil.mp3']);
+				this.load.audio('win_sound',['assets/sounds/win.ogg','assets/sounds/win.wma','assets/sounds/win.mp3']);
+				this.load.audio('gameover_sound',['assets/sounds/gameover.ogg','assets/sounds/gameover.wma','assets/sounds/gameover.mp3']);
+				this.load.audio('bad_sound',['assets/sounds/bad.ogg','assets/sounds/bad.wma','assets/sounds/bad.mp3']);
+				this.load.audio('beep_sound',['assets/sounds/beep.ogg','assets/sounds/beep.wma','assets/sounds/beep.mp3']);
 				//Switch state
 				this.load.onLoadComplete.add(function(){
 					this.game.music = this.add.audio('music',1,true);
