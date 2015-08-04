@@ -32,4 +32,10 @@ function fromAngleToDirection(angle){//TODO make it more performant
 	else
 		return direction.left;
 }
-
+/*Little shortcut set as property of the game object in order to play one sound only when the sound enabled
+* @param: the key of the sound to play {string}
+*/
+Phaser.Game.prototype.playsound = function (key){
+	if (this.soundOn)
+		this.sound.play(key);
+};

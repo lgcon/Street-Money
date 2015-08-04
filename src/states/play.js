@@ -202,8 +202,7 @@ var play = {
 				this.input.keyboard.enabled = true;
 		},
 		startPause: function(){
-			if (this.game.soundOn)
-				this.sound.play('click_sound');
+			this.game.playsound('click_sound');
 			//Show the menu
 			this.board.visible = true;
 			for (var i = 0; i < this.pauseMenu.length; i++)
@@ -229,8 +228,7 @@ var play = {
 			this.board.label.text.y = this.board.panel.top;
 			this.board.buttons.cameraOffset.y += 50;
 			//Play sound
-			if (this.game.soundOn)
-				this.sound.play('gameover_sound');
+			this.game.playsound('gameover_sound');
 			//Show the menu
 			this.board.visible = true;
 			for (var i = 0; i < this.gameoverMenu.length; i++)
@@ -245,8 +243,7 @@ var play = {
 			//Update player results
 			this.game.lastPassed++;
 			//Play sound
-			if (this.game.soundOn)
-				this.sound.play('win_sound');
+			this.game.playsound('win_sound');
 			//Text
 			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 80};//TODO bring in config
 			var textVictory = this.add.text(this.camera.x+this.game.width/2,200,this.game.lang.levelpassed,style);

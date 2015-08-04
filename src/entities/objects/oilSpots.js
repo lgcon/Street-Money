@@ -14,8 +14,7 @@ play.createOilSpots = function () {
 function slip(player,spot){
 	if (player.allowSlip){
 		player.allowSlip = false;
-		if (play.game.soundOn)
-			play.sound.play('oil_sound');
+		player.game.playsound('oil_sound');
 		//Note, tween on the speed are possible because they are updated after the update function
 		console.log(player.body.velocity.x);
 		if (player.body.facing == Phaser.UP || player.body.facing == Phaser.DOWN)

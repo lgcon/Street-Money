@@ -83,13 +83,11 @@ var menu = {
 	updateLevel: function (step){
 			var newLevel = game.current_lev + step;
 			if (newLevel < 1 || newLevel > game.conf.total_levels){
-				if (this.game.soundOn)
-					this.sound.play('bad_sound');
+				this.game.playsound('bad_sound');
 				return;
 			}
 			game.current_lev = newLevel;
-			if (this.game.soundOn)
-				this.sound.play('click_sound');
+			this.game.playsound('click_sound');
 			if (newLevel > game.lastPassed){
 				if (!this.textLevel.locked){//lock the level
 					this.textLevel.fill = '#BDBDBD';

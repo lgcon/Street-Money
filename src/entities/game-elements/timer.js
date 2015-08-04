@@ -13,8 +13,7 @@ function updateTime(){
 			this.remove(this.timeLeftEvent);
 			play.gameover();
 		} else if (this.left <= 10){
-			if (this.game.soundOn)
-				this.game.sound.play('beep_sound');
+			this.game.playsound('beep_sound');
 			this.text.addColor('#FF0000',0);
 			this.text.count.addColor('#FF0000',0);
 		}
