@@ -33,16 +33,20 @@ function teleport(player, drain){
 */
 function moveToNextDrain(player,drain){
 			var nextDrain = play.drains.children[drain.go];
-			player.position.setTo(nextDrain.body.center.x,nextDrain.body.center.y);
 			//Free the camera from following the player
 			play.camera.unfollow();
+			//Take out the player from the game and move it to the next drain
+			play.player.exists = false;
+			player.position.setTo(nextDrain.body.center.x,nextDrain.body.center.y);
 			//Set a tween to move smoothly the camera to the player
 			play.add.tween(play.camera.view)
 				.to({x: player.position.x - play.camera.view.halfWidth, 
 				     y: player.position.y - play.camera.view.halfHeight},500)
 				.start()
-				.onComplete.add(function(){play.camera.follow(player)},play);//Follow the player once arrived
-											  //TODO update the tween direction
+				.onComplete.add(function(){
+							play.camera.follow(player);
+							play.player.exists = true;},play);
+											  
 			//Don't allow teleport since the player exit the new drain
 			player.allowTeleport = false;
 			player.isTeleporting = false;

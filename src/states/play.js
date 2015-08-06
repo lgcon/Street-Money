@@ -171,7 +171,7 @@ var play = {
 			if (!this.physics.arcade.overlap(this.player,this.oilSpots,this.oilSpots.slip))
 				this.player.allowSlip = true;//In order to avoid multiple splip events
 			//Check for ovelap with drains
-		 	if (!this.physics.arcade.overlap(this.player,this.drains,this.drains.teleport))
+		 	if (!this.physics.arcade.overlap(this.player,this.drains,this.drains.teleport) && this.player.exists)
 				this.player.allowTeleport = true; //If the player is out of any drain, allow teleporting for eventual contacts
 			//Check for collision with the robber
 			this.physics.arcade.collide(this.player,this.robbers,this.robbers.steal);
