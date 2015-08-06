@@ -1,5 +1,5 @@
 //Create the game state load
-var load = {
+var load = {	
 		preload: function() {
 				//Loading screen
 				this.preloadBar = this.add.image(180,this.world.centerY,'preloadbar');

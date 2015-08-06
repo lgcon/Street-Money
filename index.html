@@ -3,10 +3,6 @@
 <html>
 	<head>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
-		
-	</head>
-	<body>
-		<div id='game'></div>
 		<script type="text/javascript" src="src/phaser/phaser.js"></script>	
 		<script type="text/javascript" src="src/phaser/phaser-multisort.js"></script>
 		<script type="text/javascript" src="src/others/simple-pause.js"></script>
@@ -31,5 +27,30 @@
 		<script type="text/javascript" src="src/entities/personages/treasures.js"></script>	
 		<script type="text/javascript" src="src/entities/personages/pathLogic.js"></script>		
 		<script type="text/javascript" src="src/main.js"></script>
+		<style type="text/css">
+			body {
+			    margin: 0px 0px 1px 0px; /* the extra 1px allows the iOS inner/outer check to work */
+			    background: #E6AB09;
+			}
+
+			#orientation {
+			    margin: 0 auto;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 100%;
+			    background-image: url(images/rotatescreen.png); 
+			    background-repeat: no-repeat;
+			    background-position: center;
+			    z-index: 999;
+			    display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='game'></div>
+		<div id='orientation'></div>
+		
 	</body>
 </html>
