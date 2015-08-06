@@ -26,10 +26,10 @@ function hitTreasure(){
 				this.game.playsound('hit_sound');
 				if (treasure.data.life > 0){
 					//Display the remaining life
-					var lifeInfo = play.add.text(treasure.x,treasure.y-100,
-							     treasure.data.life,{font:"30px Impact",fill:"#FF8000"});		
+					var lifeInfo = play.add.text(treasure.x,treasure.top-120,
+							     treasure.data.life,{font: this.game.textFont, fill:"#FF8000", fontSize: 50});
 					play.add.tween(lifeInfo)
-						.from({y: treasure.y,alpha: 0},500,Phaser.Easing.Linear.None,true)
+						.from({y: treasure.top,alpha: 0},500,Phaser.Easing.Linear.None,true)
 						.onComplete.add(lifeInfo.destroy,lifeInfo);
 				}
 				else {	
