@@ -288,6 +288,7 @@ var load = {
 			
 				//Menu
 				this.load.image('menu_title','assets/images/menu_title.png');	
+				this.load.spritesheet('coin_menu','assets/images/coin_menu.png',100,100);	
 				this.load.image('arrow_left','assets/images/arrow_left.png');
 				this.load.image('arrow_right','assets/images/arrow_right.png');
 				this.load.image('lock','assets/images/lock.png');
@@ -299,8 +300,8 @@ var load = {
 				//UI
 				this.load.image('panel','assets/images/panel.png');
 			 	this.load.image('level_label','assets/images/level_label.png');
-				this.load.spritesheet('play_button','assets/images/button.png',195,75);
-				this.load.spritesheet('speaker','assets/images/speaker.png',48,48);
+				this.load.spritesheet('play_button','assets/images/button.png',293,112.5);
+				this.load.spritesheet('speaker','assets/images/speaker.png',60,60);
 				this.load.image('pause_button','assets/images/pause_button.png');
 				this.load.spritesheet('star','assets/images/star.png',95,97);
 				//Player
@@ -312,7 +313,7 @@ var load = {
 				this.load.image('hitButton','assets/images/hitButton.png');
 
 				//Money
-				this.load.spritesheet('coin','assets/images/coin_gold.png',64,64);
+				this.load.spritesheet('coin','assets/images/coin.png',64,64);
 				//Bonuses
 				this.load.image('boots','assets/images/boots.png');
 				this.load.image('oil','assets/images/oil_spot.png');
@@ -369,19 +370,25 @@ var menu = {
 			//Title
 			this.add.image(centerX, 100, 'menu_title')
 				.anchor.setTo(0.5,0.5);
+			this.coin = this.add.image(278,58,'coin_menu',4);
+			this.coin.animations.add('flip',[5,6,7,0,1,2,3,4],10);
+			this.timer = this.time.create();
+			this.timer.loop(1500,this.coin.animations.play,this.coin.animations,'flip');
+			this.timer.start();
+			
 			//Level selector
 			//Level
-			this.textLevel = this.add.text(centerX,centerY+20,game.current_lev,{font:game.textFont, fill:"#FBEFEF",fontSize:100 });
+			this.textLevel = this.add.text(centerX,centerY+50,game.current_lev,{font:game.textFont, fill:"#FBEFEF",fontSize:150 });
 			this.textLevel.anchor.setTo(0.5,0.5);
 			//Text
-			this.add.text(centerX,this.textLevel.y-120,game.lang.level_selector,{font:game.textFont, fill: "#FBEFEF",fontSize: 60})
+			this.add.text(centerX,this.textLevel.y-150,game.lang.level_selector,{font:game.textFont, fill: "#FBEFEF",fontSize: 100})
 				.anchor.setTo(0.5,0.5);
 			//Lock
 			this.lock = this.add.image(this.textLevel.x,this.textLevel.y,'lock');
 			this.lock.anchor.setTo(0.5,0.5);
 			this.lock.visible = false;
 			//Arrows
-			var distanceArrows = 100;
+			var distanceArrows = 150;
 			this.arrowLeft = this.add.image(centerX-distanceArrows,this.textLevel.y,'arrow_left');
 			this.arrowLeft.anchor.setTo(0.5,0.5);
 			this.arrowLeft.inputEnabled = true;
@@ -391,10 +398,10 @@ var menu = {
 			this.arrowRight.inputEnabled = true;
 			this.arrowRight.events.onInputDown.add(function(){this.updateLevel(1);},this);
 			//Play button
-			this.playButton = this.add.button(centerX, centerY+180,'play_button');
+			this.playButton = this.add.button(centerX, centerY+250,'play_button');
 			this.playButton.anchor.setTo(0.5,0.5);
 			this.playButton.text = this.add.text(this.playButton.x,this.playButton.y,game.lang.play_button,
-					{font:game.textFont, fill:"#FBEFEF",fontSize: 40});
+					{font:game.textFont, fill:"#FBEFEF",fontSize: 60});
 			this.playButton.text.anchor.setTo(0.5,0.5);
 			this.playButton.onInputDown.add(function(){
 								if (!this.textLevel.locked)
@@ -492,8 +499,8 @@ var play_intro = {
 				this.board = this.game.createBoard(this.world.centerX,this.world.centerY);
 				this.board.visible = true;//show the board
 				this.board.fixedToCamera = false;//dont need it
-				this.board.label.y += 40;//Adjust the position of the label...
-				this.board.label.text.y += 40;//..and the text inside it
+				this.board.label.y += 60;//Adjust the position of the label...
+				this.board.label.text.y += 60;//..and the text inside it
 				this.style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};
 				this.board.setTitle(this.game.lang.level+' '+this.game.current_lev);
 				//Button
@@ -520,7 +527,7 @@ var play_intro = {
 				this.tutoImg=this.add.image(this.board.panel.x,this.tutoTitle.y+80,play.level.tuto.image,play.level.tuto.frame);
 				this.tutoTxt = this.add.text(this.board.panel.x,this.tutoImg.y+60,tuto.text,this.style);
 				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.tutos.button,
-							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 40});
+							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
 				this.board.button.text.anchor.setTo(0.5,0.5);
 				this.tutoElements = this.add.group();
 				this.tutoElements.addMultiple([this.tutoTitle,this.tutoImg,this.tutoTxt,this.board.button.text]);
@@ -541,7 +548,7 @@ var play_intro = {
 								   this.game.lang.text_preLevel,this.style);
 				this.text_preLevel.anchor.setTo(0.5);
 				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.start_button,
-							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 40});
+							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
 				this.board.button.onInputUp.add(function(){this.state.start('Play');},this);
 				this.board.button.text.anchor.setTo(0.5,0.5);
 				this.board.addMultiple([this.infos,this.text_preLevel,this.board.button.text]);
@@ -615,13 +622,13 @@ var play = {
 			this.camera.follow(this.player);
 			
 			//CONTROLS	
-			//Create cursors TODO: Cursor created in another state and a system for mobile devices
 			if (this.game.device.desktop) {
 				cursors = this.input.keyboard.createCursorKeys();
 				this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				this.spacebar.onDown.add(this.treasures.hit);
 				this.buttonsToPause = [];
 			} else {
+				//TODO ...
 				this.hitButton = this.createHitButton(this.game.conf.positions.hitButton.x,
 								      this.game.conf.positions.hitButton.y);
 				this.joystick = this.createJoystick(this.game.conf.positions.joystick.x,
@@ -632,35 +639,35 @@ var play = {
 			}
 			//Buttons
 			this.add.existing(this.game.speaker);
-			this.pauseButton = this.add.button(this.game.speaker.x-100,this.game.speaker.y,'pause_button');
+			this.pauseButton = this.add.button(this.game.speaker.x-110,this.game.speaker.y,'pause_button');
 			this.pauseButton.scale.setTo(1.5,1.5);
 			this.pauseButton.fixedToCamera = true;
 			this.pauseButton.onInputDown.add(this.startPause,this);
 			this.buttonsToPause.push(this.pauseButton);	
 
 			//BOARD & Panels
-			this.board = this.game.createBoard(centerX,400,450,450);
-			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 30};//TODO use a global var
+			this.board = this.game.createBoard(centerX,400,550,550);
+			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};//TODO use a global var
 			//Restart button	
-			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-80,'play_button');
+			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-105,'play_button');
 			this.restartButton.onInputDown.add(function(){this.restartButton.goDown('click_sound');},this);
 			this.restartButton.onInputUp.add(function(){this.restartButton.goUp();this.game.state.start('Play-intro');},this);
 			this.restartButton.text = this.make.text(0,0,this.game.lang.restart_button,styleTextButtons);
 			this.restartButton.addChild(this.restartButton.text);
 			//Menu button
-			this.menuButton = this.make.button(this.board.panel.x,this.board.panel.y+20,'play_button');
+			this.menuButton = this.make.button(this.board.panel.x,this.board.panel.y+35,'play_button');
 			this.menuButton.onInputDown.add(function(){this.menuButton.goDown('click_sound');},this);
 			this.menuButton.onInputUp.add(function(){this.menuButton.goUp();this.game.state.start('Menu')},this);
 			this.menuButton.text = this.make.text(0,0,this.game.lang.menu_button,styleTextButtons);
 			this.menuButton.addChild(this.menuButton.text);
 			//Resume button
-			this.resumeButton = this.make.button(this.board.panel.x,this.board.panel.y+120,'play_button');
+			this.resumeButton = this.make.button(this.board.panel.x,this.board.panel.y+175,'play_button');
 			this.resumeButton.onInputDown.add(function(){this.resumeButton.goDown('click_sound');},this);
 			this.resumeButton.onInputUp.add(function(){this.resumeButton.goUp();this.stopPause();},this);
 			this.resumeButton.text = this.make.text(0,0,this.game.lang.resume_button,styleTextButtons);
 			this.resumeButton.addChild(this.resumeButton.text);
 			//Next Level button
-			this.nextlevelButton = this.make.button(centerX+150,500,'play_button');
+			this.nextlevelButton = this.make.button(centerX+170,500,'play_button');
 			this.nextlevelButton.onInputDown.add(function(){
 								if (this.game.current_lev >= this.game.conf.total_levels)
 									this.nextlevelButton.goDown('bad_sound');
@@ -775,11 +782,11 @@ var play = {
 		},
 		gameover: function(){
 			//Restyle the panel
-			this.board.panel.height = 300;
-			this.board.label.text.fontSize = 65;
+			this.board.panel.height = 400;
+			this.board.label.text.fontSize = 80;
 			this.board.label.y = this.board.panel.top;
 			this.board.label.text.y = this.board.panel.top;
-			this.board.buttons.cameraOffset.y += 50;
+			this.board.buttons.cameraOffset.y += 70;
 			//Play sound
 			this.game.playsound('gameover_sound');
 			//Show the menu
@@ -803,7 +810,6 @@ var play = {
 			textVictory.anchor.setTo(0.5);		
 			//Stars
 			var levelScore = this.timer.left/this.level.time;
-			console.log(levelScore);
 			var stars = [];
 			for (var i = 0; i < 3; i++){//Create 3 stars
 				stars.push(this.add.image(textVictory.x-150+i*150,textVictory.y+120,'star',0));
@@ -817,8 +823,7 @@ var play = {
 			//Buttons
 			for (var i = 0; i < this.levelpassedMenu.length; i++)
 				this.levelpassedMenu[i].visible = true;
-			//this.restartButton.cameraOffset.setTo(this.nextlevelButton.cameraOffset.x-300,this.nextlevelButton.cameraOffset.y);
-			this.restartButton.x = this.nextlevelButton.x-300;
+			this.restartButton.x = this.nextlevelButton.x-340;
 			this.restartButton.y = this.nextlevelButton.y;
 			
 			
@@ -1253,14 +1258,14 @@ function updatePlayer(){
 
 Phaser.Button.prototype.goDown = function (soundKey){
 					this.frame = 1;
-					this.text.y += 3;
+					this.text.y += 5;
 					if (this.game.soundOn && soundKey)
 						this.game.sound.play(soundKey);
 }
 
 Phaser.Button.prototype.goUp = function (soundKey){
 					this.frame = 0;
-					this.text.y -= 3;
+					this.text.y -= 5;
 					if (this.game.soundOn && soundKey)
 						this.game.sound.play(soundKey);
 }
@@ -1330,7 +1335,7 @@ Phaser.Game.prototype.createBoard = function (x,y,h,w){
 		if (w) board.panel.width = w;
 		board.label = this.make.image(x,board.panel.top,'level_label');
 		board.label.anchor.setTo(0.5);
-		board.label.text = this.make.text(board.label.x,board.label.y,'',{font: this.textFont, fill: '#E86A17', fontSize: 80});
+		board.label.text = this.make.text(board.label.x,board.label.y,'',{font: this.textFont, fill: '#E86A17', fontSize: 100});
 		board.label.text.anchor.setTo(0.5);
 		board.setTitle = setTitleBoard;	
 		board.addMultiple([board.panel,board.label,board.label.text]);	

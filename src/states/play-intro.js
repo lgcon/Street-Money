@@ -12,8 +12,8 @@ var play_intro = {
 				this.board = this.game.createBoard(this.world.centerX,this.world.centerY);
 				this.board.visible = true;//show the board
 				this.board.fixedToCamera = false;//dont need it
-				this.board.label.y += 40;//Adjust the position of the label...
-				this.board.label.text.y += 40;//..and the text inside it
+				this.board.label.y += 60;//Adjust the position of the label...
+				this.board.label.text.y += 60;//..and the text inside it
 				this.style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};
 				this.board.setTitle(this.game.lang.level+' '+this.game.current_lev);
 				//Button
@@ -40,7 +40,7 @@ var play_intro = {
 				this.tutoImg=this.add.image(this.board.panel.x,this.tutoTitle.y+80,play.level.tuto.image,play.level.tuto.frame);
 				this.tutoTxt = this.add.text(this.board.panel.x,this.tutoImg.y+60,tuto.text,this.style);
 				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.tutos.button,
-							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 40});
+							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
 				this.board.button.text.anchor.setTo(0.5,0.5);
 				this.tutoElements = this.add.group();
 				this.tutoElements.addMultiple([this.tutoTitle,this.tutoImg,this.tutoTxt,this.board.button.text]);
@@ -61,7 +61,7 @@ var play_intro = {
 								   this.game.lang.text_preLevel,this.style);
 				this.text_preLevel.anchor.setTo(0.5);
 				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.start_button,
-							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 40});
+							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
 				this.board.button.onInputUp.add(function(){this.state.start('Play');},this);
 				this.board.button.text.anchor.setTo(0.5,0.5);
 				this.board.addMultiple([this.infos,this.text_preLevel,this.board.button.text]);

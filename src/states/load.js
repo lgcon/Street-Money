@@ -12,6 +12,7 @@ var load = {
 			
 				//Menu
 				this.load.image('menu_title','assets/images/menu_title.png');	
+				this.load.spritesheet('coin_menu','assets/images/coin_menu.png',100,100);	
 				this.load.image('arrow_left','assets/images/arrow_left.png');
 				this.load.image('arrow_right','assets/images/arrow_right.png');
 				this.load.image('lock','assets/images/lock.png');
@@ -23,8 +24,8 @@ var load = {
 				//UI
 				this.load.image('panel','assets/images/panel.png');
 			 	this.load.image('level_label','assets/images/level_label.png');
-				this.load.spritesheet('play_button','assets/images/button.png',195,75);
-				this.load.spritesheet('speaker','assets/images/speaker.png',48,48);
+				this.load.spritesheet('play_button','assets/images/button.png',293,112.5);
+				this.load.spritesheet('speaker','assets/images/speaker.png',60,60);
 				this.load.image('pause_button','assets/images/pause_button.png');
 				this.load.spritesheet('star','assets/images/star.png',95,97);
 				//Player
@@ -36,7 +37,7 @@ var load = {
 				this.load.image('hitButton','assets/images/hitButton.png');
 
 				//Money
-				this.load.spritesheet('coin','assets/images/coin_gold.png',64,64);
+				this.load.spritesheet('coin','assets/images/coin.png',64,64);
 				//Bonuses
 				this.load.image('boots','assets/images/boots.png');
 				this.load.image('oil','assets/images/oil_spot.png');

@@ -14,7 +14,7 @@ Phaser.Game.prototype.createBoard = function (x,y,h,w){
 		if (w) board.panel.width = w;
 		board.label = this.make.image(x,board.panel.top,'level_label');
 		board.label.anchor.setTo(0.5);
-		board.label.text = this.make.text(board.label.x,board.label.y,'',{font: this.textFont, fill: '#E86A17', fontSize: 80});
+		board.label.text = this.make.text(board.label.x,board.label.y,'',{font: this.textFont, fill: '#E86A17', fontSize: 100});
 		board.label.text.anchor.setTo(0.5);
 		board.setTitle = setTitleBoard;	
 		board.addMultiple([board.panel,board.label,board.label.text]);	

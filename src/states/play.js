@@ -62,13 +62,13 @@ var play = {
 			this.camera.follow(this.player);
 			
 			//CONTROLS	
-			//Create cursors TODO: Cursor created in another state and a system for mobile devices
 			if (this.game.device.desktop) {
 				cursors = this.input.keyboard.createCursorKeys();
 				this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				this.spacebar.onDown.add(this.treasures.hit);
 				this.buttonsToPause = [];
 			} else {
+				//TODO ...
 				this.hitButton = this.createHitButton(this.game.conf.positions.hitButton.x,
 								      this.game.conf.positions.hitButton.y);
 				this.joystick = this.createJoystick(this.game.conf.positions.joystick.x,
@@ -79,35 +79,35 @@ var play = {
 			}
 			//Buttons
 			this.add.existing(this.game.speaker);
-			this.pauseButton = this.add.button(this.game.speaker.x-100,this.game.speaker.y,'pause_button');
+			this.pauseButton = this.add.button(this.game.speaker.x-110,this.game.speaker.y,'pause_button');
 			this.pauseButton.scale.setTo(1.5,1.5);
 			this.pauseButton.fixedToCamera = true;
 			this.pauseButton.onInputDown.add(this.startPause,this);
 			this.buttonsToPause.push(this.pauseButton);	
 
 			//BOARD & Panels
-			this.board = this.game.createBoard(centerX,400,450,450);
-			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 30};//TODO use a global var
+			this.board = this.game.createBoard(centerX,400,550,550);
+			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};//TODO use a global var
 			//Restart button	
-			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-80,'play_button');
+			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-105,'play_button');
 			this.restartButton.onInputDown.add(function(){this.restartButton.goDown('click_sound');},this);
 			this.restartButton.onInputUp.add(function(){this.restartButton.goUp();this.game.state.start('Play-intro');},this);
 			this.restartButton.text = this.make.text(0,0,this.game.lang.restart_button,styleTextButtons);
 			this.restartButton.addChild(this.restartButton.text);
 			//Menu button
-			this.menuButton = this.make.button(this.board.panel.x,this.board.panel.y+20,'play_button');
+			this.menuButton = this.make.button(this.board.panel.x,this.board.panel.y+35,'play_button');
 			this.menuButton.onInputDown.add(function(){this.menuButton.goDown('click_sound');},this);
 			this.menuButton.onInputUp.add(function(){this.menuButton.goUp();this.game.state.start('Menu')},this);
 			this.menuButton.text = this.make.text(0,0,this.game.lang.menu_button,styleTextButtons);
 			this.menuButton.addChild(this.menuButton.text);
 			//Resume button
-			this.resumeButton = this.make.button(this.board.panel.x,this.board.panel.y+120,'play_button');
+			this.resumeButton = this.make.button(this.board.panel.x,this.board.panel.y+175,'play_button');
 			this.resumeButton.onInputDown.add(function(){this.resumeButton.goDown('click_sound');},this);
 			this.resumeButton.onInputUp.add(function(){this.resumeButton.goUp();this.stopPause();},this);
 			this.resumeButton.text = this.make.text(0,0,this.game.lang.resume_button,styleTextButtons);
 			this.resumeButton.addChild(this.resumeButton.text);
 			//Next Level button
-			this.nextlevelButton = this.make.button(centerX+150,500,'play_button');
+			this.nextlevelButton = this.make.button(centerX+170,500,'play_button');
 			this.nextlevelButton.onInputDown.add(function(){
 								if (this.game.current_lev >= this.game.conf.total_levels)
 									this.nextlevelButton.goDown('bad_sound');
@@ -222,11 +222,11 @@ var play = {
 		},
 		gameover: function(){
 			//Restyle the panel
-			this.board.panel.height = 300;
-			this.board.label.text.fontSize = 65;
+			this.board.panel.height = 400;
+			this.board.label.text.fontSize = 80;
 			this.board.label.y = this.board.panel.top;
 			this.board.label.text.y = this.board.panel.top;
-			this.board.buttons.cameraOffset.y += 50;
+			this.board.buttons.cameraOffset.y += 70;
 			//Play sound
 			this.game.playsound('gameover_sound');
 			//Show the menu
@@ -250,7 +250,6 @@ var play = {
 			textVictory.anchor.setTo(0.5);		
 			//Stars
 			var levelScore = this.timer.left/this.level.time;
-			console.log(levelScore);
 			var stars = [];
 			for (var i = 0; i < 3; i++){//Create 3 stars
 				stars.push(this.add.image(textVictory.x-150+i*150,textVictory.y+120,'star',0));
@@ -264,8 +263,7 @@ var play = {
 			//Buttons
 			for (var i = 0; i < this.levelpassedMenu.length; i++)
 				this.levelpassedMenu[i].visible = true;
-			//this.restartButton.cameraOffset.setTo(this.nextlevelButton.cameraOffset.x-300,this.nextlevelButton.cameraOffset.y);
-			this.restartButton.x = this.nextlevelButton.x-300;
+			this.restartButton.x = this.nextlevelButton.x-340;
 			this.restartButton.y = this.nextlevelButton.y;
 			
 			

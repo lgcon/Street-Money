@@ -19,19 +19,25 @@ var menu = {
 			//Title
 			this.add.image(centerX, 100, 'menu_title')
 				.anchor.setTo(0.5,0.5);
+			this.coin = this.add.image(278,58,'coin_menu',4);
+			this.coin.animations.add('flip',[5,6,7,0,1,2,3,4],10);
+			this.timer = this.time.create();
+			this.timer.loop(1500,this.coin.animations.play,this.coin.animations,'flip');
+			this.timer.start();
+			
 			//Level selector
 			//Level
-			this.textLevel = this.add.text(centerX,centerY+20,game.current_lev,{font:game.textFont, fill:"#FBEFEF",fontSize:100 });
+			this.textLevel = this.add.text(centerX,centerY+50,game.current_lev,{font:game.textFont, fill:"#FBEFEF",fontSize:150 });
 			this.textLevel.anchor.setTo(0.5,0.5);
 			//Text
-			this.add.text(centerX,this.textLevel.y-120,game.lang.level_selector,{font:game.textFont, fill: "#FBEFEF",fontSize: 60})
+			this.add.text(centerX,this.textLevel.y-150,game.lang.level_selector,{font:game.textFont, fill: "#FBEFEF",fontSize: 100})
 				.anchor.setTo(0.5,0.5);
 			//Lock
 			this.lock = this.add.image(this.textLevel.x,this.textLevel.y,'lock');
 			this.lock.anchor.setTo(0.5,0.5);
 			this.lock.visible = false;
 			//Arrows
-			var distanceArrows = 100;
+			var distanceArrows = 150;
 			this.arrowLeft = this.add.image(centerX-distanceArrows,this.textLevel.y,'arrow_left');
 			this.arrowLeft.anchor.setTo(0.5,0.5);
 			this.arrowLeft.inputEnabled = true;
@@ -41,10 +47,10 @@ var menu = {
 			this.arrowRight.inputEnabled = true;
 			this.arrowRight.events.onInputDown.add(function(){this.updateLevel(1);},this);
 			//Play button
-			this.playButton = this.add.button(centerX, centerY+180,'play_button');
+			this.playButton = this.add.button(centerX, centerY+250,'play_button');
 			this.playButton.anchor.setTo(0.5,0.5);
 			this.playButton.text = this.add.text(this.playButton.x,this.playButton.y,game.lang.play_button,
-					{font:game.textFont, fill:"#FBEFEF",fontSize: 40});
+					{font:game.textFont, fill:"#FBEFEF",fontSize: 60});
 			this.playButton.text.anchor.setTo(0.5,0.5);
 			this.playButton.onInputDown.add(function(){
 								if (!this.textLevel.locked)
