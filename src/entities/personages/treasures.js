@@ -23,7 +23,7 @@ function hitTreasure(){
 			//If the treasure is distant less than 50px from the player
 			if (play.physics.arcade.distanceBetween(play.player,treasure) < 50){
 				treasure.data.life--;
-				this.game.playsound('hit_sound');
+				game.playsound('hit_sound');
 				if (treasure.data.life > 0){
 					//Display the remaining life
 					var lifeInfo = play.add.text(treasure.x,treasure.top-120,
