@@ -7,9 +7,10 @@
 	},
 	"positions": {
 			"speaker": {"x": 1100, "y": 10},
+			"pauseButton": {"x": 990, "y": 10},
 			"text_timeleft": {"x": 490, "y": 0},
 			"text_score": {"x": 400, "y": 72},
-			"joystick": {"x": 200, "y": 220, "radius": 100},
-			"hitButton": {"x": 1050, "y": 220}
+			"joystick": {"x": 200, "y": 550, "radius": 100},
+			"hitButton": {"x": 990, "y": 600}
 	}
 }

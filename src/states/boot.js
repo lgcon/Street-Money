@@ -41,6 +41,7 @@ var boot = {
 			this.game.soundOn = true;
 		},
 	create: function(){
+			this.game.input.maxPointers = 2;
 			//Parse game configuration file
 			game.conf = JSON.parse(this.game.cache.getText('conf')); 	
 			//Some easier path

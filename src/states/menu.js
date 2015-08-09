@@ -67,7 +67,7 @@ var menu = {
 			//Sound
 			if (this.game.speaker){
 				this.add.existing(this.game.speaker);
-				this.game.speaker.x = this.game.conf.positions.speaker.x;//Bring it back to the original position
+				this.game.speaker.cameraOffset.y = this.game.conf.positions.speaker.y;//Bring it back to the original position
 			}
 			else{
 				this.game.speaker = this.add.image(this.game.conf.positions.speaker.x,this.game.conf.positions.speaker.y,'speaker',0);

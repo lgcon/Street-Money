@@ -28,6 +28,7 @@ function hitTreasure(){
 					//Display the remaining life
 					var lifeInfo = play.add.text(treasure.x,treasure.top-120,
 							     treasure.data.life,{font: this.game.textFont, fill:"#FF8000", fontSize: 50});
+					if (play.street) play.street.add(lifeInfo);
 					play.add.tween(lifeInfo)
 						.from({y: treasure.top,alpha: 0},500,Phaser.Easing.Linear.None,true)
 						.onComplete.add(lifeInfo.destroy,lifeInfo);

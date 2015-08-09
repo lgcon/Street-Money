@@ -7,7 +7,7 @@ var play_intro = {
 			create: function(){
 				this.add.existing(this.game.background);
 				this.add.existing(this.game.speaker);
-				this.game.speaker.x = this.game.conf.positions.speaker.x;//Bring it back to the original position
+				this.game.speaker.cameraOffset.y = this.game.conf.positions.speaker.y;//Bring it back to the original position
 				//We build the board
 				this.board = this.game.createBoard(this.world.centerX,this.world.centerY);
 				this.board.visible = true;//show the board

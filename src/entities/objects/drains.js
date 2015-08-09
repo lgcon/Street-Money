@@ -37,7 +37,7 @@ function moveToNextDrain(player,drain){
 			play.camera.unfollow();
 			//Take out the player from the game and move it to the next drain
 			play.player.exists = false;
-			player.position.setTo(nextDrain.body.center.x,nextDrain.body.center.y);
+			player.position.setTo(nextDrain.x+nextDrain.width/2,nextDrain.y+nextDrain.height/2);
 			//Set a tween to move smoothly the camera to the player
 			play.add.tween(play.camera.view)
 				.to({x: player.position.x - play.camera.view.halfWidth, 

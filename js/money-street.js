@@ -254,6 +254,7 @@ var boot = {
 			this.game.soundOn = true;
 		},
 	create: function(){
+			this.game.input.maxPointers = 2;
 			//Parse game configuration file
 			game.conf = JSON.parse(this.game.cache.getText('conf')); 	
 			//Some easier path
@@ -418,7 +419,7 @@ var menu = {
 			//Sound
 			if (this.game.speaker){
 				this.add.existing(this.game.speaker);
-				this.game.speaker.x = this.game.conf.positions.speaker.x;//Bring it back to the original position
+				this.game.speaker.cameraOffset.y = this.game.conf.positions.speaker.y;//Bring it back to the original position
 			}
 			else{
 				this.game.speaker = this.add.image(this.game.conf.positions.speaker.x,this.game.conf.positions.speaker.y,'speaker',0);
@@ -494,7 +495,7 @@ var play_intro = {
 			create: function(){
 				this.add.existing(this.game.background);
 				this.add.existing(this.game.speaker);
-				this.game.speaker.x = this.game.conf.positions.speaker.x;//Bring it back to the original position
+				this.game.speaker.cameraOffset.y = this.game.conf.positions.speaker.y;//Bring it back to the original position
 				//We build the board
 				this.board = this.game.createBoard(this.world.centerX,this.world.centerY);
 				this.board.visible = true;//show the board
@@ -597,6 +598,35 @@ var play = {
 			}
 		
 
+			//MAKE EVERYTHING ISOMETRIC
+			this.groundObjects = this.add.group();
+			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
+			this.entitiesToSort = this.add.group();
+			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.boots,this.coins]);
+			//No need to change the 'z' index of the children of the world, they are already ordered	
+
+			//CONTROLS	
+			if (this.game.device.desktop) {
+				cursors = this.input.keyboard.createCursorKeys();
+				this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+				this.spacebar.onDown.add(this.treasures.hit);
+				this.buttonsToPause = [];
+			} else {
+				var bottomAreaHeight = 393;
+				//Adapt for mobile devices (commands should be on the bottom)
+				//Create the space for the controls
+				this.street = this.add.group();
+				this.street.addMultiple([this.game.background,this.groundObjects,this.entitiesToSort]);
+				this.street.y -= bottomAreaHeight;
+				//Create touch controls
+				this.hitButton = this.createHitButton(this.game.conf.positions.hitButton.x,
+								      this.game.conf.positions.hitButton.y);
+				this.joystick = this.createJoystick(this.game.conf.positions.joystick.x,
+								    this.game.conf.positions.joystick.y,
+								    this.game.conf.positions.joystick.radius);
+				this.buttonsToPause = [this.joystick.up,this.joystick.down,this.joystick.right,this.joystick.left,
+							this.hitButton];
+			}
 
 			//GAME TEXT 
 			var centerX = this.game.width/2;
@@ -621,29 +651,24 @@ var play = {
 			//CAMERA
 			this.camera.follow(this.player);
 			
-			//CONTROLS	
-			if (this.game.device.desktop) {
-				cursors = this.input.keyboard.createCursorKeys();
-				this.spacebar = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-				this.spacebar.onDown.add(this.treasures.hit);
-				this.buttonsToPause = [];
-			} else {
-				//TODO ...
-				this.hitButton = this.createHitButton(this.game.conf.positions.hitButton.x,
-								      this.game.conf.positions.hitButton.y);
-				this.joystick = this.createJoystick(this.game.conf.positions.joystick.x,
-								    this.game.conf.positions.joystick.y,
-								    this.game.conf.positions.joystick.radius);
-				this.buttonsToPause = [this.joystick.up,this.joystick.down,this.joystick.right,this.joystick.left,
-							this.hitButton];
-			}
 			//Buttons
 			this.add.existing(this.game.speaker);
-			this.pauseButton = this.add.button(this.game.speaker.x-110,this.game.speaker.y,'pause_button');
+			this.pauseButton = this.add.button(this.game.conf.positions.pauseButton.x,
+							   this.game.conf.positions.pauseButton.y,'pause_button');
 			this.pauseButton.scale.setTo(1.5,1.5);
 			this.pauseButton.fixedToCamera = true;
 			this.pauseButton.onInputDown.add(this.startPause,this);
 			this.buttonsToPause.push(this.pauseButton);	
+
+			//Reposition (for mobile)
+			if (!this.game.device.desktop){
+				this.coinsleftText.cameraOffset.y += this.world.height - bottomAreaHeight;
+				this.coinsleftText.count.cameraOffset.y += this.world.height - bottomAreaHeight;
+				this.timer.text.cameraOffset.y += this.world.height - bottomAreaHeight;
+				this.timer.text.count.cameraOffset.y += this.world.height - bottomAreaHeight;
+				this.pauseButton.cameraOffset.y += this.world.height - bottomAreaHeight;
+				this.game.speaker.cameraOffset.y = this.game.conf.positions.speaker.y + this.world.height - bottomAreaHeight;
+			}
 
 			//BOARD & Panels
 			this.board = this.game.createBoard(centerX,400,550,550);
@@ -691,13 +716,6 @@ var play = {
 			this.pauseMenu = [this.restartButton,this.menuButton,this.resumeButton];
 			this.gameoverMenu = [this.restartButton,this.menuButton];
 			this.levelpassedMenu = [this.restartButton,this.nextlevelButton];
-			//MAKE EVERYTHING ISOMETRIC
-			this.groundObjects = this.add.group();
-			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
-			
-			this.entitiesToSort = this.add.group();
-			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.boots,this.coins]);
-			//No need to change the 'z' index of the children of the world, they are already ordered	
 
 			//RESIZE BODIES
 			setBodyAsFeet(this.entitiesToSort);
@@ -710,7 +728,6 @@ var play = {
 				sprite = this.oilSpots.children[i];
 				sprite.body.setSize(sprite.width/2,sprite.height/2,sprite.width/4,sprite.height/4);
 			}
-			
 			//PAUSE
 			//Generate a subWorld to stop in order to separate the game from the pause
 			this.elementsToPause = this.world.createSubGroup();
@@ -721,7 +738,10 @@ var play = {
 		update: function(){
 			this.player.move();
 			//Check for street's up bound
-			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 505) sprite.y = 505;},this);
+			this.keepInTheStreet.forEach(function(sprite){if (sprite.y < 505) 
+										sprite.y = 505;
+								      else if (sprite.y > this.game.height)
+										sprite.y = this.game.height},this);
 			//Move the treasures
 			for (i = 0; i < this.treasures.children.length;i++)
 				this.path.updateDirection(this.treasures.children[i]);
@@ -754,7 +774,7 @@ var play = {
 		shutdown: function(){
 			//Remove the object we need to use later
 			this.world.remove(this.game.speaker);
-			this.elementsToPause.removeChild(this.game.background);
+			this.game.background.parent.removeChild(this.game.background);
 			//Restore some values
 			this.game.background.alpha = 0.5;	
 			this.game.background.tint = 0xFFFFFF;
@@ -945,6 +965,7 @@ function stealCoin(player,robber){
 			play.coinsleftText.count.setText(play.level.goal-play.score);				
 			//Display a -1 when a coin is stolen
 			var oneLessWarn = play.add.text(player.x,player.top-100,"-1",{font: play.game.textFont, fill: "#FF0000", fontSize: 50});
+			if (play.street) play.street.add(oneLessWarn);
 			play.add.tween(oneLessWarn).from({y: player.y, alpha: 0},1000,Phaser.Easing.Linear.None,true)
 						   .onComplete.add(oneLessWarn.destroy,oneLessWarn);
 		}
@@ -986,6 +1007,7 @@ function hitTreasure(){
 					//Display the remaining life
 					var lifeInfo = play.add.text(treasure.x,treasure.top-120,
 							     treasure.data.life,{font: this.game.textFont, fill:"#FF8000", fontSize: 50});
+					if (play.street) play.street.add(lifeInfo);
 					play.add.tween(lifeInfo)
 						.from({y: treasure.top,alpha: 0},500,Phaser.Easing.Linear.None,true)
 						.onComplete.add(lifeInfo.destroy,lifeInfo);
@@ -1119,7 +1141,7 @@ function moveToNextDrain(player,drain){
 			play.camera.unfollow();
 			//Take out the player from the game and move it to the next drain
 			play.player.exists = false;
-			player.position.setTo(nextDrain.body.center.x,nextDrain.body.center.y);
+			player.position.setTo(nextDrain.x+nextDrain.width/2,nextDrain.y+nextDrain.height/2);
 			//Set a tween to move smoothly the camera to the player
 			play.add.tween(play.camera.view)
 				.to({x: player.position.x - play.camera.view.halfWidth, 
@@ -1285,32 +1307,43 @@ play.createHitButton = function(x,y){
 	}
 
 play.createJoystick = function (x,y,r) {
-		var direction = ['left','up','right','down'];
+		var directions = ['left','up','right','down'];
 		var joystick =	{}; 
 		for (var i = 0; i < 4; i++){
 			var button = this.add.button(x-r,y,'joystick');
 			button.anchor.setTo(0.5,0.5);
+			//Create hit area
+			var hitArea = new Phaser.Polygon([-button.width/2 ,    button.height/2,
+							  -button.width/2 ,   -button.height/2,
+							   button.width/2-75, -button.height/2,
+							   button.width/2 ,    0,
+							   button.width/2-75,  button.height/2
+							]);
+			button.hitArea = hitArea;
+			//Calculate rotation
 			button.position.rotate(x,y,Math.PI*i/2,false,r);
 			button.rotation = Math.PI*i/2;
 			button.fixedToCamera = true;
-			button.inputEnabled = true;
-			//TODO FIX: when button get down because of the event 'onInputOver' it doesnt go up when 'onInputUp'
-			// Istead use something linked to button.input or the pointer
+			//Inputs
+			button.forceOut = true;
 			button.onInputDown.add(function(){this.isDown = true;},button);
-			button.onInputOver.add(isPointerDown,button,button);
-			button.onInputUp.add(function(){this.isDown = false;},button);
+			button.onInputOver.add(function(button,pointer){
+							/*We set the button as it would be down, this will make Phaser look for onUp events*/
+							button.input._pointerData[pointer.id].isUp = false;
+							button.input._pointerData[pointer.id].isDown = true;
+							this.isDown = true;},button);
+			button.onInputUp.add(function(button,pointer){
+						/*We set the button as it would be out, this will make Phaser look for onOver events*/
+						button.input._pointerData[pointer.id].isOut = true;
+						button.input._pointerData[pointer.id].isOver = false;
+						this.isDown = false;},button);
 			button.onInputOut.add(function(){this.isDown = false;},button);
 			button.alpha = 0.7;
-			joystick[direction[i]] = button;
+			//Insert button into the joystick
+			joystick[directions[i]] = button;
 		}
 		joystick.resetFrames = resetFrames;
 		return joystick;
-}
-
-function isPointerDown(){
-	if (game.input.activePointer.isDown){ //TODO check for problems whit the 'HIT' button
-		this.isDown = true;
-	}
 }
 
 function resetFrames(){
