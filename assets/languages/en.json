@@ -2,6 +2,12 @@
 	"level_selector": "Select a level:",
 	"play_button": "Play",
 	"level": "LEVEL",
+	"tutos": {	"button" : "Continue",
+			"1": {
+				"title": "Lets start!",
+				"text": "Move with the arrows\nto catch all the coins\nin time!"
+			}
+	},
 	"text_time": "TIME:",
 	"text_goal": "GOAL:",
 	"text_preLevel": "Are you ready?",
@@ -9,12 +15,6 @@
 	"text_timer": "TIME:",
 	"text_score": "COINS LEFT:",
 	"hit_button": "HIT",
-	"tutos": {	"button" : "continue",
-			"1": {
-				"title": "Lets start!",
-				"text": "Move with the arrows\nto catch all the coins\nin time!"
-			}
-	},
 	"pause_menu": "PAUSE",
 	"gameover_menu": "GAME OVER",
 	"levelpassed": "LEVEL PASSED!",

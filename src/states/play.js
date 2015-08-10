@@ -227,7 +227,7 @@ var play = {
 			this.board.visible = true;
 			for (var i = 0; i < this.pauseMenu.length; i++)
 				this.pauseMenu[i].visible = true;
-			this.board.setTitle('Pause');
+			this.board.setTitle(game.lang.pause_menu);
 			//Block game
 			this.pauseGame();
 		},
@@ -253,7 +253,7 @@ var play = {
 			this.board.visible = true;
 			for (var i = 0; i < this.gameoverMenu.length; i++)
 				this.gameoverMenu[i].visible = true;
-			this.board.setTitle('Game Over');
+			this.board.setTitle(game.lang.gameover_menu);
 			//Block game
 			this.pauseGame();
 		},
