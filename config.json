@@ -1,10 +1,24 @@
 {	
 	"total_levels": 2,
 	"lang": "en",
-	"font": {
+	"textfont": {
 			"family":"Fredoka+One::latin",
 			"name":"Fredoka One"
 	},
+	"text_styles": {
+			"loading": {"color": "#FBEFEF", "size":	100},
+			"menu": {
+				"maintext" : {"color": "#FBEFEF", "size": 100},
+				"level_number": {"color": "#FBEFEF", "size": 150}
+			},
+			"buttons": {"color": "#FBEFEF", "size": 60},
+			"panels": {
+				   "label": {"color": "#E86A17", "size": 100},
+				   "content": {"color": "#FBEFEF", "size": 60}
+			},
+			"gameinfo": {"color": "#FBEFEF", "size": 60},
+			"levelpassed": {"color": "#FBEFEF", "size": 80}
+	},		
 	"positions": {
 			"speaker": {"x": 1100, "y": 10},
 			"pauseButton": {"x": 990, "y": 10},

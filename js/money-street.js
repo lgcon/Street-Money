@@ -258,14 +258,15 @@ var boot = {
 			//Parse game configuration file
 			game.conf = JSON.parse(this.game.cache.getText('conf')); 	
 			//Some easier path
-			game.textFont = game.conf.font.name;
+			game.textFont = game.conf.textfont.name;
+			game.textstyle = game.conf.text_styles;
 			if (!localStorage.lastUnblockedLevel)
 				localStorage.setItem('lastUnblockedLevel',1);
 			game.current_lev = parseInt(localStorage.lastUnblockedLevel);
 			//Load google web fonts
 			WebFont.load({
 				google: {
-					families: [game.conf.font.family]
+					families: [game.conf.textfont.family]
 				},
 				active: function(){
 					//Change state when complete (make sure the font has loaded)
@@ -283,11 +284,12 @@ var load = {
 				this.preloadBar = this.add.image(180,this.world.centerY,'preloadbar');
 				this.preloadBar.scale.setTo(17,7);
 				this.load.setPreloadSprite(this.preloadBar);
-				var style = {font: game.textFont, fill: "#FBEFEF", fontSize: 100};
+				var style = {font: game.textFont, fill: game.textstyle.loading.color, fontSize: game.textstyle.loading.size};
 				this.add.text(this.world.centerX,this.preloadBar.y-80,'Loading...',style)
 					.anchor.setTo(0.5,0.5);
+
+
 				//Load assets
-			
 				//Menu
 				this.load.image('menu_title','assets/images/menu_title.png');	
 				this.load.spritesheet('coin_menu','assets/images/coin_menu.png',100,100);	
@@ -380,10 +382,12 @@ var menu = {
 			
 			//Level selector
 			//Level
-			this.textLevel = this.add.text(centerX,centerY+50,game.current_lev,{font:game.textFont, fill:"#FBEFEF",fontSize:150 });
+			this.textLevel = this.add.text(centerX,centerY+50,game.current_lev,
+			    {font:game.textFont, fill: game.textstyle.menu.level_number.color,fontSize: game.textstyle.menu.level_number.size});
 			this.textLevel.anchor.setTo(0.5,0.5);
 			//Text
-			this.add.text(centerX,this.textLevel.y-150,game.lang.level_selector,{font:game.textFont, fill: "#FBEFEF",fontSize: 100})
+			this.add.text(centerX,this.textLevel.y-150,game.lang.level_selector,
+			       	{font:game.textFont, fill: game.textstyle.menu.maintext.color, fontSize: game.textstyle.menu.maintext.size})
 				.anchor.setTo(0.5,0.5);
 			//Lock
 			this.lock = this.add.image(this.textLevel.x,this.textLevel.y,'lock');
@@ -489,47 +493,50 @@ var menu = {
 
 var play_intro = {	
 			init: function(){
-				this.world.width = this.game.width;//Restore the width of the world
-				//Parse the level
+				this.world.width = this.game.width;//restore the width of the world
+				//parse the level
 				play.level = JSON.parse(this.game.cache.getText('level'+this.game.current_lev));	
 			},
 			create: function(){
 				this.add.existing(this.game.background);
 				this.add.existing(this.game.speaker);
-				this.game.speaker.cameraOffset.y = this.game.conf.positions.speaker.y;//Bring it back to the original position
-				//We build the board
+				this.game.speaker.cameraOffset.y = this.game.conf.positions.speaker.y;//bring it back to the original position
+				//we build the board
 				this.board = this.game.createBoard(this.world.centerX,this.world.centerY);
 				this.board.visible = true;//show the board
 				this.board.fixedToCamera = false;//dont need it
-				this.board.label.y += 60;//Adjust the position of the label...
+				this.board.label.y += 60;//adjust the position of the label...
 				this.board.label.text.y += 60;//..and the text inside it
-				this.style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};
 				this.board.setTitle(this.game.lang.level+' '+this.game.current_lev);
-				//Button
+				//text style
+				this.textStyle = {font: game.textFont, 
+						  fill: game.textstyle.panels.content.color, 
+						  fontSize: game.textstyle.panels.content.size};
+				//button
 				this.board.button = this.add.button(this.board.panel.x,this.board.panel.y+250,'play_button');
 				this.board.button.anchor.setTo(0.5);
 				this.board.button.onInputDown.add(function(){this.board.button.goDown('click_sound');},this);
 				this.board.add(this.board.button);
-				//If the level has a tutorial, show the tutorial, otherwise go to the info direclty
+				//if the level has a tutorial, show the tutorial, otherwise go to the info direclty
 				if (play.level.tuto && this.game.lang.tutos[this.game.current_lev])
 					this.showTuto();
 				else
 					this.showInfos();
 			},
 			shutdown: function(){
-				//Keep the sprites we need for the next state
+				//keep the sprites we need for the next state
 				this.world.remove(this.game.speaker);
 				this.world.remove(this.game.background);
 			},
 			showTuto: function (){
 				this.hasTuto = true;
 				var tuto = this.game.lang.tutos[this.game.current_lev];
-				this.tutoTitle = this.add.text(this.board.label.x,this.board.label.y+100,tuto.title,
-							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
-				this.tutoImg=this.add.image(this.board.panel.x,this.tutoTitle.y+80,play.level.tuto.image,play.level.tuto.frame);
-				this.tutoTxt = this.add.text(this.board.panel.x,this.tutoImg.y+60,tuto.text,this.style);
-				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.tutos.button,
-							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
+				this.tutoTitle = this.add.text(this.board.label.x,this.board.label.y+100,tuto.title,this.textStyle);
+				this.tutoImg = this.add.image(this.board.panel.x, this.tutoTitle.y+80, 
+							      play.level.tuto.image, play.level.tuto.frame);
+				this.tutoTxt = this.add.text(this.board.panel.x,this.tutoImg.y+60,tuto.text,this.textStyle);
+				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,
+								       this.game.lang.tutos.button,this.textStyle);//TODO different style obj
 				this.board.button.text.anchor.setTo(0.5,0.5);
 				this.tutoElements = this.add.group();
 				this.tutoElements.addMultiple([this.tutoTitle,this.tutoImg,this.tutoTxt,this.board.button.text]);
@@ -544,10 +551,10 @@ var play_intro = {
 					this.tutoElements.destroy();
 				}
 				this.infos = this.add.text(this.board.panel.x,this.board.panel.y-80,this.game.lang.text_goal+' '+play.level.goal
-								+'\n'+this.game.lang.text_time+' '+play.level.time+'s',this.style);
+								+'\n'+this.game.lang.text_time+' '+play.level.time+'s',this.textStyle);
 				this.infos.anchor.setTo(0.5);
 				this.text_preLevel = this.add.text(this.board.panel.x,this.board.panel.y+100,
-								   this.game.lang.text_preLevel,this.style);
+								   this.game.lang.text_preLevel,this.textStyle);
 				this.text_preLevel.anchor.setTo(0.5);
 				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.start_button,
 							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
@@ -631,12 +638,13 @@ var play = {
 
 			//GAME TEXT 
 			var centerX = this.game.width/2;
-			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};//TODO bring in config
+			this.textStyle = {font: game.textFont, fill: game.textstyle.gameinfo.color, fontSize: game.textstyle.gameinfo.size};
 			//SCORE
 			this.score = 0;
 			var scorePosition = this.game.conf.positions.text_score;
-			this.coinsleftText = this.add.text(scorePosition.x,scorePosition.y,this.game.lang.text_score,style);
-			this.coinsleftText.count = this.add.text(this.coinsleftText.right+20,this.coinsleftText.y,play.level.goal,style);
+			this.coinsleftText = this.add.text(scorePosition.x,scorePosition.y,this.game.lang.text_score,this.textStyle);
+			this.coinsleftText.count = this.add.text(this.coinsleftText.right+20,this.coinsleftText.y,play.level.goal,
+								 this.textStyle);
 			this.coinsleftText.fixedToCamera = true;
 			this.coinsleftText.count.fixedToCamera = true;
 
@@ -645,8 +653,8 @@ var play = {
 			this.timer.start();
 			//Display
 			var textPosition = this.game.conf.positions.text_timeleft;
-			this.timer.text = this.add.text(textPosition.x,textPosition.y,this.game.lang.text_timer,style);
-			this.timer.text.count = this.add.text(this.timer.text.right+20,this.timer.text.y,this.timer.left,style);
+			this.timer.text = this.add.text(textPosition.x,textPosition.y,this.game.lang.text_timer,this.textStyle);
+			this.timer.text.count = this.add.text(this.timer.text.right+20,this.timer.text.y,this.timer.left,this.textStyle);
 			this.timer.text.fixedToCamera = true;
 			this.timer.text.count.fixedToCamera = true;
 			//CAMERA
@@ -713,7 +721,7 @@ var play = {
 			}
 			this.board.buttons.fixedToCamera = true;
 			
-			//Menus TODO fill
+			//Menus
 			this.pauseMenu = [this.restartButton,this.menuButton,this.resumeButton];
 			this.gameoverMenu = [this.restartButton,this.menuButton];
 			this.levelpassedMenu = [this.restartButton,this.nextlevelButton];
@@ -827,8 +835,8 @@ var play = {
 			//Play sound
 			this.game.playsound('win_sound');
 			//Text
-			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 80};//TODO bring in config
-			var textVictory = this.add.text(this.camera.x+this.game.width/2,200,this.game.lang.levelpassed,style);
+			var textVictory = this.add.text(this.camera.x+this.game.width/2,200,this.game.lang.levelpassed,
+				{font: game.textFont, fill: game.textstyle.levelpassed.color, fontSize: game.textstyle.levelpassed.size});
 			textVictory.anchor.setTo(0.5);		
 			//Stars
 			var levelScore = this.timer.left/this.level.time;
@@ -858,10 +866,10 @@ var play = {
 			this.state.start('Play-intro');
 		},
 		pauseGame: function(){
-			//Stop everytingh
+			//Stop everything
 			this.game.setPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
 
-			//TODO ISSUE: the canvas render mode create a problem when changing the tint of the timer	
+			//ATTENTION: the canvas render mode create a problem when changing the tint of the timer	
 			this.elementsToPause.setAllChildren('tint',0x1C1C1B); 
 			if (this.game.renderType == Phaser.CANVAS) //Escamotage due to the issue of pixi relative at the tint of tilesprites
 					this.game.background.alpha = 0.2;
@@ -1370,7 +1378,8 @@ Phaser.Game.prototype.createBoard = function (x,y,h,w){
 		if (w) board.panel.width = w;
 		board.label = this.make.image(x,board.panel.top,'level_label');
 		board.label.anchor.setTo(0.5);
-		board.label.text = this.make.text(board.label.x,board.label.y,'',{font: this.textFont, fill: '#E86A17', fontSize: 100});
+		board.label.text = this.make.text(board.label.x,board.label.y,'',
+				{font: this.textFont, fill: game.textstyle.panels.label.color, fontSize: game.textstyle.panels.label.size});
 		board.label.text.anchor.setTo(0.5);
 		board.setTitle = setTitleBoard;	
 		board.addMultiple([board.panel,board.label,board.label.text]);	

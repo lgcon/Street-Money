@@ -27,10 +27,12 @@ var menu = {
 			
 			//Level selector
 			//Level
-			this.textLevel = this.add.text(centerX,centerY+50,game.current_lev,{font:game.textFont, fill:"#FBEFEF",fontSize:150 });
+			this.textLevel = this.add.text(centerX,centerY+50,game.current_lev,
+			    {font:game.textFont, fill: game.textstyle.menu.level_number.color,fontSize: game.textstyle.menu.level_number.size});
 			this.textLevel.anchor.setTo(0.5,0.5);
 			//Text
-			this.add.text(centerX,this.textLevel.y-150,game.lang.level_selector,{font:game.textFont, fill: "#FBEFEF",fontSize: 100})
+			this.add.text(centerX,this.textLevel.y-150,game.lang.level_selector,
+			       	{font:game.textFont, fill: game.textstyle.menu.maintext.color, fontSize: game.textstyle.menu.maintext.size})
 				.anchor.setTo(0.5,0.5);
 			//Lock
 			this.lock = this.add.image(this.textLevel.x,this.textLevel.y,'lock');

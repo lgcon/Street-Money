@@ -69,12 +69,13 @@ var play = {
 
 			//GAME TEXT 
 			var centerX = this.game.width/2;
-			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};//TODO bring in config
+			this.textStyle = {font: game.textFont, fill: game.textstyle.gameinfo.color, fontSize: game.textstyle.gameinfo.size};
 			//SCORE
 			this.score = 0;
 			var scorePosition = this.game.conf.positions.text_score;
-			this.coinsleftText = this.add.text(scorePosition.x,scorePosition.y,this.game.lang.text_score,style);
-			this.coinsleftText.count = this.add.text(this.coinsleftText.right+20,this.coinsleftText.y,play.level.goal,style);
+			this.coinsleftText = this.add.text(scorePosition.x,scorePosition.y,this.game.lang.text_score,this.textStyle);
+			this.coinsleftText.count = this.add.text(this.coinsleftText.right+20,this.coinsleftText.y,play.level.goal,
+								 this.textStyle);
 			this.coinsleftText.fixedToCamera = true;
 			this.coinsleftText.count.fixedToCamera = true;
 
@@ -83,8 +84,8 @@ var play = {
 			this.timer.start();
 			//Display
 			var textPosition = this.game.conf.positions.text_timeleft;
-			this.timer.text = this.add.text(textPosition.x,textPosition.y,this.game.lang.text_timer,style);
-			this.timer.text.count = this.add.text(this.timer.text.right+20,this.timer.text.y,this.timer.left,style);
+			this.timer.text = this.add.text(textPosition.x,textPosition.y,this.game.lang.text_timer,this.textStyle);
+			this.timer.text.count = this.add.text(this.timer.text.right+20,this.timer.text.y,this.timer.left,this.textStyle);
 			this.timer.text.fixedToCamera = true;
 			this.timer.text.count.fixedToCamera = true;
 			//CAMERA
@@ -151,7 +152,7 @@ var play = {
 			}
 			this.board.buttons.fixedToCamera = true;
 			
-			//Menus TODO fill
+			//Menus
 			this.pauseMenu = [this.restartButton,this.menuButton,this.resumeButton];
 			this.gameoverMenu = [this.restartButton,this.menuButton];
 			this.levelpassedMenu = [this.restartButton,this.nextlevelButton];
@@ -265,8 +266,8 @@ var play = {
 			//Play sound
 			this.game.playsound('win_sound');
 			//Text
-			var style = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 80};//TODO bring in config
-			var textVictory = this.add.text(this.camera.x+this.game.width/2,200,this.game.lang.levelpassed,style);
+			var textVictory = this.add.text(this.camera.x+this.game.width/2,200,this.game.lang.levelpassed,
+				{font: game.textFont, fill: game.textstyle.levelpassed.color, fontSize: game.textstyle.levelpassed.size});
 			textVictory.anchor.setTo(0.5);		
 			//Stars
 			var levelScore = this.timer.left/this.level.time;
@@ -296,10 +297,10 @@ var play = {
 			this.state.start('Play-intro');
 		},
 		pauseGame: function(){
-			//Stop everytingh
+			//Stop everything
 			this.game.setPause([this.elementsToPause],[this.timer],this.buttonsToPause,true);
 
-			//TODO ISSUE: the canvas render mode create a problem when changing the tint of the timer	
+			//ATTENTION: the canvas render mode create a problem when changing the tint of the timer	
 			this.elementsToPause.setAllChildren('tint',0x1C1C1B); 
 			if (this.game.renderType == Phaser.CANVAS) //Escamotage due to the issue of pixi relative at the tint of tilesprites
 					this.game.background.alpha = 0.2;

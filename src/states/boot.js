@@ -45,14 +45,15 @@ var boot = {
 			//Parse game configuration file
 			game.conf = JSON.parse(this.game.cache.getText('conf')); 	
 			//Some easier path
-			game.textFont = game.conf.font.name;
+			game.textFont = game.conf.textfont.name;
+			game.textstyle = game.conf.text_styles;
 			if (!localStorage.lastUnblockedLevel)
 				localStorage.setItem('lastUnblockedLevel',1);
 			game.current_lev = parseInt(localStorage.lastUnblockedLevel);
 			//Load google web fonts
 			WebFont.load({
 				google: {
-					families: [game.conf.font.family]
+					families: [game.conf.textfont.family]
 				},
 				active: function(){
 					//Change state when complete (make sure the font has loaded)

@@ -5,11 +5,12 @@ var load = {
 				this.preloadBar = this.add.image(180,this.world.centerY,'preloadbar');
 				this.preloadBar.scale.setTo(17,7);
 				this.load.setPreloadSprite(this.preloadBar);
-				var style = {font: game.textFont, fill: "#FBEFEF", fontSize: 100};
+				var style = {font: game.textFont, fill: game.textstyle.loading.color, fontSize: game.textstyle.loading.size};
 				this.add.text(this.world.centerX,this.preloadBar.y-80,'Loading...',style)
 					.anchor.setTo(0.5,0.5);
+
+
 				//Load assets
-			
 				//Menu
 				this.load.image('menu_title','assets/images/menu_title.png');	
 				this.load.spritesheet('coin_menu','assets/images/coin_menu.png',100,100);	
