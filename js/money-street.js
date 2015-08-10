@@ -404,11 +404,7 @@ var menu = {
 			this.arrowRight.inputEnabled = true;
 			this.arrowRight.events.onInputDown.add(function(){this.updateLevel(1);},this);
 			//Play button
-			this.playButton = this.add.button(centerX, centerY+250,'play_button');
-			this.playButton.anchor.setTo(0.5,0.5);
-			this.playButton.text = this.add.text(this.playButton.x,this.playButton.y,game.lang.play_button,
-					{font:game.textFont, fill:"#FBEFEF",fontSize: 60});
-			this.playButton.text.anchor.setTo(0.5,0.5);
+			this.playButton = this.game.createButton(centerX,centerY+250,game.lang.play_button,false);
 			this.playButton.onInputDown.add(function(){
 								if (!this.textLevel.locked)
 									this.playButton.goDown('click_sound');
@@ -513,9 +509,7 @@ var play_intro = {
 						  fill: game.textstyle.panels.content.color, 
 						  fontSize: game.textstyle.panels.content.size};
 				//button
-				this.board.button = this.add.button(this.board.panel.x,this.board.panel.y+250,'play_button');
-				this.board.button.anchor.setTo(0.5);
-				this.board.button.onInputDown.add(function(){this.board.button.goDown('click_sound');},this);
+				this.board.button = this.game.createButton(this.board.panel.x,this.board.panel.y+250,'',true,'click_sound');
 				this.board.add(this.board.button);
 				//if the level has a tutorial, show the tutorial, otherwise go to the info direclty
 				if (play.level.tuto && this.game.lang.tutos[this.game.current_lev])
@@ -535,15 +529,13 @@ var play_intro = {
 				this.tutoImg = this.add.image(this.board.panel.x, this.tutoTitle.y+80, 
 							      play.level.tuto.image, play.level.tuto.frame);
 				this.tutoTxt = this.add.text(this.board.panel.x,this.tutoImg.y+60,tuto.text,this.textStyle);
-				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,
-								       this.game.lang.tutos.button,this.textStyle);//TODO different style obj
-				this.board.button.text.anchor.setTo(0.5,0.5);
+				this.board.button.setText(this.game.lang.tutos.button);
 				this.tutoElements = this.add.group();
-				this.tutoElements.addMultiple([this.tutoTitle,this.tutoImg,this.tutoTxt,this.board.button.text]);
+				this.tutoElements.addMultiple([this.tutoTitle,this.tutoImg,this.tutoTxt]);
 				this.tutoElements.setAll('anchor.x',0.5);
-				this.board.add(this.tutoElements);
+				this.board.addMultiple([this.tutoElements]);
 				this.add.tween(this.board).from({y: -720},300,'Linear').start();
-				this.board.button.onInputUp.add(function(){this.board.button.goUp();this.showInfos();},this);
+				this.board.button.onInputUp.add(function(){this.showInfos();},this);
 			},
 			showInfos: function(){
 				//Clear the board if there was a tuto before
@@ -556,11 +548,9 @@ var play_intro = {
 				this.text_preLevel = this.add.text(this.board.panel.x,this.board.panel.y+100,
 								   this.game.lang.text_preLevel,this.textStyle);
 				this.text_preLevel.anchor.setTo(0.5);
-				this.board.button.text = this.add.text(this.board.button.x,this.board.button.y,this.game.lang.start_button,
-							{font: this.game.textFont, fill: "#FBEFEF", fontSize: 60});
+				this.board.button.setText(this.game.lang.start_button);
 				this.board.button.onInputUp.add(function(){this.state.start('Play');},this);
-				this.board.button.text.anchor.setTo(0.5,0.5);
-				this.board.addMultiple([this.infos,this.text_preLevel,this.board.button.text]);
+				this.board.addMultiple([this.infos,this.text_preLevel]);
 				//If this is the first time we see the board (there is no tuto) we set a tween
 				if (!this.hasTuto)
 					this.add.tween(this.board).from({y: -720},300,'Linear').start();
@@ -683,25 +673,19 @@ var play = {
 			this.board = this.game.createBoard(centerX,400,550,550);
 			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};//TODO use a global var
 			//Restart button	
-			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-105,'play_button');
-			this.restartButton.onInputDown.add(function(){this.restartButton.goDown('click_sound');},this);
-			this.restartButton.onInputUp.add(function(){this.restartButton.goUp();this.game.state.start('Play-intro');},this);
-			this.restartButton.text = this.make.text(0,0,this.game.lang.restart_button,styleTextButtons);
-			this.restartButton.addChild(this.restartButton.text);
+			this.restartButton = this.game.createButton(this.board.panel.x,this.board.panel.y-105,
+								    this.game.lang.restart_button,true,'click_sound');
+			this.restartButton.onInputUp.add(function(){this.game.state.start('Play-intro');},this);
 			//Menu button
-			this.menuButton = this.make.button(this.board.panel.x,this.board.panel.y+35,'play_button');
-			this.menuButton.onInputDown.add(function(){this.menuButton.goDown('click_sound');},this);
-			this.menuButton.onInputUp.add(function(){this.menuButton.goUp();this.game.state.start('Menu')},this);
-			this.menuButton.text = this.make.text(0,0,this.game.lang.menu_button,styleTextButtons);
-			this.menuButton.addChild(this.menuButton.text);
+			this.menuButton = this.game.createButton(this.board.panel.x,this.board.panel.y+35,
+								 this.game.lang.menu_button,true,'click_sound');
+			this.menuButton.onInputUp.add(function(){this.game.state.start('Menu')},this);
 			//Resume button
-			this.resumeButton = this.make.button(this.board.panel.x,this.board.panel.y+175,'play_button');
-			this.resumeButton.onInputDown.add(function(){this.resumeButton.goDown('click_sound');},this);
-			this.resumeButton.onInputUp.add(function(){this.resumeButton.goUp();this.stopPause();},this);
-			this.resumeButton.text = this.make.text(0,0,this.game.lang.resume_button,styleTextButtons);
-			this.resumeButton.addChild(this.resumeButton.text);
+			this.resumeButton = this.game.createButton(this.board.panel.x,this.board.panel.y+175,
+								   this.game.lang.resume_button,true,'click_sound');
+			this.resumeButton.onInputUp.add(this.stopPause,this);
 			//Next Level button
-			this.nextlevelButton = this.make.button(centerX+170,500,'play_button');
+			this.nextlevelButton = this.game.createButton(centerX+170,500,this.game.lang.goNextLevel_button,false);
 			this.nextlevelButton.onInputDown.add(function(){
 								if (this.game.current_lev >= this.game.conf.total_levels)
 									this.nextlevelButton.goDown('bad_sound');
@@ -709,16 +693,9 @@ var play = {
 									this.nextlevelButton.goDown('click_sound');
 							     },this);
 			this.nextlevelButton.onInputUp.add(function(){this.nextlevelButton.goUp();this.startNextLevel();},this);
-			this.nextlevelButton.text = this.make.text(0,0,this.game.lang.goNextLevel_button,styleTextButtons);
-			this.nextlevelButton.addChild(this.nextlevelButton.text);
-			
 			//Lets use a group to definei some common properties to the buttons
 			this.board.buttons.addMultiple([this.restartButton,this.menuButton,this.resumeButton,this.nextlevelButton]);	
 			this.board.buttons.setAllChildren('visible',false);
-			for (var i = 0; i < this.board.buttons.length; i++){
-				this.board.buttons.children[i].anchor.setTo(0.5);
-				this.board.buttons.children[i].text.anchor.setTo(0.5);
-			}
 			this.board.buttons.fixedToCamera = true;
 			
 			//Menus
@@ -770,8 +747,8 @@ var play = {
 			this.entitiesToSort.sort('bottom',Phaser.Group.SORT_ASCENDING,true);
 		},
 		render: function(){
-			this.time.advancedTiming = true;
-			this.game.debug.text('fps: '+this.time.fps,200,32);
+//			this.time.advancedTiming = true;
+//			this.game.debug.text('fps: '+this.time.fps,200,32);
 //			this.game.debug.body(this.player);
 //			this.robbers.forEach(this.game.debug.body,this.game.debug);
 //			this.treasures.forEach(this.game.debug.body,this.game.debug);
@@ -1301,6 +1278,44 @@ Phaser.Button.prototype.goUp = function (soundKey){
 					if (this.game.soundOn && soundKey)
 						this.game.sound.play(soundKey);
 }
+
+
+/*Create a text on the button referenced by the "text" property of the button (an instance of Phaser.Text), if existing change the content,
+*@param: text, {string} thw text to write on the button
+*/
+
+Phaser.Button.prototype.setText = function (text){
+					if (this.text)
+						this.text.text = text;
+					else{
+						this.text = this.game.add.text(0,0, text, {font: game.textFont, 
+											   fill: game.textstyle.buttons.color, 
+											   fontSize: game.textstyle.buttons.size});
+						this.addChild(this.text);
+						this.text.anchor.setTo(0.5,0.5);
+					}
+}
+
+/* This function build and returns a button 
+* @param: x,y the position of the button (the center);
+* @param: text, {string} the text to set on the button (optional);
+* @param: setInputCallbcks, {bool} if true goDown and goUp will be set as callbacks;
+* @param: downSound,upSound {string} the keys of the sound to play when the button moves up/down (optional);
+* @return: a Phaser.Button
+*/
+Phaser.Game.prototype.createButton = function (x,y,text,setInputCallbacks,downSound,upSound){
+					var button = this.add.button(x,y,'play_button');
+					button.anchor.setTo(0.5,0.5);
+					if (setInputCallbacks){
+						button.onInputDown.add(function(){this.goDown(downSound);},button);
+						button.onInputUp.add(function(){this.goUp(upSound);},button);
+					}
+					if (text)
+						button.setText(text);
+					return button;
+}
+	
+					
 
 play.createHitButton = function(x,y){
 		var button = this.add.button(x,y,'hitButton',play.treasures.hit);

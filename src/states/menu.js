@@ -49,11 +49,7 @@ var menu = {
 			this.arrowRight.inputEnabled = true;
 			this.arrowRight.events.onInputDown.add(function(){this.updateLevel(1);},this);
 			//Play button
-			this.playButton = this.add.button(centerX, centerY+250,'play_button');
-			this.playButton.anchor.setTo(0.5,0.5);
-			this.playButton.text = this.add.text(this.playButton.x,this.playButton.y,game.lang.play_button,
-					{font:game.textFont, fill:"#FBEFEF",fontSize: 60});
-			this.playButton.text.anchor.setTo(0.5,0.5);
+			this.playButton = this.game.createButton(centerX,centerY+250,game.lang.play_button,false);
 			this.playButton.onInputDown.add(function(){
 								if (!this.textLevel.locked)
 									this.playButton.goDown('click_sound');

@@ -114,25 +114,19 @@ var play = {
 			this.board = this.game.createBoard(centerX,400,550,550);
 			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};//TODO use a global var
 			//Restart button	
-			this.restartButton = this.make.button(this.board.panel.x,this.board.panel.y-105,'play_button');
-			this.restartButton.onInputDown.add(function(){this.restartButton.goDown('click_sound');},this);
-			this.restartButton.onInputUp.add(function(){this.restartButton.goUp();this.game.state.start('Play-intro');},this);
-			this.restartButton.text = this.make.text(0,0,this.game.lang.restart_button,styleTextButtons);
-			this.restartButton.addChild(this.restartButton.text);
+			this.restartButton = this.game.createButton(this.board.panel.x,this.board.panel.y-105,
+								    this.game.lang.restart_button,true,'click_sound');
+			this.restartButton.onInputUp.add(function(){this.game.state.start('Play-intro');},this);
 			//Menu button
-			this.menuButton = this.make.button(this.board.panel.x,this.board.panel.y+35,'play_button');
-			this.menuButton.onInputDown.add(function(){this.menuButton.goDown('click_sound');},this);
-			this.menuButton.onInputUp.add(function(){this.menuButton.goUp();this.game.state.start('Menu')},this);
-			this.menuButton.text = this.make.text(0,0,this.game.lang.menu_button,styleTextButtons);
-			this.menuButton.addChild(this.menuButton.text);
+			this.menuButton = this.game.createButton(this.board.panel.x,this.board.panel.y+35,
+								 this.game.lang.menu_button,true,'click_sound');
+			this.menuButton.onInputUp.add(function(){this.game.state.start('Menu')},this);
 			//Resume button
-			this.resumeButton = this.make.button(this.board.panel.x,this.board.panel.y+175,'play_button');
-			this.resumeButton.onInputDown.add(function(){this.resumeButton.goDown('click_sound');},this);
-			this.resumeButton.onInputUp.add(function(){this.resumeButton.goUp();this.stopPause();},this);
-			this.resumeButton.text = this.make.text(0,0,this.game.lang.resume_button,styleTextButtons);
-			this.resumeButton.addChild(this.resumeButton.text);
+			this.resumeButton = this.game.createButton(this.board.panel.x,this.board.panel.y+175,
+								   this.game.lang.resume_button,true,'click_sound');
+			this.resumeButton.onInputUp.add(this.stopPause,this);
 			//Next Level button
-			this.nextlevelButton = this.make.button(centerX+170,500,'play_button');
+			this.nextlevelButton = this.game.createButton(centerX+170,500,this.game.lang.goNextLevel_button,false);
 			this.nextlevelButton.onInputDown.add(function(){
 								if (this.game.current_lev >= this.game.conf.total_levels)
 									this.nextlevelButton.goDown('bad_sound');
@@ -140,16 +134,9 @@ var play = {
 									this.nextlevelButton.goDown('click_sound');
 							     },this);
 			this.nextlevelButton.onInputUp.add(function(){this.nextlevelButton.goUp();this.startNextLevel();},this);
-			this.nextlevelButton.text = this.make.text(0,0,this.game.lang.goNextLevel_button,styleTextButtons);
-			this.nextlevelButton.addChild(this.nextlevelButton.text);
-			
 			//Lets use a group to definei some common properties to the buttons
 			this.board.buttons.addMultiple([this.restartButton,this.menuButton,this.resumeButton,this.nextlevelButton]);	
 			this.board.buttons.setAllChildren('visible',false);
-			for (var i = 0; i < this.board.buttons.length; i++){
-				this.board.buttons.children[i].anchor.setTo(0.5);
-				this.board.buttons.children[i].text.anchor.setTo(0.5);
-			}
 			this.board.buttons.fixedToCamera = true;
 			
 			//Menus
@@ -201,8 +188,8 @@ var play = {
 			this.entitiesToSort.sort('bottom',Phaser.Group.SORT_ASCENDING,true);
 		},
 		render: function(){
-			this.time.advancedTiming = true;
-			this.game.debug.text('fps: '+this.time.fps,200,32);
+//			this.time.advancedTiming = true;
+//			this.game.debug.text('fps: '+this.time.fps,200,32);
 //			this.game.debug.body(this.player);
 //			this.robbers.forEach(this.game.debug.body,this.game.debug);
 //			this.treasures.forEach(this.game.debug.body,this.game.debug);
