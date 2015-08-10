@@ -17,6 +17,10 @@
 				   "content": {"color": "#FBEFEF", "size": 60}
 			},
 			"gameinfo": {"color": "#FBEFEF", "size": 60},
+			"hit_button": {
+					"color": {"pressed": "#FFFF00", "released": "#FBEFEF"},
+					"size": 55
+			},
 			"levelpassed": {"color": "#FBEFEF", "size": 80}
 	},		
 	"positions": {
