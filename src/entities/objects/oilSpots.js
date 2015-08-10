@@ -1,8 +1,8 @@
 play.createOilSpots = function () {	
 			var oilSpots = this.add.group();
 			oilSpots.enableBody = true;
-			for (var i = 0; i < play.level.bonuses.oil.length; i++)
-				oilSpots.create(this.level.bonuses.oil[i].x,play.level.bonuses.oil[i].y,'oil');
+			for (var i = 0; i < play.level.objects.oil.length; i++)
+				oilSpots.create(this.level.objects.oil[i].x,play.level.objects.oil[i].y,'oil');
 			oilSpots.slip = slip;
 			return oilSpots;
 }

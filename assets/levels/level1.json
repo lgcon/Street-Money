@@ -14,8 +14,8 @@
 			{"x":200,"y":560}
 		],
 	"startingCoins": 3,
-	"bonuses":{
-			"speed":[
+	"objects":{
+			"boots":[
 				{"x":230, "y":600, "time":3}
 				],
 			"oil":[

@@ -1,9 +1,9 @@
 play.createDrains = function () { 
 			var drains = this.add.group();
 			drains.enableBody = true;
-			for (i = 0; i < play.level.bonuses.drains.length; i++){
-				drains.create(play.level.bonuses.drains[i].x,play.level.bonuses.drains[i].y,'drain')
-					.go = play.level.bonuses.drains[i].go;
+			for (i = 0; i < play.level.objects.drains.length; i++){
+				drains.create(play.level.objects.drains[i].x,play.level.objects.drains[i].y,'drain')
+					.go = play.level.objects.drains[i].go;
 			}
 			drains.teleport = teleport;
 			drains.teleport.go = moveToNextDrain;

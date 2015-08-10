@@ -1052,9 +1052,9 @@ play.createBoots = function() {
 
 
 function generateBoots(){
-		for ( var i = 0; i < play.level.bonuses.speed.length; i++){
-			if (play.level.bonuses.speed[i].time === play.level.time - play.timer.left){
-				var boots = play.boots.create(play.level.bonuses.speed[i].x,play.level.bonuses.speed[i].y,'boots');	
+		for ( var i = 0; i < play.level.objects.boots.length; i++){
+			if (play.level.objects.boots[i].time === play.level.time - play.timer.left){
+				var boots = play.boots.create(play.level.objects.boots[i].x,play.level.objects.boots[i].y,'boots');	
 				boots.body.setSize(boots.width/2,feetHeight,boots.width/4,boots.height-feetHeight);
 			}
 		}
@@ -1107,9 +1107,9 @@ function collectCoin(player, coin){
 play.createDrains = function () { 
 			var drains = this.add.group();
 			drains.enableBody = true;
-			for (i = 0; i < play.level.bonuses.drains.length; i++){
-				drains.create(play.level.bonuses.drains[i].x,play.level.bonuses.drains[i].y,'drain')
-					.go = play.level.bonuses.drains[i].go;
+			for (i = 0; i < play.level.objects.drains.length; i++){
+				drains.create(play.level.objects.drains[i].x,play.level.objects.drains[i].y,'drain')
+					.go = play.level.objects.drains[i].go;
 			}
 			drains.teleport = teleport;
 			drains.teleport.go = moveToNextDrain;
@@ -1161,8 +1161,8 @@ function moveToNextDrain(player,drain){
 play.createOilSpots = function () {	
 			var oilSpots = this.add.group();
 			oilSpots.enableBody = true;
-			for (var i = 0; i < play.level.bonuses.oil.length; i++)
-				oilSpots.create(this.level.bonuses.oil[i].x,play.level.bonuses.oil[i].y,'oil');
+			for (var i = 0; i < play.level.objects.oil.length; i++)
+				oilSpots.create(this.level.objects.oil[i].x,play.level.objects.oil[i].y,'oil');
 			oilSpots.slip = slip;
 			return oilSpots;
 }
