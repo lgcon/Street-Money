@@ -260,7 +260,8 @@ var play = {
 			//Block game
 			this.pauseGame();
 			//Update player results
-			this.game.lastPassed++;
+			if (localStorage.lastUnblockedLevel < game.conf.total_levels)
+				localStorage.lastUnblockedLevel++;
 			//Play sound
 			this.game.playsound('win_sound');
 			//Text

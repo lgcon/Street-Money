@@ -259,8 +259,9 @@ var boot = {
 			game.conf = JSON.parse(this.game.cache.getText('conf')); 	
 			//Some easier path
 			game.textFont = game.conf.font.name;
-			game.lastPassed = 1; //TODO use coockies to get this value
-			game.current_lev = game.lastPassed;
+			if (!localStorage.lastUnblockedLevel)
+				localStorage.setItem('lastUnblockedLevel',1);
+			game.current_lev = parseInt(localStorage.lastUnblockedLevel);
 			//Load google web fonts
 			WebFont.load({
 				google: {
@@ -446,7 +447,7 @@ var menu = {
 			}
 			game.current_lev = newLevel;
 			this.game.playsound('click_sound');
-			if (newLevel > game.lastPassed){
+			if (newLevel > localStorage.lastUnblockedLevel){
 				if (!this.textLevel.locked){//lock the level
 					this.textLevel.fill = '#BDBDBD';
 					this.textLevel.alpha = 0.3;
@@ -821,7 +822,8 @@ var play = {
 			//Block game
 			this.pauseGame();
 			//Update player results
-			this.game.lastPassed++;
+			if (localStorage.lastUnblockedLevel < game.conf.total_levels)
+				localStorage.lastUnblockedLevel++;
 			//Play sound
 			this.game.playsound('win_sound');
 			//Text

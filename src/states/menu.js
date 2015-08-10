@@ -94,7 +94,7 @@ var menu = {
 			}
 			game.current_lev = newLevel;
 			this.game.playsound('click_sound');
-			if (newLevel > game.lastPassed){
+			if (newLevel > localStorage.lastUnblockedLevel){
 				if (!this.textLevel.locked){//lock the level
 					this.textLevel.fill = '#BDBDBD';
 					this.textLevel.alpha = 0.3;

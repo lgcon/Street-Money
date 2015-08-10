@@ -46,8 +46,9 @@ var boot = {
 			game.conf = JSON.parse(this.game.cache.getText('conf')); 	
 			//Some easier path
 			game.textFont = game.conf.font.name;
-			game.lastPassed = 1; //TODO use coockies to get this value
-			game.current_lev = game.lastPassed;
+			if (!localStorage.lastUnblockedLevel)
+				localStorage.setItem('lastUnblockedLevel',1);
+			game.current_lev = parseInt(localStorage.lastUnblockedLevel);
 			//Load google web fonts
 			WebFont.load({
 				google: {
