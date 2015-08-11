@@ -25,7 +25,9 @@ function stealCoin(player,robber){
 			player.lastTheft = play.time.time;
 			play.coinsleftText.count.setText(play.level.goal-play.score);				
 			//Display a -1 when a coin is stolen
-			var oneLessWarn = play.add.text(player.x,player.top-100,"-1",{font: play.game.textFont, fill: "#FF0000", fontSize: 50});
+			var oneLessWarn = play.add.text(player.x,player.top-100,"-1",{font: game.textFont, 
+										      fill: game.textstyle.interactions.color_thief, 
+										      fontSize: game.textstyle.interactions.size});
 			if (play.street) play.street.add(oneLessWarn);
 			play.add.tween(oneLessWarn).from({y: player.y, alpha: 0},1000,Phaser.Easing.Linear.None,true)
 						   .onComplete.add(oneLessWarn.destroy,oneLessWarn);

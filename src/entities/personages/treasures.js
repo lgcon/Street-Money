@@ -26,8 +26,10 @@ function hitTreasure(){
 				game.playsound('hit_sound');
 				if (treasure.data.life > 0){
 					//Display the remaining life
-					var lifeInfo = play.add.text(treasure.x,treasure.top-120,
-							     treasure.data.life,{font: this.game.textFont, fill:"#FF8000", fontSize: 50});
+					var lifeInfo = play.add.text(treasure.x,treasure.top-120,treasure.data.life,
+								     {font: this.game.textFont,
+								      fill: game.textstyle.interactions.color_treasure,
+								      fontSize: game.textstyle.interactions.size});
 					if (play.street) play.street.add(lifeInfo);
 					play.add.tween(lifeInfo)
 						.from({y: treasure.top,alpha: 0},500,Phaser.Easing.Linear.None,true)

@@ -17,6 +17,7 @@
 				   "content": {"color": "#FBEFEF", "size": 60}
 			},
 			"gameinfo": {"color": "#FBEFEF", "size": 60},
+			"interactions": { "color_thief": "#FF0000", "color_treasure": "#FF8000", "size": 50},
 			"hit_button": {
 					"color": {"pressed": "#FFFF00", "released": "#FBEFEF"},
 					"size": 55
