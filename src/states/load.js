@@ -25,7 +25,7 @@ var load = {
 				//UI
 				this.load.image('panel','assets/images/panel.png');
 			 	this.load.image('level_label','assets/images/level_label.png');
-				this.load.spritesheet('play_button','assets/images/button.png',293,112.5);
+				this.load.spritesheet('button','assets/images/button.png',293,112.5);
 				this.load.spritesheet('speaker','assets/images/speaker.png',60,60);
 				this.load.image('pause_button','assets/images/pause_button.png');
 				this.load.spritesheet('star','assets/images/star.png',95,97);

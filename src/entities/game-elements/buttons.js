@@ -39,7 +39,7 @@ Phaser.Button.prototype.setText = function (text){
 * @return: a Phaser.Button
 */
 Phaser.Game.prototype.createButton = function (x,y,text,setInputCallbacks,downSound,upSound){
-					var button = this.add.button(x,y,'play_button');
+					var button = this.add.button(x,y,'button');
 					button.anchor.setTo(0.5,0.5);
 					if (setInputCallbacks){
 						button.onInputDown.add(function(){this.goDown(downSound);},button);
