@@ -14,7 +14,8 @@ play.createPlayer = function () {
 			//Player collide world bounds
 			player.body.collideWorldBounds = true;
 			//Set player speed
-			player.speed = 200;
+			player.speed = game.conf.speed_player;
+			player.speed_bonus = this.add.tween(player);
 			//Take track of the thefts (timestamp of the last one)
 			player.lastTheft = 0;
 			//Keep the player inside the street

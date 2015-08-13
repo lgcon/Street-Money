@@ -41,8 +41,21 @@ var play = {
 			this.groundObjects = this.add.group();
 			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
 			this.entitiesToSort = this.add.group();
-			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.boots,this.coins]);
+			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.coins]);
 			//No need to change the 'z' index of the children of the world, they are already ordered	
+
+			//RESIZE BODIES
+			setBodyAsFeet(this.entitiesToSort);
+			this.entitiesToSort.add(this.boots);
+			var sprite;
+			for (i = 0; i < this.drains.length; i++){
+				sprite = this.drains.children[i];
+				sprite.body.setSize(10,10,sprite.width/2-5,sprite.height/2-5);
+			}
+			for (i = 0; i < this.oilSpots.length; i++){
+				sprite = this.oilSpots.children[i];
+				sprite.body.setSize(sprite.width/2,sprite.height/2,sprite.width/4,sprite.height/4);
+			}
 
 			//CONTROLS	
 			if (this.game.device.desktop) {
@@ -112,7 +125,6 @@ var play = {
 
 			//BOARD & Panels
 			this.board = this.game.createBoard(centerX,400,550,550);
-			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};//TODO use a global var
 			//Restart button	
 			this.restartButton = this.game.createButton(this.board.panel.x,this.board.panel.y-105,
 								    this.game.lang.restart_button,true,'click_sound');
@@ -144,17 +156,6 @@ var play = {
 			this.gameoverMenu = [this.restartButton,this.menuButton];
 			this.levelpassedMenu = [this.restartButton,this.nextlevelButton];
 
-			//RESIZE BODIES
-			setBodyAsFeet(this.entitiesToSort);
-			var sprite;
-			for (i = 0; i < this.drains.length; i++){
-				sprite = this.drains.children[i];
-				sprite.body.setSize(10,10,sprite.width/2-5,sprite.height/2-5);
-			}
-			for (i = 0; i < this.oilSpots.length; i++){
-				sprite = this.oilSpots.children[i];
-				sprite.body.setSize(sprite.width/2,sprite.height/2,sprite.width/4,sprite.height/4);
-			}
 			//PAUSE
 			//Generate a subWorld to stop in order to separate the game from the pause
 			this.elementsToPause = this.world.createSubGroup();
@@ -248,7 +249,7 @@ var play = {
 			//Block game
 			this.pauseGame();
 			//Update player results
-			if (localStorage.lastUnblockedLevel < game.conf.total_levels)
+			if (localStorage.lastUnblockedLevel < game.conf.total_levels && localStorage.lastUnblockedLevel == game.current_lev)
 				localStorage.lastUnblockedLevel++;
 			//Play sound
 			this.game.playsound('win_sound');

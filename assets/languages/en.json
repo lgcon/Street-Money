@@ -5,8 +5,33 @@
 	"tutos": {	"button" : "Continue",
 			"1": {
 				"title": "Lets start!",
-				"text": "Move with the arrows\nto catch all the coins\nin time!"
+				"text": "Use the arrows to move\nand catch all the coins\nin time!"
+			},
+			"2": {
+				"title": "Treasures",
+				"text": "Use the spacebar or\nthe HIT button (mobile)\nto breack them"
+			},
+			"4": {
+				"title": "Run!",
+				"text": "Take the boots to double\nyour speed and try to\nreach your goal!"
+			},
+			"5": {
+				"title": "Running race!",
+				"text": "Are you fast enough to\nreach your opponent?"
+			},
+			"6": {
+				"title": "Don't touch the thief!",
+				"text": "Always try to avoid the\nthieves, except if you want\nthem to steal your money!"
+			},
+			"8": {
+				"title": "Den of thieves!",
+				"text": "The thieves are hiding\na treasure, go and\ncatch it!"
+			},
+			"9": {
+				"title": "Oil stains",
+				"text": "Walk on the oil stains will\nmake you slip, and\nslow you down."
 			}
+			
 	},
 	"text_time": "TIME:",
 	"text_goal": "GOAL:",

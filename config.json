@@ -1,6 +1,7 @@
 {	
-	"total_levels": 2,
+	"total_levels": 10,
 	"lang": "en",
+	"speed_player" : 200,
 	"textfont": {
 			"family":"Fredoka+One::latin",
 			"name":"Fredoka One"

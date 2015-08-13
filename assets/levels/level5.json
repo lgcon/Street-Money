@@ -1,0 +1,41 @@
+{
+	"tuto": {
+			"image":"treasure",
+			"frame": 4 
+	},
+	"width": 7000,	
+	"playerStarts": {"x":200,"y":650},
+	"time": 20,
+	"goal": 4,
+	"coins": [
+		],
+	"startingCoins": 0,
+	"objects":{
+			"boots":[
+				{"x":600, "y":650, "time":0},
+				{"x":1600, "y":720, "time":0},
+				{"x":2600, "y":550, "time":0},
+				{"x":3600, "y":650, "time":0},
+				{"x":4600, "y":700, "time":0}
+				
+				],
+			"oil":[
+			      ],
+			"drains":[
+				]
+		},
+	"personages":{
+			"robbers":[
+				],
+			"treasures":[
+					{"path":[
+							{"x":230,"y":600, "wait":0},
+							{"x":7000,"y":600, "wait":99999}
+						],
+					"speed":300,
+					"life":3,
+					"coins":4
+					}
+				] 
+		}
+}

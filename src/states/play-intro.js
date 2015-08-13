@@ -18,7 +18,8 @@ var play_intro = {
 				//text style
 				this.textStyle = {font: game.textFont, 
 						  fill: game.textstyle.panels.content.color, 
-						  fontSize: game.textstyle.panels.content.size};
+						  fontSize: game.textstyle.panels.content.size,
+						  align: 'center'};
 				//button
 				this.board.button = this.game.createButton(this.board.panel.x,this.board.panel.y+250,'',true,'click_sound');
 				this.board.add(this.board.button);
@@ -36,10 +37,10 @@ var play_intro = {
 			showTuto: function (){
 				this.hasTuto = true;
 				var tuto = this.game.lang.tutos[this.game.current_lev];
-				this.tutoTitle = this.add.text(this.board.label.x,this.board.label.y+100,tuto.title,this.textStyle);
-				this.tutoImg = this.add.image(this.board.panel.x, this.tutoTitle.y+80, 
+				this.tutoTitle = this.add.text(this.board.label.x,this.board.label.y+80,tuto.title,this.textStyle);
+				this.tutoImg = this.add.image(this.board.panel.x, this.tutoTitle.y+70, 
 							      play.level.tuto.image, play.level.tuto.frame);
-				this.tutoTxt = this.add.text(this.board.panel.x,this.tutoImg.y+60,tuto.text,this.textStyle);
+				this.tutoTxt = this.add.text(this.board.panel.x,this.tutoImg.bottom,tuto.text,this.textStyle);
 				this.board.button.setText(this.game.lang.tutos.button);
 				this.tutoElements = this.add.group();
 				this.tutoElements.addMultiple([this.tutoTitle,this.tutoImg,this.tutoTxt]);

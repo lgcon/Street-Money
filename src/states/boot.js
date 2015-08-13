@@ -48,7 +48,7 @@ var boot = {
 			game.textFont = game.conf.textfont.name;
 			game.textstyle = game.conf.text_styles;
 			if (!localStorage.lastUnblockedLevel)
-				localStorage.setItem('lastUnblockedLevel',1);
+				localStorage.setItem('lastUnblockedLevel',1);//TODO bring back to 1
 			game.current_lev = parseInt(localStorage.lastUnblockedLevel);
 			//Load google web fonts
 			WebFont.load({

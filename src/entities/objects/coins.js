@@ -27,7 +27,7 @@ function collectCoin(player, coin){
 				var newCoin = play.coins.create(play.level.coins[play.currentCoin].x,play.level.coins[play.currentCoin].y,'coin');
 				newCoin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
 				newCoin.animations.play('spin');
-				newCoin.body.setSize(newCoin.width/2,feetHeight,newCoin.width/4,newCoin.height-feetHeight);
+				setBodyAsFeet(newCoin);	
 				play.currentCoin++;
 			}
 			//Did the player win?

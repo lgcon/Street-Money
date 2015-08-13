@@ -261,7 +261,7 @@ var boot = {
 			game.textFont = game.conf.textfont.name;
 			game.textstyle = game.conf.text_styles;
 			if (!localStorage.lastUnblockedLevel)
-				localStorage.setItem('lastUnblockedLevel',1);
+				localStorage.setItem('lastUnblockedLevel',1);//TODO bring back to 1
 			game.current_lev = parseInt(localStorage.lastUnblockedLevel);
 			//Load google web fonts
 			WebFont.load({
@@ -507,7 +507,8 @@ var play_intro = {
 				//text style
 				this.textStyle = {font: game.textFont, 
 						  fill: game.textstyle.panels.content.color, 
-						  fontSize: game.textstyle.panels.content.size};
+						  fontSize: game.textstyle.panels.content.size,
+						  align: 'center'};
 				//button
 				this.board.button = this.game.createButton(this.board.panel.x,this.board.panel.y+250,'',true,'click_sound');
 				this.board.add(this.board.button);
@@ -525,10 +526,10 @@ var play_intro = {
 			showTuto: function (){
 				this.hasTuto = true;
 				var tuto = this.game.lang.tutos[this.game.current_lev];
-				this.tutoTitle = this.add.text(this.board.label.x,this.board.label.y+100,tuto.title,this.textStyle);
-				this.tutoImg = this.add.image(this.board.panel.x, this.tutoTitle.y+80, 
+				this.tutoTitle = this.add.text(this.board.label.x,this.board.label.y+80,tuto.title,this.textStyle);
+				this.tutoImg = this.add.image(this.board.panel.x, this.tutoTitle.y+70, 
 							      play.level.tuto.image, play.level.tuto.frame);
-				this.tutoTxt = this.add.text(this.board.panel.x,this.tutoImg.y+60,tuto.text,this.textStyle);
+				this.tutoTxt = this.add.text(this.board.panel.x,this.tutoImg.bottom,tuto.text,this.textStyle);
 				this.board.button.setText(this.game.lang.tutos.button);
 				this.tutoElements = this.add.group();
 				this.tutoElements.addMultiple([this.tutoTitle,this.tutoImg,this.tutoTxt]);
@@ -600,8 +601,21 @@ var play = {
 			this.groundObjects = this.add.group();
 			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
 			this.entitiesToSort = this.add.group();
-			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.boots,this.coins]);
+			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.coins]);
 			//No need to change the 'z' index of the children of the world, they are already ordered	
+
+			//RESIZE BODIES
+			setBodyAsFeet(this.entitiesToSort);
+			this.entitiesToSort.add(this.boots);
+			var sprite;
+			for (i = 0; i < this.drains.length; i++){
+				sprite = this.drains.children[i];
+				sprite.body.setSize(10,10,sprite.width/2-5,sprite.height/2-5);
+			}
+			for (i = 0; i < this.oilSpots.length; i++){
+				sprite = this.oilSpots.children[i];
+				sprite.body.setSize(sprite.width/2,sprite.height/2,sprite.width/4,sprite.height/4);
+			}
 
 			//CONTROLS	
 			if (this.game.device.desktop) {
@@ -671,7 +685,6 @@ var play = {
 
 			//BOARD & Panels
 			this.board = this.game.createBoard(centerX,400,550,550);
-			var styleTextButtons = {font: this.game.textFont, fill: "#FBEFEF", fontSize: 60};//TODO use a global var
 			//Restart button	
 			this.restartButton = this.game.createButton(this.board.panel.x,this.board.panel.y-105,
 								    this.game.lang.restart_button,true,'click_sound');
@@ -703,17 +716,6 @@ var play = {
 			this.gameoverMenu = [this.restartButton,this.menuButton];
 			this.levelpassedMenu = [this.restartButton,this.nextlevelButton];
 
-			//RESIZE BODIES
-			setBodyAsFeet(this.entitiesToSort);
-			var sprite;
-			for (i = 0; i < this.drains.length; i++){
-				sprite = this.drains.children[i];
-				sprite.body.setSize(10,10,sprite.width/2-5,sprite.height/2-5);
-			}
-			for (i = 0; i < this.oilSpots.length; i++){
-				sprite = this.oilSpots.children[i];
-				sprite.body.setSize(sprite.width/2,sprite.height/2,sprite.width/4,sprite.height/4);
-			}
 			//PAUSE
 			//Generate a subWorld to stop in order to separate the game from the pause
 			this.elementsToPause = this.world.createSubGroup();
@@ -807,7 +809,7 @@ var play = {
 			//Block game
 			this.pauseGame();
 			//Update player results
-			if (localStorage.lastUnblockedLevel < game.conf.total_levels)
+			if (localStorage.lastUnblockedLevel < game.conf.total_levels && localStorage.lastUnblockedLevel == game.current_lev)
 				localStorage.lastUnblockedLevel++;
 			//Play sound
 			this.game.playsound('win_sound');
@@ -1035,6 +1037,8 @@ play.createBoots = function() {
 			boots.enableBody = true; 
 			boots.generate = generateBoots;
 			boots.getBonus = launchSpeedBonus;
+			play.timer = {left: play.level.time};//Need this value in order to generate the boots with time = 0
+			boots.generate();
 			return boots;
 	} 
 
@@ -1043,14 +1047,25 @@ play.createBoots = function() {
 function generateBoots(){
 		for ( var i = 0; i < play.level.objects.boots.length; i++){
 			if (play.level.objects.boots[i].time === play.level.time - play.timer.left){
-				var boots = play.boots.create(play.level.objects.boots[i].x,play.level.objects.boots[i].y,'boots');	
-				boots.body.setSize(boots.width/2,feetHeight,boots.width/4,boots.height-feetHeight);
+				var boots = this.create(play.level.objects.boots[i].x,play.level.objects.boots[i].y,'boots');	
+				setBodyAsFeet(boots);
 			}
 		}
-	}
+}
+
 function launchSpeedBonus(player,boots){
 		boots.destroy();
-		play.add.tween(player).from({speed: 2*player.speed},4000,"Linear",true);
+		var bonus = game.add.tween(player);
+		if (play.player.speed_bonus.isRunning){
+			var tween_data = play.player.speed_bonus.timeline[0];
+			var timeLeft = tween_data.duration - tween_data.dt;
+			var currentSpeed = play.player.speed;
+			play.player.speed = game.conf.speed_player;
+			play.player.speed_bonus.stop();
+			play.player.speed_bonus = bonus.from({speed: 2*currentSpeed},4000+timeLeft,"Linear",true);
+		} else{
+			play.player.speed_bonus = bonus.from({speed: 2*player.speed},4000,"Linear",true);
+		}
 		
 }
 
@@ -1083,7 +1098,7 @@ function collectCoin(player, coin){
 				var newCoin = play.coins.create(play.level.coins[play.currentCoin].x,play.level.coins[play.currentCoin].y,'coin');
 				newCoin.animations.add('spin',[0,1,2,3,4,5,6,7],10,true);
 				newCoin.animations.play('spin');
-				newCoin.body.setSize(newCoin.width/2,feetHeight,newCoin.width/4,newCoin.height-feetHeight);
+				setBodyAsFeet(newCoin);	
 				play.currentCoin++;
 			}
 			//Did the player win?
@@ -1189,7 +1204,8 @@ play.createPlayer = function () {
 			//Player collide world bounds
 			player.body.collideWorldBounds = true;
 			//Set player speed
-			player.speed = 200;
+			player.speed = game.conf.speed_player;
+			player.speed_bonus = this.add.tween(player);
 			//Take track of the thefts (timestamp of the last one)
 			player.lastTheft = 0;
 			//Keep the player inside the street
