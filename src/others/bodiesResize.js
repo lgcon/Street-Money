@@ -1,5 +1,5 @@
 //This value will be the vertical dimension of the space occupied on the game surface
-var feetHeight = 15;
+var feetHeight = 30;
 
 /*Set the body shape according to the need of the game, to use with the sprites that need an isometric-style collision effect
 * (it will move the body to the feet of the object and resize it) [! not valid for sprites belonging to groudObjects]
