@@ -1493,7 +1493,7 @@ function setBodyAsFeet(object) {
 	else{ 
 		object.anchor.setTo(0.5,1);
 		//object.body.setSize(object.width/3,feetHeight,object.width/4,object.height-feetHeight);
-		object.body.setSize(object.width/2,feetHeight);
+		object.body.setSize(2*object.width/3,feetHeight);
 	}
 }
 
