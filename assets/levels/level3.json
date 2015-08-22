@@ -25,6 +25,12 @@
 			{"x":865,"y":628}
 		],
 	"startingCoins": 10,
+	"obstacles": {
+			"box": [
+				],
+			"trash": [
+				]
+		},
 	"objects":{
 			"boots":[
 				],

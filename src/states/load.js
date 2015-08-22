@@ -43,6 +43,9 @@ var load = {
 				this.load.image('boots','assets/images/boots.png');
 				this.load.image('oil','assets/images/oil_spot.png');
 				this.load.image('drain','assets/images/drain.png');
+				//Obstacles
+				this.load.image('trash','assets/images/trash.png');
+				this.load.image('box','assets/images/box.png');
 				//Robber
 				this.load.spritesheet('robber','assets/images/robber.png',64,96);
 				//Treasure

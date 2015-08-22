@@ -322,6 +322,9 @@ var load = {
 				this.load.image('boots','assets/images/boots.png');
 				this.load.image('oil','assets/images/oil_spot.png');
 				this.load.image('drain','assets/images/drain.png');
+				//Obstacles
+				this.load.image('trash','assets/images/trash.png');
+				this.load.image('box','assets/images/box.png');
 				//Robber
 				this.load.spritesheet('robber','assets/images/robber.png',64,96);
 				//Treasure
@@ -582,6 +585,9 @@ var play = {
 			this.drains = this.createDrains();
 			this.oilSpots = this.createOilSpots();
 			this.boots = this.createBoots();
+			//Obstacles
+			this.boxes = this.createObstacles('box');
+			this.trashes = this.createObstacles('trash');
 			
 			//PATH-FOLLLOWERS PROPERTIES
 			var pathBasedPersonages = [this.robbers,this.treasures];
@@ -601,7 +607,7 @@ var play = {
 			this.groundObjects = this.add.group();
 			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
 			this.entitiesToSort = this.add.group();
-			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.coins]);
+			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.coins,this.boxes,this.trashes]);
 			//No need to change the 'z' index of the children of the world, they are already ordered	
 
 			//RESIZE BODIES
@@ -741,10 +747,13 @@ var play = {
 			//Check for ovelap with drains
 		 	if (!this.physics.arcade.overlap(this.player,this.drains,this.drains.teleport) && this.player.exists)
 				this.player.allowTeleport = true; //If the player is out of any drain, allow teleporting for eventual contacts
-			//Check for collision with the robber
-			this.physics.arcade.collide(this.player,this.robbers,this.robbers.steal);
 			//Check for collisions with the treasures
 			this.physics.arcade.collide(this.player,this.treasures);
+			//Check for collision with the robber
+			this.physics.arcade.collide(this.player,this.robbers,this.robbers.steal);
+			//Check for collisions with obstacles
+			this.physics.arcade.collide(this.player,this.boxes);
+			this.physics.arcade.collide(this.player,this.trashes);
 			//Update display order
 			this.entitiesToSort.sort('bottom',Phaser.Group.SORT_ASCENDING,true);
 		},
@@ -1161,6 +1170,18 @@ function moveToNextDrain(player,drain){
 			player.allowTeleport = false;
 			player.isTeleporting = false;
 		}	
+
+play.createObstacles = function(key){
+		var obstacles = this.add.group();		
+		obstacles.enableBody = true;
+		var levelObst = this.level.obstacles[key];
+		for (var i = 0; i < levelObst.length; i++){
+			var newObstacle = obstacles.create(levelObst[i].x,levelObst[i].y,key);
+			newObstacle.body.immovable = true;
+		}
+					
+		return obstacles;
+}
 
 play.createOilSpots = function () {	
 			var oilSpots = this.add.group();

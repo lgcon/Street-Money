@@ -50,6 +50,12 @@
 			{"x":618,"y":678}
 		],
 	"startingCoins": 12,
+	"obstacles": {
+			"box": [
+				],
+			"trash": [
+				]
+		},
 	"objects":{
 			"boots":[
 				{"x":230, "y":600, "time":0},

@@ -22,6 +22,9 @@ var play = {
 			this.drains = this.createDrains();
 			this.oilSpots = this.createOilSpots();
 			this.boots = this.createBoots();
+			//Obstacles
+			this.boxes = this.createObstacles('box');
+			this.trashes = this.createObstacles('trash');
 			
 			//PATH-FOLLLOWERS PROPERTIES
 			var pathBasedPersonages = [this.robbers,this.treasures];
@@ -41,7 +44,7 @@ var play = {
 			this.groundObjects = this.add.group();
 			this.groundObjects.addMultiple([this.oilSpots,this.drains]);
 			this.entitiesToSort = this.add.group();
-			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.coins]);
+			this.entitiesToSort.addMultiple([this.player,this.robbers,this.treasures,this.coins,this.boxes,this.trashes]);
 			//No need to change the 'z' index of the children of the world, they are already ordered	
 
 			//RESIZE BODIES
@@ -181,10 +184,13 @@ var play = {
 			//Check for ovelap with drains
 		 	if (!this.physics.arcade.overlap(this.player,this.drains,this.drains.teleport) && this.player.exists)
 				this.player.allowTeleport = true; //If the player is out of any drain, allow teleporting for eventual contacts
-			//Check for collision with the robber
-			this.physics.arcade.collide(this.player,this.robbers,this.robbers.steal);
 			//Check for collisions with the treasures
 			this.physics.arcade.collide(this.player,this.treasures);
+			//Check for collision with the robber
+			this.physics.arcade.collide(this.player,this.robbers,this.robbers.steal);
+			//Check for collisions with obstacles
+			this.physics.arcade.collide(this.player,this.boxes);
+			this.physics.arcade.collide(this.player,this.trashes);
 			//Update display order
 			this.entitiesToSort.sort('bottom',Phaser.Group.SORT_ASCENDING,true);
 		},
