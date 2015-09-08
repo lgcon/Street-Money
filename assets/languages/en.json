@@ -9,7 +9,7 @@
 			},
 			"2": {
 				"title": "Treasures",
-				"text": "Use the spacebar or\nthe HIT button (mobile)\nto breack them"
+				"text": "Use the spacebar or\nthe HIT button (mobile)\nto break them"
 			},
 			"4": {
 				"title": "Run!",
@@ -17,7 +17,7 @@
 			},
 			"5": {
 				"title": "Running race!",
-				"text": "Are you fast enough to\nreach your opponent?"
+				"text": "Are you fast enough to\nreach the treasure?"
 			},
 			"6": {
 				"title": "Don't touch the thief!",
@@ -29,16 +29,21 @@
 			},
 			"9": {
 				"title": "Oil stains",
-				"text": "Walk on the oil stains will\nmake you slip, and\nslow you down."
+				"text": "Walk on the oil stains will\nmake you slip and\nslow you down."
 			},
 			"11": {
 				"title": "Drains",
 				"text": "Sometime better just pass\nunder everything..."
+			},
+			"12": { 
+				"title": "Maze",
+				"text": "Finish the maze on time\nand get you prize!"
 			}
 			
 	},
 	"text_time": "TIME:",
 	"text_goal": "GOAL:",
+	"symbol_seconds": "s",
 	"text_preLevel": "Are you ready?",
 	"start_button": "Start",
 	"text_timer": "TIME:",
