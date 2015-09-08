@@ -264,15 +264,17 @@ var play = {
 				{font: game.textFont, fill: game.textstyle.levelpassed.color, fontSize: game.textstyle.levelpassed.size});
 			textVictory.anchor.setTo(0.5);		
 			//Stars
-			var levelScore = this.timer.left/this.level.time;
+			//var levelScore = this.timer.left/this.level.time;
 			var stars = [];
 			for (var i = 0; i < 3; i++){//Create 3 stars
 				stars.push(this.add.image(textVictory.x-150+i*150,textVictory.y+120,'star',0));
 				stars[i].anchor.setTo(0.5);
 			}
-			if (levelScore <= 0.3){//More than 70% of the time
+			//if (levelScore <= 0.3){//More than 70% of the time
+			if (this.timer.left < 6){
 				stars[2].frame = 1;
-				if (levelScore <= 0.2)//More than 80% of the time
+				//if (levelScore <= 0.2)//More than 80% of the time
+				if (this.timer.left < 4)
 					stars[1].frame = 1;
 			}
 			//Buttons
