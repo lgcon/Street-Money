@@ -36,8 +36,20 @@
 				"text": "Sometime better just pass\nunder everything..."
 			},
 			"12": { 
-				"title": "Maze",
-				"text": "Finish the maze on time\nand get you prize!"
+				"title": "Boxes",
+				"text": "The boxes block your way.\nPass the maze in time\nand get you prize!"
+			},
+			"17": {
+				"title": "Push me!",
+				"text": "Treasures can help you\nto reach your goal. Use\nthem to gain on speed!"
+			},
+			"27": {
+				"title":"Fast underground",
+				"text": "Drains move you very\nfast. Pick the right one\nand reach the treasure."
+			},
+			"30": {
+				"title": "Unvincible",
+				"text": "Are you able to finish\nthis level without\nlosing any coin?"
 			}
 			
 	},

@@ -1,4 +1,4 @@
-{"tuto":{"image":"","frame":4},"width":"1200","playerStarts":{"x":116.66666666666663,"y":650.000000000001},"time":"20","goal":"3","coins":[{"x":976,"y":613},{"x":239,"y":614},{"x":600,"y":607}],"startingCoins":"1",
+{"tuto":{"image":"","frame":4},"width":"1200","playerStarts":{"x":116.66666666666663,"y":650.000000000001},"time":"20","goal":"3","coins":[{"x":976,"y":713},{"x":239,"y":614},{"x":600,"y":657}],"startingCoins":"1",
 	"obstacles": {
 			"box": [
 				],
