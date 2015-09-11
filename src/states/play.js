@@ -257,10 +257,13 @@ var play = {
 			//Update player results
 			if (localStorage.lastUnblockedLevel < game.conf.total_levels && localStorage.lastUnblockedLevel == game.current_lev)
 				localStorage.lastUnblockedLevel++;
+			//Game complete
+			var gameCompleted = game.current_lev == game.conf.total_levels;
 			//Play sound
 			this.game.playsound('win_sound');
 			//Text
-			var textVictory = this.add.text(this.camera.x+this.game.width/2,200,this.game.lang.levelpassed,
+			var textContent = (gameCompleted)? game.lang.game_completed : game.lang.levelpassed;
+			var textVictory = this.add.text(this.camera.x+this.game.width/2,200,textContent,
 				{font: game.textFont, fill: game.textstyle.levelpassed.color, fontSize: game.textstyle.levelpassed.size});
 			textVictory.anchor.setTo(0.5);		
 			//Stars
@@ -282,6 +285,14 @@ var play = {
 				this.levelpassedMenu[i].visible = true;
 			this.restartButton.x = this.nextlevelButton.x-340;
 			this.restartButton.y = this.nextlevelButton.y;
+
+			if (gameCompleted){
+				this.menuButton.x = this.nextlevelButton.x;
+				this.menuButton.y = this.nextlevelButton.y;
+				this.menuButton.visible = true;
+				this.nextlevelButton.visible = false;
+			}
+		
 			
 			
 			

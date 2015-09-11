@@ -64,6 +64,7 @@
 	"pause_menu": "Pause",
 	"gameover_menu": "Game Over",
 	"levelpassed": "LEVEL PASSED!",
+	"game_completed": "GAME COMPLETE",
 	"restart_button": "Restart",
 	"menu_button": "Menu",
 	"resume_button": "Resume",
