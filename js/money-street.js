@@ -261,7 +261,7 @@ var boot = {
 			game.textFont = game.conf.textfont.name;
 			game.textstyle = game.conf.text_styles;
 			if (!localStorage.lastUnblockedLevel)
-				localStorage.setItem('lastUnblockedLevel',1);//TODO bring back to 1
+				localStorage.setItem('lastUnblockedLevel',30);//TODO bring back to 1
 			game.current_lev = parseInt(localStorage.lastUnblockedLevel);
 			//Load google web fonts
 			WebFont.load({
@@ -546,9 +546,11 @@ var play_intro = {
 				if (this.hasTuto){
 					this.tutoElements.destroy();
 				}
-				this.infos = this.add.text(this.board.panel.x,this.board.panel.y-80,this.game.lang.text_goal+' '+play.level.goal
-								+'\n'+this.game.lang.text_time+' '+play.level.time+'s',this.textStyle);
-				this.infos.anchor.setTo(0.5);
+				this.infos = this.add.text(0, this.board.panel.y-130,this.game.lang.text_goal+' '+play.level.goal
+								+'\n'+this.game.lang.text_time+' '+play.level.time+' '+
+								this.game.lang.symbol_seconds,this.textStyle);
+				this.infos.x = this.board.panel.x-this.infos.width/2;
+				this.infos.align = 'left';
 				this.text_preLevel = this.add.text(this.board.panel.x,this.board.panel.y+100,
 								   this.game.lang.text_preLevel,this.textStyle);
 				this.text_preLevel.anchor.setTo(0.5);
@@ -1099,10 +1101,6 @@ play.createCoins = function () {
 
 function collectCoin(player, coin){
 			coin.destroy();
-			//Calculate and show score
-			play.score++;
-			var coinsLeft = play.level.goal-play.score;
-			play.coinsleftText.count.setText(play.level.goal-play.score);
 			player.game.playsound('coin_sound');	
 			//Add next coin
 			if (play.currentCoin < play.level.coins.length){
@@ -1112,9 +1110,14 @@ function collectCoin(player, coin){
 				setBodyAsFeet(newCoin);	
 				play.currentCoin++;
 			}
-			//Did the player win?
-			if (coinsLeft <= 0)
-				play.levelpassed();
+			//Calculate and show score
+			var coinsLeft = play.level.goal-play.score-1;
+			if (coinsLeft >= 0){
+		       		play.score++;
+				play.coinsleftText.count.setText(coinsLeft);
+				if (coinsLeft == 0)
+					play.levelpassed();
+			}
 				
 		
 	}

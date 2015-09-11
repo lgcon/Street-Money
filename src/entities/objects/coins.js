@@ -17,10 +17,6 @@ play.createCoins = function () {
 
 function collectCoin(player, coin){
 			coin.destroy();
-			//Calculate and show score
-			play.score++;
-			var coinsLeft = play.level.goal-play.score;
-			play.coinsleftText.count.setText(play.level.goal-play.score);
 			player.game.playsound('coin_sound');	
 			//Add next coin
 			if (play.currentCoin < play.level.coins.length){
@@ -30,9 +26,14 @@ function collectCoin(player, coin){
 				setBodyAsFeet(newCoin);	
 				play.currentCoin++;
 			}
-			//Did the player win?
-			if (coinsLeft <= 0)
-				play.levelpassed();
+			//Calculate and show score
+			var coinsLeft = play.level.goal-play.score-1;
+			if (coinsLeft >= 0){
+		       		play.score++;
+				play.coinsleftText.count.setText(coinsLeft);
+				if (coinsLeft == 0)
+					play.levelpassed();
+			}
 				
 		
 	}
