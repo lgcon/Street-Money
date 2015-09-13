@@ -4,7 +4,7 @@
 	"level": "LEVEL",
 	"tutos": {	"button" : "Continue",
 			"1": {
-				"title": "Lets start!",
+				"title": "Let's start!",
 				"text": "Use the arrows to move\nand catch all the coins\nin time!"
 			},
 			"2": {
@@ -37,7 +37,7 @@
 			},
 			"12": { 
 				"title": "Boxes",
-				"text": "The boxes block your way.\nPass the maze in time\nand get you prize!"
+				"text": "The boxes block your way.\nPass the maze in time\nand get your prize!"
 			},
 			"17": {
 				"title": "Push me!",
@@ -48,14 +48,16 @@
 				"text": "Drains move you very\nfast. Pick the right one\nand reach the treasure."
 			},
 			"30": {
-				"title": "Unvincible",
+				"title": "Invincible",
 				"text": "Are you able to finish\nthis level without\nlosing any coin?"
 			}
 			
 	},
 	"text_time": "TIME:",
 	"text_goal": "GOAL:",
-	"symbol_seconds": "s",
+	"symbol_seconds": "seconds",
+	"symbol_coin":"coin",
+	"symbol_coins": "coins",
 	"text_preLevel": "Are you ready?",
 	"start_button": "Start",
 	"text_timer": "TIME:",
@@ -64,7 +66,7 @@
 	"pause_menu": "Pause",
 	"gameover_menu": "Game Over",
 	"levelpassed": "LEVEL PASSED!",
-	"game_completed": "GAME COMPLETE",
+	"game_completed": "GAME COMPLETED",
 	"restart_button": "Restart",
 	"menu_button": "Menu",
 	"resume_button": "Resume",

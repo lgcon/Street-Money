@@ -1,0 +1,74 @@
+{
+	"level_selector": "Seleziona un livello:",
+	"play_button": "Gioca",
+	"level": "LIVELLO",
+	"tutos": {	"button" : "Continua",
+			"1": {
+				"title": "Si comincia!",
+				"text": "Usa le freccie per\nmuoverti e catturare tutte\nle monete in tempo!"
+			},
+			"2": {
+				"title": "Tesori",
+				"text": "Usa la barra spaziatrice\no il bottone HIT (versione\nmobile) per romperli"
+			},
+			"4": {
+				"title": "Corri!",
+				"text": "Prendi gli stivali per\nraddoppiare la tua velocità\n e raggiungi il tuo obiettivo!"
+			},
+			"5": {
+				"title": "Gara di corsa!",
+				"text": "Sei abbastaza veloce da\nraggiungere il tesoro?"
+			},
+			"6": {
+				"title": "Non toccare il ladro!",
+				"text": "Cerca sempre di evitare\ni ladri, eccetto se desideri\nessere derubato!"
+			},
+			"8": {
+				"title": "Tana dei ladri!",
+				"text": "I ladri stanno nascondendo\nun tesoro, vai e catturalo!"
+			},
+			"9": {
+				"title": "Macchie d'olio",
+				"text": "Camminare sulle macchie\nd'olio ti farà scivolare e\nperdere velocità."
+			},
+			"11": {
+				"title": "Tombini",
+				"text": "Qualche volta è meglio\npassare sotto tutti quanti."
+			},
+			"12": { 
+				"title": "Scatole",
+				"text": "Le scatole ti bloccano il\npassaggio. Finisci il labirinto\n in tempo e passa il livello!"
+			},
+			"17": {
+				"title": "Spingimi!",
+				"text": "I tesori possono aiutarti a\nraggiungere i tuoi obiettivi.\nUsali per andare più veloce!"
+			},
+			"27": {
+				"title":"Veloce sottoterra",
+				"text": "I tombini ti spostano molto\nvelocemente. Scegli quelli\ngiusti e raggiungi il tesoro!"
+			},
+			"30": {
+				"title": "Invincibile",
+				"text": "Sei in grado di finire\nil livello senza\nperdere alcuna moneta?"
+			}
+			
+	},
+	"text_time": "TEMPO:",
+	"text_goal": "OBIETTIVO:",
+	"symbol_seconds": "secondi",
+	"symbol_coin":"moneta",
+	"symbol_coins": "monete",
+	"text_preLevel": "Sei pronto?",
+	"start_button": "Via",
+	"text_timer": "TEMPO:",
+	"text_score": "MONETE RIMASTE:",
+	"hit_button": "HIT",
+	"pause_menu": "Pausa",
+	"gameover_menu": "Hai perso",
+	"levelpassed": "LIVELLO COMPLETATO!",
+	"game_completed": "GIOCO COMPLETATO",
+	"restart_button": "Inizia",
+	"menu_button": "Menu",
+	"resume_button": "Riprendi",
+	"goNextLevel_button": "Prossimo"
+}

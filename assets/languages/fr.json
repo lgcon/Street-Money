@@ -1,0 +1,74 @@
+{
+	"level_selector": "Sélectionnez un niveau:",
+	"play_button": "Jouer",
+	"level": "NIVEAU",
+	"tutos": {	"button" : "Continuer",
+			"1": {
+				"title": "On commence!",
+				"text": "Utilisez les flèches pour\nvous déplacer et attraper\ntoutes les monnaies!"
+			},
+			"2": {
+				"title": "Trésors",
+				"text": "Utilisez la barre d'espace\n ou le bouton HIT (mobile)\npour les casser."
+			},
+			"4": {
+				"title": "Courez!",
+				"text": "Prenez les bottes pour\ndoubler votre vitesse!"
+			},
+			"5": {
+				"title": "Course à pied!",
+				"text": "Êtes-vous assez rapide\npour attraper le trésor?"
+			},
+			"6": {
+				"title": "Ne touchez pas le voleur!",
+				"text": "Essayez d'éviter les\nvoleurs, sauf si vous voulez\nqu'ils volent votre argent!"
+			},
+			"8": {
+				"title": "Repaire de voleurs!",
+				"text": "Les voleurs ont caché un\ntrésor, allez l'attraper!"
+			},
+			"9": {
+				"title": "Taches d'huile",
+				"text": "Marcher sur le taches\nvous fera glisser\net ralentir."
+			},
+			"11": {
+				"title": "Bouche d'égout",
+				"text": "Quelquefois c'est mieux\npasser au-dessous\nde tout le monde"
+			},
+			"12": { 
+				"title": "Boîtes",
+				"text": "Les boîtes bloquent\nvotre chemin. Passez\nle labyrinthe!"
+			},
+			"17": {
+				"title": "Pousse moi!",
+				"text": "Les trésors peuvent\nvous aider. Utilisez-les\npour aller plus vite!"
+			},
+			"27": {
+				"title":"Rapide sous terre",
+				"text": "Choisissez les bonnes\nbouches d'égout\npour attrapper le trésor."
+			},
+			"30": {
+				"title": "Invincible",
+				"text": "Êtes-vous en mesure de\nterminer ce niveau sans\nperdre aucune monnaie?"
+			}
+			
+	},
+	"text_time": "TEMPS:",
+	"text_goal": "OBJECTIF:",
+	"symbol_seconds": "secondes",
+	"symbol_coin":"monnaie",
+	"symbol_coins": "monnaies",
+	"text_preLevel": "Êtes-vous prêt?",
+	"start_button": "Start",
+	"text_timer": "TEMPS:",
+	"text_score": "MONNAIES RESTÉ:",
+	"hit_button": "HIT",
+	"pause_menu": "Pause",
+	"gameover_menu": "Vous avez perdu",
+	"levelpassed": "NIVEAU PASSÉ!",
+	"game_completed": "JEU TERMINÉ",
+	"restart_button": "Restart",
+	"menu_button": "Menu",
+	"resume_button": "Reprendre",
+	"goNextLevel_button": "Prochaine"
+}
