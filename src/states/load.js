@@ -36,7 +36,6 @@ var load = {
 				//Joystick
 				this.load.spritesheet('joystick','assets/images/joystick.png',180,144);
 				this.load.image('hitButton','assets/images/hitButton.png');
-
 				//Money
 				this.load.spritesheet('coin','assets/images/coin.png',64,64);
 				//Bonuses
