@@ -103,7 +103,7 @@ var menu = {
 			}
 			else {
 				if (this.textLevel.locked){//unlock the level
-					this.textLevel.fill = '#FBEFEF';
+					this.textLevel.fill = game.textstyle.menu.level_number.color;
 					this.textLevel.alpha = 1;
 					this.lock.visible = false;
 					this.textLevel.locked = false;
