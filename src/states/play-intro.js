@@ -54,9 +54,11 @@ var play_intro = {
 				if (this.hasTuto){
 					this.tutoElements.destroy();
 				}
-				this.infos = this.add.text(0, this.board.panel.y-130,this.game.lang.text_goal+' '+play.level.goal
-								+'\n'+this.game.lang.text_time+' '+play.level.time+' '+
-								this.game.lang.symbol_seconds,this.textStyle);
+				var coinsText = (play.level.goal > 1)? game.lang.symbol_coins : game.lang.symbol_coin;
+				this.infos = this.add.text(0, this.board.panel.y-130,
+						this.game.lang.text_goal+' '+play.level.goal+' '+coinsText+'\n'+
+						this.game.lang.text_time+' '+play.level.time+' '+this.game.lang.symbol_seconds,
+						this.textStyle);
 				this.infos.x = this.board.panel.x-this.infos.width/2;
 				this.infos.align = 'left';
 				this.text_preLevel = this.add.text(this.board.panel.x,this.board.panel.y+100,
