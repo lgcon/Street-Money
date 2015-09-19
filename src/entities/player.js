@@ -50,7 +50,7 @@ function moveMobile() {
 				this.body.velocity.setTo(this.speed,0);
 				this.animation = 'right'
 			}
-			else if (play.joystick.up.isDown){
+			else if (play.joystick.up.isDown && this.y > 505){
 				play.joystick.up.frame = 1;
 				this.body.velocity.setTo(0,-this.speed);
 				this.animation = 'up'
@@ -75,7 +75,7 @@ function moveMobile() {
 				this.body.velocity.setTo(this.speed,0);
 				this.animation = 'right'
 			}
-			else if (cursors.up.isDown ){
+			else if (cursors.up.isDown && this.y > 505){
 				this.body.velocity.setTo(0,-this.speed);
 				this.animation = 'up'
 				
