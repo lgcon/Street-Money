@@ -12,6 +12,8 @@ var boot = {
 				this.scale.enterIncorrectOrientation.add(this.enterIncorrectOrientation, this);
 	    	    this.scale.leaveIncorrectOrientation.add(this.leaveIncorrectOrientation, this);
 			}
+			//Get host name
+			game.host = window.location.host;
 		},
 	onResizeCallback: function(){
 			var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height);
@@ -48,7 +50,7 @@ var boot = {
 			game.textFont = game.conf.textfont.name;
 			game.textstyle = game.conf.text_styles;
 			if (!localStorage.lastUnblockedLevel)
-				localStorage.setItem('lastUnblockedLevel',1);//TODO bring back to 1
+				localStorage.setItem('lastUnblockedLevel',1);
 			game.current_lev = parseInt(localStorage.lastUnblockedLevel);
 			//Load google web fonts
 			WebFont.load({
@@ -56,8 +58,10 @@ var boot = {
 					families: [game.conf.textfont.family]
 				},
 				active: function(){
-					//Change state when complete (make sure the font has loaded)
-					game.state.start('Load');
+					if (game.host == "4998.s.time4vps.com" || game.host == "localhost"){
+						//Change state when complete (make sure the font has loaded)
+						game.state.start('Load');
+					}
 				}
 			}); 
 		}

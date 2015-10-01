@@ -21,7 +21,8 @@
   "bugs": {
     "url": "https://github.com/luigiconiglio/Street-Money/issues"
   },
-  "homepage": "https://github.com/luigiconiglio/Street-Money#readme",
+  "homepage": "https://4998.s.time4vps.eu/game/index.html",
+  "host":"4998.s.time4vps.eu",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-concat": "^0.5.1",
