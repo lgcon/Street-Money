@@ -226,7 +226,10 @@ var boot = {
 	    	    this.scale.leaveIncorrectOrientation.add(this.leaveIncorrectOrientation, this);
 			}
 			//Get host name
-			game.host = window.location.host;
+			var reg1 = new RegExp('^https?:\/\/');
+			var reg2 = new RegExp('\/[^\/]*$');
+			game.host = (window.location != window.parent.location)? 
+					document.referrer.replace(reg1,'').replace(reg2,'') : window.location.host;
 		},
 	onResizeCallback: function(){
 			var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height);
@@ -271,7 +274,10 @@ var boot = {
 					families: [game.conf.textfont.family]
 				},
 				active: function(){
-					if (game.host == "4998.s.time4vps.com" || game.host == "localhost"){
+					console.log(game.host);
+					if (game.host == "www.fgl.com" || 
+					    game.host == "4998.s.time4vps.eu" ||
+					    game.host == "localhost") {
 						//Change state when complete (make sure the font has loaded)
 						game.state.start('Load');
 					}
