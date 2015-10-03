@@ -226,10 +226,12 @@ var boot = {
 	    	    this.scale.leaveIncorrectOrientation.add(this.leaveIncorrectOrientation, this);
 			}
 			//Get host name
-			var reg1 = new RegExp('^https?:\/\/');
+		/*	var reg1 = new RegExp('^https?:\/\/');
 			var reg2 = new RegExp('\/[^\/]*$');
 			game.host = (window.location != window.parent.location)? 
 					document.referrer.replace(reg1,'').replace(reg2,'') : window.location.host;
+		*/
+			game.host = window.location.host;
 		},
 	onResizeCallback: function(){
 			var scale = Math.min(window.innerWidth / this.game.width, window.innerHeight / this.game.height);
@@ -274,13 +276,12 @@ var boot = {
 					families: [game.conf.textfont.family]
 				},
 				active: function(){
-					console.log(game.host);
-					if (game.host == "www.fgl.com" || 
+					/*if (game.host == "www.fgl.com" || 
 					    game.host == "4998.s.time4vps.eu" ||
-					    game.host == "localhost") {
+					    game.host == "localhost") 
+					*/
 						//Change state when complete (make sure the font has loaded)
 						game.state.start('Load');
-					}
 				}
 			}); 
 		}
@@ -1301,22 +1302,23 @@ function moveMobile() {
 	}
  function moveDesktop() {
 			//Move the player
-			if (cursors.down.isDown){
+			if (cursors.down.isDown || game.input.keyboard.isDown(Phaser.Keyboard.S)){
 				this.body.velocity.setTo(0,this.speed);
 				this.animation = 'down'
 			}
-			else if (cursors.left.isDown){
+			else if (cursors.left.isDown || game.input.keyboard.isDown(Phaser.Keyboard.A)){
 				this.body.velocity.setTo(-this.speed,0);
 				this.animation = 'left'
 			}
-			else if (cursors.right.isDown ){
+			else if (cursors.right.isDown || game.input.keyboard.isDown(Phaser.Keyboard.D) ){
 				this.body.velocity.setTo(this.speed,0);
 				this.animation = 'right'
 			}
-			else if (cursors.up.isDown && this.y > 505){
-				this.body.velocity.setTo(0,-this.speed);
-				this.animation = 'up'
-				
+			else if (cursors.up.isDown || game.input.keyboard.isDown(Phaser.Keyboard.W)){
+				if (this.y > 505){
+					this.body.velocity.setTo(0,-this.speed);
+					this.animation = 'up'
+				}
 			}
 			else{
 				this.body.velocity.setTo(0,0);
