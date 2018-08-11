@@ -4,5 +4,5 @@
 
 **Money Street** is an HTML5 game powered by Phaser.
 
-Modules missing: gamepad,p2,ninja,particles,graphics,retrofont,bitmaptext
+Have a look [here](https://www.youtube.com/watch?v=JqG11xpKWEQ)
 
